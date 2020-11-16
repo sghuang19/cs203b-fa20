@@ -18,6 +18,8 @@ Some useful resources.
 
 [Python开发规范](https://www.jianshu.com/p/d414e90dc953)
 
+[Python命名规范](https://www.jianshu.com/p/a793c0d960fe)
+
 [A Byte of Python](https://python.swaroopch.com)
 
 [OpenPyXL](https://openpyxl.readthedocs.io)
