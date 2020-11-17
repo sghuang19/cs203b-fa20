@@ -50,3 +50,6 @@ class Matrix:
         self.column = column
 
 
+def __str__(self):
+    """Convert a matrix to string"""
+    return self.elements.__str__()
