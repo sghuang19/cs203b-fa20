@@ -20,3 +20,33 @@ class Matrix:
 
     # TODO(SamuelHuang2019): Finish the docstring.
     # TODO(SamuelHuang2019): More methods.
+
+    def __init__(self, elements, row=None, column=None):
+        """
+    Initializes the matrix,
+
+    :param elements: Elements in the matrix, in row-major order
+    :param row: The number of rows
+    :param column: The number of Columns
+    :type elements: List or Tuple
+    :type row: int
+    :type column: int
+    """
+
+        if row is None:
+            row = 1
+            column = len(elements)
+        if column is None:
+            column = len(elements) / row
+
+        self.row = row
+        self.column = column
+
+        if len(elements) != row * column:
+            print('Invalid matrix size')
+
+        self.elements = elements
+        self.row = row
+        self.column = column
+
+
