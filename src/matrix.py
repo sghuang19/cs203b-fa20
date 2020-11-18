@@ -49,7 +49,8 @@ class Matrix:
         self.row = row
         self.column = column
 
+    def __str__(self):
+        """Convert a matrix to string"""
+        return self.elements.__str__()
 
-def __str__(self):
-    """Convert a matrix to string"""
-    return self.elements.__str__()
+
