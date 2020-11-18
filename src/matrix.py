@@ -4,6 +4,9 @@ def square_matrix_multiply(self, a, b):
     print('Hello World!')
 
 
+import matrix_exceptions
+
+
 class Matrix:
     """
     A data structure for matrix. The matrix implementation should be suitable for dense matrices. You are required to
