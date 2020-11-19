@@ -62,8 +62,8 @@ class Matrix:
         result = ''
         for i in range(self.row):
             for j in range(self.column):
-                result = result + ' '+str(self.__getitem__((i+1,j+1)))
-                if j == self.column-1:
+                result = result + ' ' + str(self.__getitem__((i + 1, j + 1)))
+                if j == self.column - 1:
                     result = result + '\n'
         return result
 
@@ -74,15 +74,14 @@ class Matrix:
         """
         if type(item) is tuple:
             if item[0] > self.row or item[0] <= 0:
-                raise (matrix_exceptions.RowOutOfBoundException(item, item[0]))
+                raise (exceptions.RowOutOfBoundsException(item))
             if item[1] > self.column or item[1] <= 0:
-                raise (matrix_exceptions.ColumnOutOfBoundException(item, item[1]))
-            return self.elements[(item[0]-1)*self.column + item[1]-1]
+                raise (exceptions.ColumnOutOfBoundsException(item))
+            return self.elements[(item[0] - 1) * self.column + item[1] - 1]
 
         if item >= len(self.elements):
-            raise (matrix_exceptions.ColumnOutOfBoundException(item, item))
+            raise (exceptions.ColumnOutOfBoundsException(item))
         return self.elements[item]
-
 
     def __add__(self, other):
         """
