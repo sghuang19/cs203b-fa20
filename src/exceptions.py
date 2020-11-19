@@ -1,25 +1,19 @@
 class RowOutOfBoundsException(Exception):
-    def __init__(self, parameter, para_value):
-        err = 'The row index "{0}"[0] out of bounds:{1}'.format(parameter, para_value)
+    def __init__(self, index):
+        err = 'The row index out of bounds:{0}'.format(index)
         Exception.__init__(self, err)
-        self.parameter = parameter
-        self.para_value = para_value
 
 
 class ColumnOutOfBoundsException(Exception):
-    def __init__(self, parameter, para_value):
-        err = 'The column index "{0}"[1] out of bounds:{1}'.format(parameter, para_value)
+    def __init__(self, index):
+        err = 'The column index  out of bounds:{0}'.format(index)
         Exception.__init__(self, err)
-        self.parameter = parameter
-        self.para_value = para_value
 
 
 class IndexOutOfBoundsException(Exception):
-    def __init__(self, parameter, para_value):
-        err = 'The index "{0}" out of bounds:{1}'.format(parameter, para_value)
+    def __init__(self, index):
+        err = 'The index  out of bounds:{0}'.format(index)
         Exception.__init__(self, err)
-        self.parameter = parameter
-        self.para_value = para_value
 
 
 class DimensionInconsistentException(Exception):
