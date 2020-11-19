@@ -71,3 +71,25 @@ class Matrix:
             raise (matrix_exceptions.ColumnOutOfBoundException(item, item))
         return self.elements[item]
 
+    def __add__(self, other):
+        """
+        :rtype: Matrix
+        """
+
+        if type(other) is Matrix:
+            if self.row is other.row and self.column is other.column:
+                s = []
+                for i in range(len(self.elements)):
+                    s += [self.elements[i] + other.elements[i]]
+                return Matrix(s, self.row, self.column)
+            raise (exceptions.DimensionInconsistentException(self, other))
+
+        for i in range(len(self.elements)):
+            self.elements[i] += other
+        return self
+
+    def __sizeof__(self):
+        return len(self.elements)
+
+    def dimension(self):
+        return self.row, self.column
