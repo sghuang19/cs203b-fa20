@@ -57,18 +57,16 @@ class Matrix:
         return self.elements.__str__()
 
     def __getitem__(self, item):
-        """
-        Get element with index of key, in row-major order
-        """
+        """Get element with index of key, in row-major order"""
         if type(item) is tuple:
             if item[0] >= self.row:
-                raise (matrix_exceptions.RowOutOfBoundException(item, item[0]))
+                raise (exceptions.RowOutOfBoundsException(item, item[0]))
             if item[1] >= self.column:
-                raise (matrix_exceptions.ColumnOutOfBoundException(item, item[1]))
+                raise (exceptions.ColumnOutOfBoundsException(item, item[1]))
             return self.elements[item[0] * item[1]]
 
         if item >= len(self.elements):
-            raise (matrix_exceptions.ColumnOutOfBoundException(item, item))
+            raise (exceptions.ColumnOutOfBoundsException(item, item))
         return self.elements[item]
 
     def __add__(self, other):
