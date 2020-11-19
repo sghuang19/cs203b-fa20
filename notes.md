@@ -26,6 +26,10 @@ Some useful resources.
 
 [函数重载](https://blog.csdn.net/QQ2352108083/article/details/105580079)
 
+[浅析Python运算符重载](https://blog.csdn.net/goodlixueyong/article/details/52589979)
+
+[python自定义异常](https://www.jianshu.com/p/251fe443723d)
+
 ### On Markdown
 
 ### Others
