@@ -1,12 +1,16 @@
-def square_matrix_multiply(self, a, b):
-    """Use the standard approach to multiply 2 matrices a and b, return their product."""
+import exceptions
+
+
+def square_matrix_multiply(a, b):
+    """
+    Use the standard approach to multiply 2 matrices a and b, return their product.
+
+    :type a: Matrix
+    :type b: Matrix
+    :return: Matrix
+    """
     # TODO(SamuelHuang2019): Finish the docstring.
-
-
-
-
-
-import matrix_exceptions
+    print('Hello World!')
 
 
 class Matrix:
@@ -28,15 +32,14 @@ class Matrix:
 
     def __init__(self, elements, row=None, column=None):
         """
-    Initializes the matrix,
+        Initializes the matrix,
 
-    :param elements: Elements in the matrix, in row-major order
-    :param row: The number of rows
-    :param column: The number of Columns
-    :type elements: List or Tuple
-    :type row: int
-    :type column: int
-    """
+        :param elements: Elements in the matrix, in row-major order
+        :param row: The number of rows
+        :param column: The number of Columns
+        :type row: int
+        :type column: int
+        """
 
         if row is None:
             row = 1
@@ -47,7 +50,7 @@ class Matrix:
         self.row = row
         self.column = column
 
-        if len(elements) != row * column:
+        if len(elements) is not row * column:
             print('Invalid matrix size')
 
         self.elements = elements
@@ -78,5 +81,28 @@ class Matrix:
 
         if item >= len(self.elements):
             raise (matrix_exceptions.ColumnOutOfBoundException(item, item))
-            return self.elements[item]
+        return self.elements[item]
 
+
+    def __add__(self, other):
+        """
+        :rtype: Matrix
+        """
+
+        if type(other) is Matrix:
+            if self.row is other.row and self.column is other.column:
+                s = []
+                for i in range(len(self.elements)):
+                    s += [self.elements[i] + other.elements[i]]
+                return Matrix(s, self.row, self.column)
+            raise (exceptions.DimensionInconsistentException())
+
+        for i in range(len(self.elements)):
+            self.elements[i] += other
+        return self
+
+    def __sizeof__(self):
+        return len(self.elements)
+
+    def dimension(self):
+        return self.row, self.column
