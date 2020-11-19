@@ -59,20 +59,30 @@ class Matrix:
 
     def __str__(self):
         """Convert a matrix to string"""
-        return self.elements.__str__()
+        result = ''
+        for i in range(self.row):
+            for j in range(self.column):
+                result = result + ' '+str(self.__getitem__((i+1,j+1)))
+                if j == self.column-1:
+                    result = result + '\n'
+        return result
 
     def __getitem__(self, item):
-        """Get element with index of key, in row-major order"""
+        """
+        Get element with index of key, in row-major order
+        Index of col or row starts from 1
+        """
         if type(item) is tuple:
-            if item[0] >= self.row:
-                raise (exceptions.RowOutOfBoundsException(item[0]))
-            if item[1] >= self.column:
-                raise (exceptions.ColumnOutOfBoundsException(item[1]))
-            return self.elements[item[0] * item[1]]
+            if item[0] > self.row or item[0] <= 0:
+                raise (matrix_exceptions.RowOutOfBoundException(item, item[0]))
+            if item[1] > self.column or item[1] <= 0:
+                raise (matrix_exceptions.ColumnOutOfBoundException(item, item[1]))
+            return self.elements[(item[0]-1)*self.column + item[1]-1]
 
         if item >= len(self.elements):
-            raise (exceptions.IndexOutOfBoundsException(item))
+            raise (matrix_exceptions.ColumnOutOfBoundException(item, item))
         return self.elements[item]
+
 
     def __add__(self, other):
         """
