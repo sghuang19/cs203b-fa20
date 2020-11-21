@@ -4,6 +4,7 @@ This is the report for the project of DSAA course, written by Group 2, with foll
 
 - HUANG Guanchao, SID 11912309 from SME
 - ZHENG Shuhan, SID 11712401 from PHY
+- Li Yuru, SID 11911035 from EIE
 
 [toc]
 
