@@ -72,13 +72,46 @@ class Matrix:
         Get element with index of key, in row-major order
         Index of col or row starts from 1
         """
-        if type(item) is tuple:
+
+        # for tuple input
+        if isinstance(item, tuple):
+            # both of the elements in the item are slice
+            if isinstance(item[0], slice) and isinstance(item[1], slice):
+                e = []
+                row_indices = item[0].indices(self.row)
+                row_range = range(row_indices[0], row_indices[1] + 1, row_indices[2])
+                col_indices = item[1].indices(self.column)
+                col_range = range(col_indices[0], col_indices[1] + 1, col_indices[2])
+                r = 0
+                c = 0
+                for i in row_range:
+                    r += 1
+                    c = 0
+                    for j in col_range:
+                        c += 1
+                        e += [self[i, j]]
+                return Matrix(e, r, c)
+
+            # one slice, one int
+            if isinstance(item[0], slice) and isinstance(item[1], slice):
+                return
+
+            # one slice, one int
+            if isinstance(item[0], slice) and isinstance(item[1], slice):
+                return
+
+            # both of the elements in the item are int
             if item[0] > self.row or item[0] <= 0:
                 raise (exceptions.RowOutOfBoundsException(item))
             if item[1] > self.column or item[1] <= 0:
                 raise (exceptions.ColumnOutOfBoundsException(item))
             return self.elements[(item[0] - 1) * self.column + item[1] - 1]
 
+        # for slice input
+        if isinstance(item, slice):
+            return self.elements[item]
+
+        # else for int input
         if item >= len(self.elements):
             raise (exceptions.ColumnOutOfBoundsException(item))
         return self.elements[item]
