@@ -45,7 +45,7 @@ class Matrix:
             row = 1
             column = len(elements)
         if column is None:
-            column = len(elements) / row
+            column = len(elements) // row
 
         self.row = row
         self.column = column
