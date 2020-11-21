@@ -118,6 +118,8 @@ class Matrix:
 
     def __add__(self, other):
         """
+        If other is a matrix, perform matrix addition, else perform addition with a number element-wisely
+
         :rtype: Matrix
         """
 
