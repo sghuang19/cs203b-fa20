@@ -134,6 +134,24 @@ class Matrix:
         for i in range(len(self.elements)):
             self.elements[i] += other
         return self
+    
+    def __sub__(self, other):
+        """
+        If other is a matrix, perform matrix subtraction, else perform subtraction with a number element-wisely
+
+        :rtype: Matrix
+        """
+        if type(other) is Matrix:
+            if self.row is other.row and self.column is other.column:
+                s = []
+                for i in range(len(self.elements)):
+                    s += [self.elements[i] - other.elements[i]]
+                return Matrix(s, self.row, self.column)
+            raise (exceptions.DimensionInconsistentException())
+
+        for i in range(len(self.elements)):
+            self.elements[i] -= other
+        return self
 
     def __sizeof__(self):
         return len(self.elements)
