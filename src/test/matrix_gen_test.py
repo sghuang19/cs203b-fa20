@@ -15,13 +15,6 @@ print(c)
 print(c2)
 
 
-from matrix import Matrix
-from matrix import strassen_mutliply
-from matrix import square_matrix_multiply
-import numpy as np
-import time
-
-
 m1 = Matrix(range(10000),100,100)
 m2 = Matrix(range(10000),100,100)
 #print(list(m1[1:1,1:m1.column]))
