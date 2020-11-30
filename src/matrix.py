@@ -38,7 +38,7 @@ def strassen_mutliply(a, b):  # for almost square matrix
         print("Unmatched matrix size")
         return
 
-    if min(arow, acol, bcol) < 3:
+    if max(arow, acol, bcol) < 100:               # 100 could be changed to other number depending on input size
         return square_matrix_multiply(a, b)
 
     half_arow_ceil = math.ceil(arow / 2)
