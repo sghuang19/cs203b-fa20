@@ -69,6 +69,17 @@ return C
 
 From the recurrence we can know that the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When n is very large, the time is a lot smaller than the standard matrix multiplication.
 
+For the standard matrix multiplication, the running time is about n^3, and the pseudocode is given below:
+SQUARE MATRIX MULTIPLY(A,B)
+n=A.rows
+let C be a new n*n matrix
+for i=1 to n
+   for j=1 to n
+      Cij=0
+      for k=1 to n
+      Cij=Cij+aik*bkj
+return C
+
 
 
 ---
