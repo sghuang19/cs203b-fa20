@@ -42,6 +42,45 @@ Uses an abstract model to estimate the crossover point analytically. You can pro
 <!-- in which you explain Strassens Algorithm, standard matrix multiplication and give pseudocode and further explanation. Include your runtime analysis from Part 2 here. -->
 
 <!-- TODO -->
+the strassens Algorithm can make the running time of matrix multiplication lower by replacing one separated matrix multiplication with several new matrix additions. The pseudocode for Strassens method can be written as follows:
+Strassen(A,B)
+S1=B12-B22
+S2=A11-A12
+S3=A21+A22
+S4=B21-B11
+S5=A11+A22
+S6=B11+B22
+S7=A12-A22
+S8=B21+B22
+S9=A11-A21
+S10=B11+B12
+P1=Strassen(A11,S1)
+P2=Strassen(A11,B22)
+P3=Strassen(S3,B11)
+P4=Strassen(A22,S4)
+P5=Strassen(S5,S6)
+P6=Strassen(S7,S8)
+P7=Strassen(S9,S10)
+C11=P5+P4-P2+P6
+C12=P1+P2
+C21=P3+P4
+C22=P5+P1-P3-P7
+return C
+
+From the recurrence we can know that the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When n is very large, the time is a lot smaller than the standard matrix multiplication.
+
+For the standard matrix multiplication, the running time is about n^3, and the pseudocode is given below:
+SQUARE MATRIX MULTIPLY(A,B)
+n=A.rows
+let C be a new n*n matrix
+for i=1 to n
+   for j=1 to n
+      Cij=0
+      for k=1 to n
+      Cij=Cij+aik*bkj
+return C
+
+
 
 ---
 

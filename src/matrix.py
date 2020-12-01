@@ -39,7 +39,7 @@ def strassen_mutliply(a, b):  # for almost square matrix
         print("Unmatched matrix size")
         return
 
-    if min(arow, acol, bcol) < 3:
+    if max(arow, acol, bcol) < 100:               # 100 could be changed to other number depending on input size
         return square_matrix_multiply(a, b)
 
     half_arow_ceil = math.ceil(arow / 2)
@@ -67,13 +67,13 @@ def strassen_mutliply(a, b):  # for almost square matrix
     B3 = b[half_brow_ceil + 1:half_brow_ceil + half_brow_floor,
          half_bcol_ceil + 1:half_bcol_ceil + half_bcol_floor]
 
-    T2 = adaptiveminus(B1, B3, half_bcol_ceil, half_bcol_floor)
+    T2 = adaptiveminus(B1, B3, half_brow_ceil, half_bcol_floor)
     M3 = strassen_mutliply(A0, T2)
     C1 = M3
     C3 = adaptiveadd(M3, Matrix([0], 1, 1), half_arow_floor, half_bcol_floor)
 
     T1 = adaptiveminus(A2, A0, half_arow_ceil, half_acol_ceil)
-    T2 = adaptiveadd(B0, B1, half_bcol_ceil, half_bcol_ceil)
+    T2 = adaptiveadd(B0, B1, half_brow_ceil, half_bcol_ceil)
     M6 = strassen_mutliply(T1, T2)
     C3 = adaptiveadd(C3, M6, half_arow_floor, half_bcol_floor)
 
