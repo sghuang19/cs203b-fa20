@@ -12,9 +12,7 @@ This is the report for the project of DSAA course, written by Group 2, with foll
 ---
 
 ## Introduction
-
-Commit Test.
-hhh
+We know that for normal matrix multiplication, the time complexity is \theta(n^3). It use to be though the only way to compute matrix multiplication, but Strassen had found a new way to compute it and faster than normal method with time complexity (n^lg7). In this project, we will relize the Strassen's algorithm and make more discussion about it.
 ---
 
 ## Background
