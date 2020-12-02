@@ -5,6 +5,6 @@ This repo is intended for the project of course DSAA B, 2020 Fall Semester at SU
 Our team members:
 
 - HUANG Guanchao, SID 11912309 from SME
-- ZHENG Shuhan, SID 11712401 form Phy
+- ZHENG Shuhan, SID 11712401 from Phy
 - Li Yuru, SID 11911035 from EIE
-- Tian Yuqiong, SID 11911039 form EIE
+- Tian Yuqiong, SID 11911039 from EIE
