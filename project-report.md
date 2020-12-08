@@ -12,7 +12,6 @@ This is the report for the project of DSAA course, written by Group 2, with foll
 ---
 
 ## Introduction
-We know that for normal matrix multiplication, the time complexity is \theta(n^3). It use to be though the only way to compute matrix multiplication, but Strassen had found a new way to compute it and faster than normal method with time complexity (n^lg7). In this project, we will relize the Strassen's algorithm and make more discussion about it.
 
 Matrix multiplication is a very important property of the matrix. It is used in many field like mathematics, physics, electric and so on. In real life, no matter calculating the path between two place or solving the profit problem of goods, it always be of great use.
 
@@ -24,9 +23,9 @@ n=A.rows
 let C be a new n*n matrix
 for i=1 to n
    for j=1 to n
-      C_(ij)=0
+      Cij=0
       for k=1 to n
-      C_(ij)=C_(ij)+a_(ik)*b_(kj)
+      Cij=Cij+aik*bkj
 return C
 ```
 
