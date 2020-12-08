@@ -13,9 +13,9 @@ This is the report for the project of DSAA course, written by Group 2, with foll
 
 ## Introduction
 
-Matrix multiplication is a very important property of the matrix. It is used in many field like mathematics, physics, electric and so on. In real life, no matter calculating the path between two place or solving the profit problem of goods, it always be of great use.
+Matrix mltiplication (MM) is a practical application of Linear Algebra. It is used in many fields, including mathematics, physics and electrical engineering (**Cite**). In real life, no matter calculating the path between two place or solving the profit problem of goods, it always be of great use.
 
-Originally people used traditional matrix multiplication which was called Obvious matrix multiplication to calculate the product of two matrices. It's pseudocode is 
+Previously, people used traditional matrix multiplication, which was based on the definition of MM, to calculate the product of two matrices. It's pseudocode is 
 
 ```python
 SQUARE MATRIX MULTIPLY(A,B)
@@ -29,9 +29,9 @@ for i=1 to n
 return C
 ```
 
-From the pseudocode we can see that it contains three circulations. Therefore, we can calculate it's time complexity which is \Theta(n^3), where n is the length of the square matrix. We can see that the time complexity of traditional method is large. Hence, since the extensive of matrix multiplication, how to optimize the operation of matrix multiplication becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in matrix multiplication is a major optimized direction.
+From the pseudocode, we can see that the algorithm contains three circulations. Therefore, we can calculate it's time complexity which is \Theta(n^3), where n is the length of the square matrix. The time complexity of traditional method is large. Hence, since the extensive of MM, how to optimize the operation of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in MM is a major optimized direction.
 
-The earliest matrix multiplication optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm. It's main idea is to replace multiplication by addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms. For a two order square matrix, the pseudocode of Strassen's algorithm is 
+The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm (**Cite**). It's main idea is to replace multiplication by addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms. For a two order square matrix, the pseudocode of Strassen's algorithm is 
 
 ```python
 Strassen(A,B)
@@ -61,7 +61,7 @@ return C
 
 For Strassen algorithm, we can calculate the time complexity is O(n^(\lg7)). For a two order matrix multiplication, we need to spend 8*(2^3) with Obvious matrix multiplication algorithm but we just need 7*(2^(\lg7)) by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
 
-After Strassen came up with this algorithm, more and more optimized algrithms were proposed by different people. But in this project, we just pay more attention to the Strassen algorithm.We will apply it to higher order matrix multiplication and talk about more details about it.
+After Strassen came up with this algorithm, more and more optimized algrithms were proposed by different people (**Cite**). But in this project, we will focus on the Strassen algorithm. We will apply it to higher order matrix multiplication and discuss more details about it.
 
 ---
 
