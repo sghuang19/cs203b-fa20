@@ -29,7 +29,7 @@ for i=1 to n
 return C
 ```
 
-From the pseudocode, we can see that the algorithm contains three circulations. Therefore, we can calculate it's time complexity which is \Theta(n^3), where n is the length of the square matrix. The time complexity of traditional method is large. Hence, since the extensive of MM, how to optimize the operation of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in MM is a major optimized direction.
+According to the pseudocode, the algorithm contains three circulations. Therefore, the time complexity which is \Theta(n^3), where n is the length of the square matrix. The time complexity of traditional method is large. Hence, since the extensive application of MM, how to optimize the operation of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in MM is a major optimized direction.
 
 The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm (**Cite**). It's main idea is to replace multiplication by addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms. For a two order square matrix, the pseudocode of Strassen's algorithm is 
 
@@ -59,7 +59,7 @@ C22=P5+P1-P3-P7
 return C
 ```
 
-For Strassen algorithm, we can calculate the time complexity is O(n^(\lg7)). For a two order matrix multiplication, we need to spend 8*(2^3) with Obvious matrix multiplication algorithm but we just need 7*(2^(\lg7)) by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
+For Strassen algorithm, the time complexity is O(n^(\lg7)). For a two order matrix multiplication, we need to spend 8*(2^3) with Obvious matrix multiplication algorithm but we just need 7*(2^(\lg7)) by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
 
 After Strassen came up with this algorithm, more and more optimized algrithms were proposed by different people (**Cite**). But in this project, we will focus on the Strassen algorithm. We will apply it to higher order matrix multiplication and discuss more details about it.
 
@@ -87,10 +87,10 @@ Uses an abstract model to estimate the crossover point analytically. You can pro
 
 ## Methodology
 
-<!-- in which you explain Strassens Algorithm, standard matrix multiplication and give pseudocode and further explanation. Include your runtime analysis from Part 2 here. -->
+<!-- in which you explain Strassen Algorithm, standard matrix multiplication and give pseudocode and further explanation. Include your runtime analysis from Part 2 here. -->
 
 <!-- TODO -->
-the strassens Algorithm can make the running time of matrix multiplication lower by replacing one separated matrix multiplication with several new matrix additions. The pseudocode for Strassens method can be written as follows:
+The Strassens Algorithm can significantly reduce the running time of matrix multiplication lower by replacing one separated matrix multiplication with several new matrix additions. The pseudocode for Strassens method can be written as follows:
 Strassen(A,B)
 S1=B12-B22
 S2=A11-A12
@@ -115,7 +115,7 @@ C21=P3+P4
 C22=P5+P1-P3-P7
 return C
 
-From the recurrence we can know that the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When n is very large, the time is a lot smaller than the standard matrix multiplication.
+According to the recurrence relation, the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When n is very large, the time is significantly lower than the standard matrix multiplication.
 
 For the standard matrix multiplication, the running time is about n^3, and the pseudocode is given below:
 SQUARE MATRIX MULTIPLY(A,B)
