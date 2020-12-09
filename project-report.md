@@ -29,7 +29,7 @@ for i=1 to n
 return C
 ```
 
-According to the pseudocode, the algorithm contains three circulations. Therefore, the time complexity which is \Theta(n^3), where n is the length of the square matrix. The time complexity of traditional method is large. Hence, since the extensive application of MM, how to optimize the operation of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in MM is a major optimized direction.
+According to the pseudocode, the algorithm contains three circulations. Concretely, $C_{ij}=A_{ik}B_{kj}$, each index ($i,j,k$) runs from 1 to $n$. Therefore, the time complexity is $\Theta(n^3)$, where $n$ is the length of the square matrix. The time complexity of traditional method is large. Hence, since the extensive application of MM, how to optimize the operation of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in MM is a major optimized direction.
 
 The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm (**Cite**). It's main idea is to replace multiplication by addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms. For a two order square matrix, the pseudocode of Strassen's algorithm is 
 
@@ -115,7 +115,7 @@ C21=P3+P4
 C22=P5+P1-P3-P7
 return C
 
-According to the recurrence relation, the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When n is very large, the time is significantly lower than the standard matrix multiplication.
+According to the recurrence relation, the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
 
 For the standard matrix multiplication, the running time is about n^3, and the pseudocode is given below:
 SQUARE MATRIX MULTIPLY(A,B)
