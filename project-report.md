@@ -74,7 +74,8 @@ A 1-page summary of the contributions of the paper in [1]. Discuss why the autho
 -->
 
 <!-- TODO -->
-the writers of the paper provided, Paolo D'Alberto and Alexandru Nicolau talked about and easy-to-use adaptive algorithm which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS.The
+the writers of the paper provided, Paolo D'Alberto and Alexandru Nicolau talked about and easy-to-use adaptive algorithm which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS. The Strassen's algorithm has decreased the running time of matrix multiplication significantly, by replacing one descrete matrix multiplication with several matrix additions. However, for
+modern architectures with complex memory hierarchies, the matrix additions have a limited in-cache data reuse and thus poor memory-hierarchy utilization. The first benefit writers listed is their algorithm divides the MM problems into a set of balanced subproblems without any matrix padding or peelingIn addition;Second, their  algorithm applies Strassen’s strategy recursively as many time as a function of the problem size.Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The writers' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm.
 ---
 
 ## Theoretical Analysis
