@@ -93,7 +93,7 @@ Uses an abstract model to estimate the crossover point analytically. You can pro
 
 <!-- TODO -->
 
-Compare to the Obvious matrix multiplication, The Strassens Algorithm replace matrix multiplying with matrix into the matrix addition. In this algorithm, the operated matries are divided into some submatries and define some other submatries to be the basic operated matries which are calculated by the addtion or subtraction of those submatries divided from the operated matries. Then repeat these procedure on all submatries and get the result submatries which we define as "P". Then get the submatries of the product of the original operated matries. Finally add all these submatries to get the result.
+Compare to the Obvious matrix multiplication, The Strassens Algorithm replace matrix multiplying with matrix into the matrix addition. In this algorithm, the operated matrices are divided into some submatries and define some other submatrices to be the basic operated matrices which are calculated by the addtion or subtraction of those submatrices divided from the operated matrices. Then repeat these procedure on all submatrices and get the result submatrices which we define as "P". Then get the submatrices of the product of the original operated matrices. Finally add all these submatrices to get the result.
 Since the Strassens Algorithm replace the one separated matrix multiplication with several new matrix additions. It can significantly reduce the running time of matrix multiplication lower. The pseudocode for Strassens method used in two-ordered matrix can be written as follows:
 
 ```python
@@ -122,9 +122,29 @@ C22=P5+P1-P3-P7
 return C
 ```
 
-According to the recurrence relation, the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
+For Strassen's method, make the recursion tree less bushy. Perform only 7 recursive multiplications of $(n/2)\times(n/2)$ matrices, rather than 8 for divide and conquer algorithm. Since it divide the operated matrices into submatrices, it will cost several additions of $(n/2)\times(n/2)$ matrices, but just a constant number more which can still absorb the constant factor for matrix addition into the $\Theta(n/2)$ term.
 
-For the standard matrix multiplication, the running time is about n^3, and the pseudocode is given below:
+For this algorithm:
+First, as in the recursive method, partition each of the matrices into four $(n/2)\times(n/2) $ submatrices. The time is $\Theta(1)$.
+
+Second, create 10 matrices $S_1$,$S_2$,...,$S_10$. Each is $(n/2) \times (n/2)$ and is the sum or difference of two matrices created in previous step. The time is $\Theta(n^2)$ to create all 10 matrices.
+
+Third, recursively compute 7 matrix products $P_1$, $P_2$,..., $P_7$, each equals to $(n/2) \times (n/2)$.
+
+Last, compute $(n/2)\times(n/2)$ submatrices of C by adding and subtracting various combinations of the $P_i$. The time is $\Theta(n^2)$.
+
+Hence, the recurrence will be
+
+$$
+T(n) =
+\begin{cases}
+\Theta(1) \quad & \text{if}\, n = 1 \\
+7T(n/2) + \Theta(n^2) \quad & \text{if}\, n > 1
+\end{cases}
+$$
+By the master method, since $n^(\log_ba)$ = $n^(\log_27)$ = $n^(\lg7)$ is larger than $f(n)$ which equals to $n^2$, hence for case one of master method, the solution is $T(n) = \Theta(n^(\lg7))$.
+
+For the standard matrix multiplication, the pseudocode is given below:
 
 ```python
 SQUARE MATRIX MULTIPLY(A,B)
@@ -138,6 +158,10 @@ for i=1 to n
 return C
 ```
 
+As we can see, this method contains three circulations. Therefore,the running time is about $n^3$
+
+Compare to these two method, we can see that when $n$ is very large, the time of Strassen's algorithm is significantly lower than the time of standard matrix multiplication.
+
 ---
 
 ## Experiment Design
@@ -145,7 +169,7 @@ return C
 <!-- describes your implementation of the two algorithms and the way you generate test problems (ie matrices to multiply). -->
 
 <!-- TODO -->
-
+ 
 ---
 
 ## Empirical Analysis
