@@ -175,6 +175,28 @@ Compare to these two method, we can see that when $n$ is very large, the time of
 
 <!-- TODO -->
  
+### Class `Matrix`
+
+#### Data Storage
+
+#### Indexing
+
+#### Operators Override
+
+#### Other Operations
+
+### Function `random_matrix_gen()`
+
+### Function `adaptive_add()` and `adaptive_minus()`
+
+### Function `square_matrix_multiply()`
+
+### Function `strassen_matrix_multiply()`
+
+### Performance Benchmark
+
+### Data Collecting
+
 ---
 
 ## Empirical Analysis
