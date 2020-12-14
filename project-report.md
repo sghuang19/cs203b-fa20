@@ -74,8 +74,9 @@ A 1-page summary of the contributions of the paper in [1]. Discuss why the autho
 -->
 
 <!-- TODO -->
-the writers of the paper provided, Paolo D'Alberto and Alexandru Nicolau talked about and easy-to-use adaptive algorithm which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS. The Strassen's algorithm has decreased the running time of matrix multiplication significantly, by replacing one descrete matrix multiplication with several matrix additions. However, for
-modern architectures with complex memory hierarchies, the matrix additions have a limited in-cache data reuse and thus poor memory-hierarchy utilization. The first benefit writers listed is their algorithm divides the MM problems into a set of balanced subproblems without any matrix padding or peelingIn addition;Second, their  algorithm applies Strassen’s strategy recursively as many time as a function of the problem size.Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The writers' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm.
+
+the writers of the paper provided, Paolo D'Alberto and Alexandru Nicolau talked about and easy-to-use adaptive algorithm which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS. The Strassen's algorithm has decreased the running time of matrix multiplication significantly, by replacing one descrete matrix multiplication with several matrix additions. However, for modern architectures with complex memory hierarchies, the matrix additions have a limited in-cache data reuse and thus poor memory-hierarchy utilization. The first benefit writers listed is their algorithm divides the MM problems into a set of balanced subproblems without any matrix padding or peelingIn addition;Second, their  algorithm applies Strassen’s strategy recursively as many time as a function of the problem size.Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The writers' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm.
+
 ---
 
 ## Theoretical Analysis
@@ -93,7 +94,11 @@ Uses an abstract model to estimate the crossover point analytically. You can pro
 <!-- in which you explain Strassen Algorithm, standard matrix multiplication and give pseudocode and further explanation. Include your runtime analysis from Part 2 here. -->
 
 <!-- TODO -->
-The Strassens Algorithm can significantly reduce the running time of matrix multiplication lower by replacing one separated matrix multiplication with several new matrix additions. The pseudocode for Strassens method can be written as follows:
+
+Compare to the Obvious matrix multiplication, The Strassens Algorithm replace matrix multiplying with matrix into the matrix addition. In this algorithm, the operated matries are divided into some submatries and define some other submatries to be the basic operated matries which are calculated by the addtion or subtraction of those submatries divided from the operated matries. Then repeat these procedure on all submatries and get the result submatries which we define as "P". Then get the submatries of the product of the original operated matries. Finally add all these submatries to get the result.
+Since the Strassens Algorithm replace the one separated matrix multiplication with several new matrix additions. It can significantly reduce the running time of matrix multiplication lower. The pseudocode for Strassens method used in two-ordered matrix can be written as follows:
+
+```python
 Strassen(A,B)
 S1=B12-B22
 S2=A11-A12
@@ -117,10 +122,13 @@ C12=P1+P2
 C21=P3+P4
 C22=P5+P1-P3-P7
 return C
+```
 
 According to the recurrence relation, the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
 
 For the standard matrix multiplication, the running time is about n^3, and the pseudocode is given below:
+
+```python
 SQUARE MATRIX MULTIPLY(A,B)
 n=A.rows
 let C be a new n*n matrix
@@ -130,6 +138,7 @@ for i=1 to n
       for k=1 to n
       Cij=Cij+aik*bkj
 return C
+```
 
 ---
 
