@@ -151,6 +151,28 @@ return C
 
 <!-- TODO -->
 
+### Class `Matrix`
+
+#### Data Storage
+
+#### Indexing
+
+#### Operators Override
+
+#### Other Operations
+
+### Function `random_matrix_gen()`
+
+### Function `adaptive_add()` and `adaptive_minus()`
+
+### Function `square_matrix_multiply()`
+
+### Function `strassen_matrix_multiply()`
+
+### Performance Benchmark
+
+### Data Collecting
+
 ---
 
 ## Empirical Analysis
@@ -158,6 +180,35 @@ return C
 <!-- provides your results of parts 3 and 4 evaluating the adaptive method for matrix multiplication, Strassen’s algorithm, and the basic method. You should use [1] as an example of the type of results you should put in this section (tables, graphs, type of discussion) because when marking will expect to see graphs and results that are of comparable quality to this and measure similar quantities. -->
 
 <!-- TODO -->
+
+The specifications of our testing platform is as follows:
+
+- Hardware
+- Software
+
+Special thanks to SUN Jiachen, for providing us with this powerful testing platform.
+
+<!-- TODO: add platform info -->
+
+### Preparation
+
+Firstly, we run the performance benchmark, to figure out the run time of `float` addition and `float` multiplication. We tested 1,000,000 (1 million) additions and multiplications, the total runtime is shown below.
+
+| Floating point addition | Floating point multiplication |       Ratio       |
+| :---------------------: | :---------------------------: | :---------------: |
+|   0.09375667572021484   |   0.07808113009113098144531   | 0.832806085447587 |
+
+Which is obvious a questionable result, since the runtime for addition cannot be longer than multiplication.
+
+### Crossover Point Test
+
+In this experiment, the larger size of the matrices is, the more convincing the result is. However, too large matrices would lead to unacceptable runtime for a single test. After doing several brief test on multiplication of different matrices size, taking the pace of our work into consideration, we chose 512 by 512 matrices for finding the crossover point.
+
+<!-- TODO: add runtime -->
+
+In all, are done, with a total runtime of. The complete testing result in `.xlsx` format can be retrieved at.
+
+<!-- TODO: add links -->
 
 ---
 
