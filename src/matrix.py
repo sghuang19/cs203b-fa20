@@ -29,6 +29,7 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
 
     :type a: Matrix
     :type b: Matrix
+    :type n: int
     :return: Matrix
     """
     arow = a.row
@@ -39,7 +40,9 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
         print("Unmatched matrix size")
         return
 
-    if max(arow, acol, bcol) < 100:               # 100 could be changed to other number depending on input size
+    if n is None:
+        n = 20
+    if max(arow, acol, bcol) < n:  # 100 could be changed to other number depending on input size
         return square_matrix_multiply(a, b)
 
     half_arow_ceil = math.ceil(arow / 2)
