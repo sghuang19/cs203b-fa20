@@ -23,7 +23,7 @@ def square_matrix_multiply(a, b):
     return c
 
 
-def strassen_mutliply(a, b):  # for almost square matrix
+def strassen_multiply(a, b, n=None):  # for almost square matrix
     """
     Use the Strassen to multiply 2 matrices a and b, return their product.
 
@@ -68,38 +68,38 @@ def strassen_mutliply(a, b):  # for almost square matrix
          half_bcol_ceil + 1:half_bcol_ceil + half_bcol_floor]
 
     T2 = adaptiveminus(B1, B3, half_brow_ceil, half_bcol_floor)
-    M3 = strassen_mutliply(A0, T2)
+    M3 = strassen_multiply(A0, T2)
     C1 = M3
     C3 = adaptiveadd(M3, Matrix([0], 1, 1), half_arow_floor, half_bcol_floor)
 
     T1 = adaptiveminus(A2, A0, half_arow_ceil, half_acol_ceil)
     T2 = adaptiveadd(B0, B1, half_brow_ceil, half_bcol_ceil)
-    M6 = strassen_mutliply(T1, T2)
+    M6 = strassen_multiply(T1, T2)
     C3 = adaptiveadd(C3, M6, half_arow_floor, half_bcol_floor)
 
     T1 = adaptiveadd(A2, A3, half_arow_floor, half_acol_ceil)
-    M2 = strassen_mutliply(T1, B0)
+    M2 = strassen_multiply(T1, B0)
     C2 = M2
     C3 = adaptiveminus(C3, M2, half_arow_floor, half_bcol_floor)
 
     T1 = adaptiveadd(A0, A3, half_arow_ceil, half_acol_ceil)
     T2 = adaptiveadd(B0, B3, half_brow_ceil, half_bcol_ceil)
-    M1 = strassen_mutliply(T1, T2)
+    M1 = strassen_multiply(T1, T2)
     C0 = M1
     C3 = adaptiveadd(C3, M1, half_arow_floor, half_bcol_floor)
 
     T1 = adaptiveadd(A0, A1, half_arow_ceil, half_acol_floor)
-    M5 = strassen_mutliply(T1, B3)
+    M5 = strassen_multiply(T1, B3)
     C0 = adaptiveminus(C0, M5, half_arow_ceil, half_bcol_ceil)
     C1 = adaptiveadd(C1, M5, half_arow_ceil, half_bcol_floor)
 
     T1 = adaptiveminus(A1, A3, half_arow_ceil, half_acol_floor)
     T2 = adaptiveadd(B2, B3, half_brow_floor, half_bcol_ceil)
-    M7 = strassen_mutliply(T1, T2)
+    M7 = strassen_multiply(T1, T2)
     C0 = adaptiveadd(C0, M7, half_arow_ceil, half_bcol_ceil)
 
     T2 = adaptiveminus(B2, B0, half_brow_floor, half_bcol_ceil)
-    M4 = strassen_mutliply(A3, T2)
+    M4 = strassen_multiply(A3, T2)
     C0 = adaptiveadd(C0, M4, half_arow_ceil, half_bcol_ceil)
     C2 = adaptiveadd(C2, M4, half_arow_floor, half_bcol_ceil)
 
