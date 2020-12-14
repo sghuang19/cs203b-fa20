@@ -2,7 +2,7 @@ from matrix import *
 import time
 import random
 
-n = 10000
+n = 100000000000
 
 m1 = random_matrix_gen(n)
 m2 = random_matrix_gen(n)
