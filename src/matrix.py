@@ -55,7 +55,7 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
         return
 
     if n is None:
-        n = 20
+        n = 46
     if max(arow, acol, bcol) < n:  # 100 could be changed to other number depending on input size
         return square_matrix_multiply(a, b)
 
