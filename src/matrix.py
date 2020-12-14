@@ -1,20 +1,5 @@
 import exceptions
 import math
-import random
-
-
-def random_matrix_gen(n):
-    """
-    Generates a random matrix of size n by n, the elements are randomly from -1 to 1 float number.
-    :param n: the size of the matrix
-    :type n: int
-    :return: The generated random matrix
-    :rtype Matrix
-    """
-    elements = []
-    for i in range(n * n):
-        elements.append(random.uniform(-1, 1))
-    return Matrix(elements, n, n)
 
 
 def square_matrix_multiply(a, b):
@@ -23,8 +8,7 @@ def square_matrix_multiply(a, b):
 
     :type a: Matrix
     :type b: Matrix
-    :return: The product
-    :rtype Matrix
+    :return: Matrix
     """
     if a.col != b.row:
         print("Unmatched matrix size")
@@ -39,15 +23,13 @@ def square_matrix_multiply(a, b):
     return c
 
 
-def strassen_multiply(a, b, n=None):  # for almost square matrix
+def strassen_mutliply(a, b):  # for almost square matrix
     """
     Use the Strassen to multiply 2 matrices a and b, return their product.
 
     :type a: Matrix
     :type b: Matrix
-    :type n: int
-    :return: the product
-    :rtype Matrix
+    :return: Matrix
     """
     arow = a.row
     acol = a.col
@@ -57,9 +39,7 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
         print("Unmatched matrix size")
         return
 
-    if n is None:
-        n = 46
-    if max(arow, acol, bcol) < n:  # 100 could be changed to other number depending on input size
+    if max(arow, acol, bcol) < 100:               # 100 could be changed to other number depending on input size
         return square_matrix_multiply(a, b)
 
     half_arow_ceil = math.ceil(arow / 2)
@@ -87,41 +67,41 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
     B3 = b[half_brow_ceil + 1:half_brow_ceil + half_brow_floor,
          half_bcol_ceil + 1:half_bcol_ceil + half_bcol_floor]
 
-    T2 = adaptive_minus(B1, B3, half_brow_ceil, half_bcol_floor)
-    M3 = strassen_multiply(A0, T2)
+    T2 = adaptiveminus(B1, B3, half_brow_ceil, half_bcol_floor)
+    M3 = strassen_mutliply(A0, T2)
     C1 = M3
-    C3 = adaptive_add(M3, Matrix([0], 1, 1), half_arow_floor, half_bcol_floor)
+    C3 = adaptiveadd(M3, Matrix([0], 1, 1), half_arow_floor, half_bcol_floor)
 
-    T1 = adaptive_minus(A2, A0, half_arow_ceil, half_acol_ceil)
-    T2 = adaptive_add(B0, B1, half_brow_ceil, half_bcol_ceil)
-    M6 = strassen_multiply(T1, T2)
-    C3 = adaptive_add(C3, M6, half_arow_floor, half_bcol_floor)
+    T1 = adaptiveminus(A2, A0, half_arow_ceil, half_acol_ceil)
+    T2 = adaptiveadd(B0, B1, half_brow_ceil, half_bcol_ceil)
+    M6 = strassen_mutliply(T1, T2)
+    C3 = adaptiveadd(C3, M6, half_arow_floor, half_bcol_floor)
 
-    T1 = adaptive_add(A2, A3, half_arow_floor, half_acol_ceil)
-    M2 = strassen_multiply(T1, B0)
+    T1 = adaptiveadd(A2, A3, half_arow_floor, half_acol_ceil)
+    M2 = strassen_mutliply(T1, B0)
     C2 = M2
-    C3 = adaptive_minus(C3, M2, half_arow_floor, half_bcol_floor)
+    C3 = adaptiveminus(C3, M2, half_arow_floor, half_bcol_floor)
 
-    T1 = adaptive_add(A0, A3, half_arow_ceil, half_acol_ceil)
-    T2 = adaptive_add(B0, B3, half_brow_ceil, half_bcol_ceil)
-    M1 = strassen_multiply(T1, T2)
+    T1 = adaptiveadd(A0, A3, half_arow_ceil, half_acol_ceil)
+    T2 = adaptiveadd(B0, B3, half_brow_ceil, half_bcol_ceil)
+    M1 = strassen_mutliply(T1, T2)
     C0 = M1
-    C3 = adaptive_add(C3, M1, half_arow_floor, half_bcol_floor)
+    C3 = adaptiveadd(C3, M1, half_arow_floor, half_bcol_floor)
 
-    T1 = adaptive_add(A0, A1, half_arow_ceil, half_acol_floor)
-    M5 = strassen_multiply(T1, B3)
-    C0 = adaptive_minus(C0, M5, half_arow_ceil, half_bcol_ceil)
-    C1 = adaptive_add(C1, M5, half_arow_ceil, half_bcol_floor)
+    T1 = adaptiveadd(A0, A1, half_arow_ceil, half_acol_floor)
+    M5 = strassen_mutliply(T1, B3)
+    C0 = adaptiveminus(C0, M5, half_arow_ceil, half_bcol_ceil)
+    C1 = adaptiveadd(C1, M5, half_arow_ceil, half_bcol_floor)
 
-    T1 = adaptive_minus(A1, A3, half_arow_ceil, half_acol_floor)
-    T2 = adaptive_add(B2, B3, half_brow_floor, half_bcol_ceil)
-    M7 = strassen_multiply(T1, T2)
-    C0 = adaptive_add(C0, M7, half_arow_ceil, half_bcol_ceil)
+    T1 = adaptiveminus(A1, A3, half_arow_ceil, half_acol_floor)
+    T2 = adaptiveadd(B2, B3, half_brow_floor, half_bcol_ceil)
+    M7 = strassen_mutliply(T1, T2)
+    C0 = adaptiveadd(C0, M7, half_arow_ceil, half_bcol_ceil)
 
-    T2 = adaptive_minus(B2, B0, half_brow_floor, half_bcol_ceil)
-    M4 = strassen_multiply(A3, T2)
-    C0 = adaptive_add(C0, M4, half_arow_ceil, half_bcol_ceil)
-    C2 = adaptive_add(C2, M4, half_arow_floor, half_bcol_ceil)
+    T2 = adaptiveminus(B2, B0, half_brow_floor, half_bcol_ceil)
+    M4 = strassen_mutliply(A3, T2)
+    C0 = adaptiveadd(C0, M4, half_arow_ceil, half_bcol_ceil)
+    C2 = adaptiveadd(C2, M4, half_arow_floor, half_bcol_ceil)
 
     s = []
     for i in range(C0.row):
@@ -134,16 +114,15 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
     return c
 
 
-def adaptive_add(a, b, target_row, target_col):
+def adaptiveadd(a, b, target_row, target_col):
     """
-    Given target matrix size, perform adaptive matrix addition
-    :type a: Matrix
-    :type b: Matrix
-    :type target_col: Integer
-    :type target_row: Integer
-    :return the sum
-    :rtype Matrix
-    """
+        Given target matrix size, perform adaptive matrix addition
+        :type a: Matrix
+        :type b: Matrix
+        :type target_col: Integer
+        :type target_row: Integer
+        :return: Matrix
+        """
     arow = a.row
     acol = a.col
     brow = b.row
@@ -164,15 +143,15 @@ def adaptive_add(a, b, target_row, target_col):
     return c
 
 
-def adaptive_minus(a, b, target_row, target_col):
+def adaptiveminus(a, b, target_row, target_col):
     """
-    Given target matrix size, perform adaptive matrix subtraction
-    :type a: Matrix
-    :type b: Matrix
-    :type target_col: Integer
-    :type target_row: Integer
-    :return: Matrix
-    """
+        Given target matrix size, perform adaptive matrix subtraction
+        :type a: Matrix
+        :type b: Matrix
+        :type target_col: Integer
+        :type target_row: Integer
+        :return: Matrix
+        """
     arow = a.row
     acol = a.col
     brow = b.row
