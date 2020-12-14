@@ -2,6 +2,22 @@
 import exceptions
 import math
 
+import random
+
+
+def random_matrix_gen(n):
+    """
+    Generates a random matrix of size n by n, the elements are randomly from -1 to 1 float number.
+    :param n: the size of the matrix
+    :type n: int
+    :return: The generated random matrix
+    :rtype Matrix
+    """
+    elements = []
+    for i in range(n * n):
+        elements.append(random.uniform(-1, 1))
+    return Matrix(elements, n, n)
+
 
 def square_matrix_multiply(a, b):
     """
