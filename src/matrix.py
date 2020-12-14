@@ -23,7 +23,8 @@ def square_matrix_multiply(a, b):
 
     :type a: Matrix
     :type b: Matrix
-    :return: Matrix
+    :return: The product
+    :rtype Matrix
     """
     if a.col != b.row:
         print("Unmatched matrix size")
@@ -37,6 +38,7 @@ def square_matrix_multiply(a, b):
     c = Matrix(s, a.row, b.col)
     return c
 
+
 def strassen_multiply(a, b, n=None):  # for almost square matrix
     """
     Use the Strassen to multiply 2 matrices a and b, return their product.
@@ -44,7 +46,8 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
     :type a: Matrix
     :type b: Matrix
     :type n: int
-    :return: Matrix
+    :return: the product
+    :rtype Matrix
     """
     arow = a.row
     acol = a.col
@@ -133,13 +136,14 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
 
 def adaptive_add(a, b, target_row, target_col):
     """
-        Given target matrix size, perform adaptive matrix addition
-        :type a: Matrix
-        :type b: Matrix
-        :type target_col: Integer
-        :type target_row: Integer
-        :return: Matrix
-        """
+    Given target matrix size, perform adaptive matrix addition
+    :type a: Matrix
+    :type b: Matrix
+    :type target_col: Integer
+    :type target_row: Integer
+    :return the sum
+    :rtype Matrix
+    """
     arow = a.row
     acol = a.col
     brow = b.row
@@ -162,13 +166,13 @@ def adaptive_add(a, b, target_row, target_col):
 
 def adaptive_minus(a, b, target_row, target_col):
     """
-        Given target matrix size, perform adaptive matrix subtraction
-        :type a: Matrix
-        :type b: Matrix
-        :type target_col: Integer
-        :type target_row: Integer
-        :return: Matrix
-        """
+    Given target matrix size, perform adaptive matrix subtraction
+    :type a: Matrix
+    :type b: Matrix
+    :type target_col: Integer
+    :type target_row: Integer
+    :return: Matrix
+    """
     arow = a.row
     acol = a.col
     brow = b.row
