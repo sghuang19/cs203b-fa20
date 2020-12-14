@@ -30,6 +30,8 @@ Some useful resources.
 
 [python自定义异常](https://www.jianshu.com/p/251fe443723d)
 
+[Python性能分析](https://www.jianshu.com/p/a82620a9e1ef)
+
 ### On Markdown
 
 ### Others
