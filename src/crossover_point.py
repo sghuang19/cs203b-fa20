@@ -8,15 +8,21 @@ s = 1
 e = 64
 r = 2
 
+print("Matrix generation starts")
+
 elements = []
 for i in range(n * n):
     elements.append(random.uniform(-1, 1))
 m1 = Matrix(elements, n, n)
+print("Matrix 1 generated")
 
 elements = []
 for i in range(n * n):
     elements.append(random.uniform(-1, 1))
 m2 = Matrix(elements, n, n)
+print("Matrix 2 generated")
+
+del elements
 
 wb = openpyxl.load_workbook('data.xlsx')
 print("workbook", wb.sheetnames, "loaded")
@@ -32,7 +38,7 @@ for i in range(s, e + 1):
         print("test ", j)
 
         time1 = time.time()
-        c = strassen_multiply(m1, m2)
+        c = strassen_multiply(m1, m2, i)
         time2 = time.time()
         print("The run time of Strassen's method is", time2 - time1)
         strassen = time2 - time1 + strassen
