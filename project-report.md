@@ -215,11 +215,61 @@ print(time2 - time1)
 
 Similarly, the test for multiplication is written in another module, so that we can utilize analyzer provided by Visual Studio or PyCharm to evaluate the performance.
 
+### Crossover Point Searching
 
-print("the ratio of alpha and pi is ", pi / alpha)
+For searching for the crossover point, we used `openpyxl` package to collect the data in Excel file. In the script, `n` is the matrix size we consider, `s` is the start point for searching, `e` is accordingly the end point, `r` means for each recursion point, tests are conducted twice and take average.
+
+```python
+from matrix import square_matrix_multiply, strassen_multiply
+import time
+import openpyxl
+
+n = 512
+s = 1
+e = 64
+r = 2
+
+print("Matrix generation starts")
+m1 = random_matrix_gen(n)
+print("Matrix 1 generated")
+m2 = random_matrix_gen(n)
+print("Matrix 2 generated")
+
+wb = openpyxl.load_workbook('data.xlsx')
+print("workbook", wb.sheetnames, "loaded")
+ws = wb['crossover_point']
+
+for i in range(s, e + 1):
+    strassen = 0
+    square = 0
+    ws['A' + str(i)] = i
+    print("The recursion point is set to be ", i)
+
+    for j in range(1, r + 1):
+        print("test ", j)
+
+        time1 = time.time()
+        c = strassen_multiply(m1, m2, i)
+        time2 = time.time()
+        print("The run time of Strassen's method is", time2 - time1)
+        strassen = time2 - time1 + strassen
+
+        time1 = time.time()
+        c1 = square_matrix_multiply(m1, m2)
+        time2 = time.time()
+        print("The run time of brutal method is", time2 - time1)
+        square = time2 - time1 + square
+
+    print("average strassen", strassen / r)
+    ws['B' + str(i)] = strassen / r
+    print("average square", square / r)
+    ws['C' + str(i)] = square / r
+    print("==========")
+
+wb.save('data.xlsx')
 ```
 
-### Data Collecting
+To make the condition as close as possible, `square_matrix_multiply()` is executed again every time `strassen_matrix_multiply()` runs in the loop, even theoretically the recursion point has no affect on the run time of `square_matrix_multiply()`.
 
 ---
 
