@@ -243,15 +243,15 @@ Some other lightweight tests are conducted on our own platform Surface Pro 6, th
 
 ### Preparation
 
-Firstly, we run the performance benchmark, to figure out the run time of `float` addition and `float` multiplication. We tested 1,000,000 (1 million) additions and multiplications, the total runtime is shown below.
+Firstly, we run the performance benchmark, to figure out the run time of `float` addition and `float` multiplication.
 
-| Floating point addition | Floating point multiplication |       Ratio       |
-| :---------------------: | :---------------------------: | :---------------: |
-|   0.09375667572021484   |   0.07808113009113098144531   | 0.832806085447587 |
+ We tested the additions and multiplications between the elements of two matrices of size 8192 by 8192, in total $2^26$, which is the total runtime is shown below.
 
-Which is obvious a questionable result, since the runtime for addition cannot be longer than multiplication.
+|     Addition      |  Multiplication   | Ratio $\alpha/\pi$ |
+| :---------------: | :---------------: | :----------------: |
+| 89.12498784065247 | 87.74823570251465 | 0.984552568572583  |
 
-### Crossover Point Test
+Which is obviously an absurd result, since generally, the runtime for addition cannot be longer than multiplication. In this case, the ratio is of sheds no light on the estimation of crossover point.
 
 In this experiment, the larger size of the matrices is, the more convincing the result is. However, too large matrices would lead to unacceptable runtime for a single test. After doing several brief test on multiplication of different matrices size, taking the pace of our work into consideration, we chose 512 by 512 matrices for finding the crossover point.
 
