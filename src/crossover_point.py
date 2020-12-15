@@ -34,17 +34,19 @@ for i in range(s, e + 1):
         time1 = time.time()
         c = strassen_multiply(m1, m2)
         time2 = time.time()
-        strassen = (time2 - time1 + strassen) / 2
-        print("The run time of Strassen's method is", strassen)
+        print("The run time of Strassen's method is", time2 - time1)
+        strassen = time2 - time1 + strassen
 
         time1 = time.time()
         c1 = square_matrix_multiply(m1, m2)
         time2 = time.time()
-        square = (time2 - time1 + square) / 2
-        print("The run time of brutal method is", square)
+        print("The run time of brutal method is", time2 - time1)
+        square = time2 - time1 + square
 
-    ws['B' + str(i)] = strassen
-    ws['C' + str(i)] = square
+    print("average strassen", strassen / r)
+    ws['B' + str(i)] = strassen / r
+    print("average square", square / r)
+    ws['C' + str(i)] = square / r
     print("==========")
 
 wb.save('data.xlsx')
