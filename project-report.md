@@ -199,24 +199,22 @@ $$
 Therefore, it is natural for us to try to find this ratio by running benchmark, in order to approximate the recursion point. To simulate the real floating point addition and multiplication in MM, we conducted this benchmark by initializing two matrices, and do addition and multiplication by indexing the elements in the matrices.
 
 ```python
+import time
+from matrix import random_matrix_gen
+
 n = 8192
-e1 = random_matrix_gen(n)
-e2 = random_matrix_gen(n)
-print("benchmark starts")
+m1 = random_matrix_gen(n)
+m2 = random_matrix_gen(n)
 
 time1 = time.time()
 for i in range(n * n):
-    s = e1[i] + e2[i]
+    s = m1[i] + m2[i]
 time2 = time.time()
-alpha = time2 - time1
 print(time2 - time1)
+```
 
-time1 = time.time()
-for i in range(n * n):
-    s = e1[i] * e2[i]
-time2 = time.time()
-pi = time2 - time1
-print(time2 - time1)
+Similarly, the test for multiplication is written in another module, so that we can utilize analyzer provided by Visual Studio or PyCharm to evaluate the performance.
+
 
 print("the ratio of alpha and pi is ", pi / alpha)
 ```
