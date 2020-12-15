@@ -3,7 +3,7 @@ import time
 import random
 import openpyxl
 
-n = 20
+n = 128
 s = 35
 e = 45
 
@@ -30,11 +30,13 @@ for i in range(35, 45):
     c = strassen_multiply(m1, m2)
     time2 = time.time()
     print("The run time of Strassen's method is", time2 - time1)
+    ws['B' + str(i)] = time2 - time1
 
     time1 = time.time()
     c1 = square_matrix_multiply(m1, m2)
     time2 = time.time()
     print("The run time of brutal method is", time2 - time1)
+    ws['C' + str(i)] = time2 - time1
 
     print("==========")
 
