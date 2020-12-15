@@ -1,6 +1,5 @@
-from matrix import Matrix, square_matrix_multiply, strassen_multiply
+from matrix import square_matrix_multiply, strassen_multiply, random_matrix_gen
 import time
-import random
 import openpyxl
 
 n = 512
@@ -9,20 +8,10 @@ e = 64
 r = 2
 
 print("Matrix generation starts")
-
-elements = []
-for i in range(n * n):
-    elements.append(random.uniform(-1, 1))
-m1 = Matrix(elements, n, n)
+m1 = random_matrix_gen(n)
 print("Matrix 1 generated")
-
-elements = []
-for i in range(n * n):
-    elements.append(random.uniform(-1, 1))
-m2 = Matrix(elements, n, n)
+m2 = random_matrix_gen(n)
 print("Matrix 2 generated")
-
-del elements
 
 wb = openpyxl.load_workbook('data.xlsx')
 print("workbook", wb.sheetnames, "loaded")
