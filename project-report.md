@@ -181,14 +181,34 @@ return C
 
 <!-- TODO -->
 
-The specifications of our testing platform is as follows:
+### Testing Platform
+
+The specifications of our main testing platform is as follows:
 
 - Hardware
+  - AMD Ryzen 9 3900X, with 12 cores, running at 3.8GHz, **maximum turbo frequency 4.6GHz**
+  - ADATA DDR4 3200MHz 16GB × 4, **running at 2666MHz**, quad channel
+  - Gigabyte X570 Gaming X
 - Software
+  - Windows 10 Professional 20H2
+  - Python 3.7, built in Visual Studio Community 2019
 
 Special thanks to SUN Jiachen, for providing us with this powerful testing platform.
 
 <!-- TODO: add platform info -->
+
+Some other lightweight tests are conducted on our own platform Surface Pro 6, the specifications are shown below.
+
+- Hardware
+  - Surface Pro 6 1796
+  - Intel Core i7-8650U 1.99GHz, running at 2.11GHz, **maximum Turbo frequency 4.2GHz**
+  - 8GB of RAM, dual channel, **running at 1867MHz**
+- Software
+  - Windows 10 Professional 20H2
+  - WSL2, Kali Linux
+  - Python 3.9, running in WSL2
+  - PyCharm 2020.3 Professional Edition
+  - Visual Studio Code, with Pylance engine
 
 ### Preparation
 
