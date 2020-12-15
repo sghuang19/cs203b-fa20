@@ -289,9 +289,11 @@ The specifications of our main testing platform is as follows:
   - Gigabyte X570 Gaming X
 - Software
   - Windows 10 Professional 20H2
-  - Python 3.7, built in Visual Studio Community 2019
+  - Python 3.9.1
+  - PyCharm 2020.3, Professional Edition
+  - Visual Studio Community 2019
 
-Special thanks to SUN Jiachen, for providing us with this powerful testing platform.
+>Special thanks to SUN Jiachen, for providing us with this powerful testing platform.
 
 <!-- TODO: add platform info -->
 
@@ -304,9 +306,10 @@ Some other lightweight tests are conducted on our own platform Surface Pro 6, th
 - Software
   - Windows 10 Professional 20H2
   - WSL2, Kali Linux
-  - Python 3.9, running in WSL2
+  - Python 3.9.1, running in WSL2
   - PyCharm 2020.3 Professional Edition
   - Visual Studio Code, with Pylance engine
+  - Visual Studio Community 2019
 
 ### Preparation
 
