@@ -171,6 +171,37 @@ return C
 
 ### Performance Benchmark
 
+According to Paolo D'Alberto and Alexandru Nicolau, the crossover point (or the recursion point) for square matrices case is expressed as
+
+$$
+n_1 = \frac{\alpha}{\pi}.
+$$
+
+Therefore, it is natural for us to try to find this ratio by running benchmark, in order to approximate the recursion point. To simulate the real floating point addition and multiplication in MM, we conducted this benchmark by initializing two matrices, and do addition and multiplication by indexing the elements in the matrices.
+
+```python
+n = 8192
+e1 = random_matrix_gen(n)
+e2 = random_matrix_gen(n)
+print("benchmark starts")
+
+time1 = time.time()
+for i in range(n * n):
+    s = e1[i] + e2[i]
+time2 = time.time()
+alpha = time2 - time1
+print(time2 - time1)
+
+time1 = time.time()
+for i in range(n * n):
+    s = e1[i] * e2[i]
+time2 = time.time()
+pi = time2 - time1
+print(time2 - time1)
+
+print("the ratio of alpha and pi is ", pi / alpha)
+```
+
 ### Data Collecting
 
 ---
