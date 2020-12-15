@@ -5,6 +5,9 @@ from msvcrt import getch
 
 # n = 8192
 n = 20
+print("press any key to start benchmark")
+getch()
+
 m1 = random_matrix_gen(n)
 print("Matrix 1 generation completed")
 m2 = random_matrix_gen(n)
