@@ -161,8 +161,6 @@ return C
 
 #### Other Operations
 
-### Function `random_matrix_gen()`
-
 ### Function `adaptive_add()` and `adaptive_minus()`
 
 ### Function `square_matrix_multiply()`
