@@ -34,29 +34,29 @@ According to the pseudocode, the algorithm contains three circulations. Concrete
 The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm (**Cite**). It's main idea is to replace multiplication by addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms. For a two order square matrix, the pseudocode of Strassen's algorithm is
 
 ```python
-Strassen(A,B)
-S1 = B12 - B22
-S2 = A11 - A12
-S3 = A21 + A22
-S4 = B21 - B11
-S5 = A11 + A22
-S6 = B11 + B22
-S7 = A12 - A22
-S8 = B21 + B22
-S9 = A11 - A21
-S10 = B11 + B12
-P1 = Strassen(A11,S1)
-P2 = Strassen(A11,B22)
-P3 = Strassen(S3,B11)
-P4 = Strassen(A22,S4)
-P5 = Strassen(S5,S6)
-P6 = Strassen(S7,S8)
-P7 = Strassen(S9,S10)
-C11 = P5 + P4 - P2 + P6
-C12 = P1 + P2
-C21 = P3 + P4
-C22 = P5 + P1 - P3 - P7
-return C
+Strassen(A, B)
+  S1 = B12 - B22
+  S2 = A11 - A12
+  S3 = A21 + A22
+  S4 = B21 - B11
+  S5 = A11 + A22
+  S6 = B11 + B22
+  S7 = A12 - A22
+  S8 = B21 + B22
+  S9 = A11 - A21
+  S10 = B11 + B12
+  P1 = Strassen(A11, S1)
+  P2 = Strassen(A11, B22)
+  P3 = Strassen(S3, B11)
+  P4 = Strassen(A22, S4)
+  P5 = Strassen(S5, S6)
+  P6 = Strassen(S7, S8)
+  P7 = Strassen(S9, S10)
+  C11 = P5 + P4 - P2 + P6
+  C12 = P1 + P2
+  C21 = P3 + P4
+  C22 = P5 + P1 - P3 - P7
+  return C
 ```
 
 For Strassen algorithm, the time complexity is O(n^(\lg7)). For a two order matrix multiplication, we need to spend 8*(2^3) with Obvious matrix multiplication algorithm but we just need 7*(2^(\lg7)) by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
