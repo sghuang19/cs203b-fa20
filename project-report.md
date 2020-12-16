@@ -17,47 +17,9 @@ Matrix mltiplication (MM) is a practical application of Linear Algebra. It is us
 
 Previously, people used traditional matrix multiplication, which was based on the definition of MM, to calculate the product of two matrices. It's pseudocode is
 
-```python
-SQUARE-MATRIX-MULTIPLY(A, B)
-  n = A.rows
-  let C be a new n * n matrix
-  for i = 1 to n
-    for j = 1 to n
-        Cij = 0
-        for k = 1 to n
-        Cij = Cij + aik * bkj
-  return C
-```
-
 According to the pseudocode, the algorithm contains three circulations. Concretely, $C_{ij}=A_{ik}B_{kj}$, each index ($i,j,k$) runs from 1 to $n$. Therefore, the time complexity is $\Theta(n^3)$, where $n$ is the length of the square matrix. The time complexity of traditional method is large. Hence, since the extensive application of MM, how to optimize the operation of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in MM is a major optimized direction.
 
 The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm (**Cite**). It's main idea is to replace multiplication by addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms. For a two order square matrix, the pseudocode of Strassen's algorithm is
-
-```python
-Strassen(A, B)
-  S1 = B12 - B22
-  S2 = A11 - A12
-  S3 = A21 + A22
-  S4 = B21 - B11
-  S5 = A11 + A22
-  S6 = B11 + B22
-  S7 = A12 - A22
-  S8 = B21 + B22
-  S9 = A11 - A21
-  S10 = B11 + B12
-  P1 = Strassen(A11, S1)
-  P2 = Strassen(A11, B22)
-  P3 = Strassen(S3, B11)
-  P4 = Strassen(A22, S4)
-  P5 = Strassen(S5, S6)
-  P6 = Strassen(S7, S8)
-  P7 = Strassen(S9, S10)
-  C11 = P5 + P4 - P2 + P6
-  C12 = P1 + P2
-  C21 = P3 + P4
-  C22 = P5 + P1 - P3 - P7
-  return C
-```
 
 For Strassen algorithm, the time complexity is O(n^(\lg7)). For a two order matrix multiplication, we need to spend 8*(2^3) with Obvious matrix multiplication algorithm but we just need 7*(2^(\lg7)) by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
 
@@ -96,6 +58,12 @@ In conclusion, the adaptive algorithm is based on the Strassen method and have s
 Uses an abstract model to estimate the crossover point analytically. You can provide this based on a review of academic papers and the textbook but make sure you explain it clearly and discuss the structure, constants, assumptions, and limitations of the theoretical model.
 -->
 
+### Time Complexity of Standard Matrix Multiplication
+
+### Time Complexity of Strassen Algorithm
+
+### Crossover Point Estimation
+
 <!-- TODO -->
 
 ---
@@ -106,33 +74,37 @@ Uses an abstract model to estimate the crossover point analytically. You can pro
 
 <!-- TODO -->
 
+### Strassen Algorithm
+
+### Standard Matrix Multiplication
+
 Comparing to the Obvious matrix multiplication, the Strassens Algorithm replaces matrix multiplication into the matrix addition. In this algorithm, the operated matries are divided into some submatries and define some other submatries to be the basic operated matries which are calculated by the addtion or subtraction of those submatries divided from the operated matries. Then repeat these procedures on all submatries and get the resulting submatries which we define as "P". Then get the submatries of the product of the original operated matries. Finally add all these submatries to get the result.
 Since the Strassens Algorithm replaces the one separated matrix multiplication with several new matrix additions. It can significantly reduce the running time of matrix multiplication lower. The pseudocode for Strassens method used in two-ordered matrix can be written as follows:
 
 ```python
-Strassen(A,B)
-S1 = B12 - B22
-S2 = A11 - A12
-S3 = A21 + A22
-S4 = B21 - B11
-S5 = A11 + A22
-S6 = B11 + B22
-S7 = A12 - A22
-S8 = B21 + B22
-S9 = A11 - A21
-S10 = B11 + B12
-P1 = Strassen(A11,S1)
-P2 = Strassen(A11,B22)
-P3 = Strassen(S3,B11)
-P4 = Strassen(A22,S4)
-P5 = Strassen(S5,S6)
-P6 = Strassen(S7,S8)
-P7 = Strassen(S9,S10)
-C11 = P5 + P4 - P2 + P6
-C12 = P1 + P2
-C21 = P3 + P4
-C22 = P5 + P1 - P3 - P7
-return C
+Strassen(A, B)
+    S1 = B12 - B22
+    S2 = A11 - A12
+    S3 = A21 + A22
+    S4 = B21 - B11
+    S5 = A11 + A22
+    S6 = B11 + B22
+    S7 = A12 - A22
+    S8 = B21 + B22
+    S9 = A11 - A21
+    S10 = B11 + B12
+    P1 = Strassen(A11, S1)
+    P2 = Strassen(A11, B22)
+    P3 = Strassen(S3, B11)
+    P4 = Strassen(A22, S4)
+    P5 = Strassen(S5, S6)
+    P6 = Strassen(S7, S8)
+    P7 = Strassen(S9, S10)
+    C11 = P5 + P4 - P2 + P6
+    C12 = P1 + P2
+    C21 = P3 + P4
+    C22 = P5 + P1 - P3 - P7
+    return C
 ```
 
 According to the recurrence relation, the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
@@ -140,15 +112,15 @@ According to the recurrence relation, the running time for Strassens method is T
 For the standard matrix multiplication, the running time is about n^3, and the pseudocode is given below:
 
 ```python
-SQUARE MATRIX MULTIPLY(A,B)
-n=A.rows
-let C be a new n*n matrix
-for i=1 to n
-   for j=1 to n
-      Cij=0
-      for k=1 to n
-      Cij=Cij+aik*bkj
-return C
+SQUARE-MATRIX-MULTIPLY(A, B)
+    n = A.rows
+    let C be a new n * n matrix
+    for i = 1 to n
+        for j = 1 to n
+            Cij = 0
+            for k = 1 to n
+                Cij = Cij + aik * bkj
+    return C
 ```
 
 ---
@@ -335,9 +307,28 @@ In this experiment, the larger size of the matrices is, the more convincing the 
 
 <!-- TODO: add runtime -->
 
+For finding the crossover point, multiplications between 512 by 512 matrices are conducted. The range of crossover point searching is from 1 to 64, for each recursion point the test is conducted twice and take average, the whole test costs about 10 to 11 hours. The complete testing result in `.xlsx` format can be retrieved at.
 
 <!-- TODO: add links -->
+
+### Algorithm Performance
+
+#### Comparison between Two Algorithms
+
+#### Comparison for Recursion Point
+
+#### Comparison for Matrix Size
+
+### More on FLO Benchmark
+
+The results obtained from FLO benchmark is completely invalid, hence we did further research on it. The profile tool in PyCharm helps us to analyze the CPU time and function calling tree. According to the report, most of the CPU time were spent on indexing the elements of the matrices.
 
 ---
 
 ## Conclusion
+
+### Performance Bottleneck
+
+### Balance between Performance and Ease of use
+
+### Optimizations
