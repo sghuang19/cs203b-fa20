@@ -66,7 +66,7 @@ From the code we can know that there are three for-loop cycles, so that the time
 
 ### Time Complexity of Strassen Algorithm
 
-From the recurrence relationship we know that the run-time complexity is T(n)=7T(n/2)+ $\Theta(n^2)$(when n>1). By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^lg7).
+From the recurrence relationship we know that the run-time complexity is T(n)=7T(n/2)+ $\Theta(n^2)$(when n>1). By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^lg7)$.
 
 ### Crossover Point Estimation
 
@@ -83,8 +83,6 @@ From the recurrence relationship we know that the run-time complexity is T(n)=7T
 <!-- TODO -->
 
 ### Strassen Algorithm
-
-### Standard Matrix Multiplication
 
 Comparing to the Obvious matrix multiplication, the Strassen's Algorithm replaces matrix multiplication into the matrix addition. In this algorithm, the operated matrices are divided into some submatrices and define some other submatrices to be the basic operated matrices which are calculated by the addition or subtraction of those submatrices which are divided from the operated matrices. Then repeat these procedures on all submatrices and get the resulting submatrices which we define as "P". Then get the submatrices of the product of the original operated matries. Finally add all these submatrices to get the result.
 Since the Strassen's Algorithm replaces the one separated matrix multiplication with several new matrix additions. It can significantly reduce the running time of matrix multiplication lower. The pseudocode for Strassen's method used in two-ordered matrix can be written as follows:
@@ -116,6 +114,8 @@ Strassen(A, B)
 ```
 
 According to the recurrence relation, the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
+
+### Standard Matrix Multiplication
 
 For the standard matrix multiplication, the running time is about n^3, and the pseudocode is given below:
 
