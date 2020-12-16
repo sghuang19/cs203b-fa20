@@ -35,27 +35,27 @@ The earliest MM optimized algorithm was proposed by German mathematician Volker 
 
 ```python
 Strassen(A,B)
-S1=B12-B22
-S2=A11-A12
-S3=A21+A22
-S4=B21-B11
-S5=A11+A22
-S6=B11+B22
-S7=A12-A22
-S8=B21+B22
-S9=A11-A21
-S10=B11+B12
-P1=Strassen(A11,S1)
-P2=Strassen(A11,B22)
-P3=Strassen(S3,B11)
-P4=Strassen(A22,S4)
-P5=Strassen(S5,S6)
-P6=Strassen(S7,S8)
-P7=Strassen(S9,S10)
-C11=P5+P4-P2+P6
-C12=P1+P2
-C21=P3+P4
-C22=P5+P1-P3-P7
+S1 = B12 - B22
+S2 = A11 - A12
+S3 = A21 + A22
+S4 = B21 - B11
+S5 = A11 + A22
+S6 = B11 + B22
+S7 = A12 - A22
+S8 = B21 + B22
+S9 = A11 - A21
+S10 = B11 + B12
+P1 = Strassen(A11,S1)
+P2 = Strassen(A11,B22)
+P3 = Strassen(S3,B11)
+P4 = Strassen(A22,S4)
+P5 = Strassen(S5,S6)
+P6 = Strassen(S7,S8)
+P7 = Strassen(S9,S10)
+C11 = P5 + P4 - P2 + P6
+C12 = P1 + P2
+C21 = P3 + P4
+C22 = P5 + P1 - P3 - P7
 return C
 ```
 
@@ -98,32 +98,32 @@ Uses an abstract model to estimate the crossover point analytically. You can pro
 
 <!-- TODO -->
 
-Compare to the Obvious matrix multiplication, The Strassens Algorithm replace matrix multiplying with matrix into the matrix addition. In this algorithm, the operated matries are divided into some submatries and define some other submatries to be the basic operated matries which are calculated by the addtion or subtraction of those submatries divided from the operated matries. Then repeat these procedure on all submatries and get the result submatries which we define as "P". Then get the submatries of the product of the original operated matries. Finally add all these submatries to get the result.
-Since the Strassens Algorithm replace the one separated matrix multiplication with several new matrix additions. It can significantly reduce the running time of matrix multiplication lower. The pseudocode for Strassens method used in two-ordered matrix can be written as follows:
+Comparing to the Obvious matrix multiplication, the Strassens Algorithm replaces matrix multiplication into the matrix addition. In this algorithm, the operated matries are divided into some submatries and define some other submatries to be the basic operated matries which are calculated by the addtion or subtraction of those submatries divided from the operated matries. Then repeat these procedures on all submatries and get the resulting submatries which we define as "P". Then get the submatries of the product of the original operated matries. Finally add all these submatries to get the result.
+Since the Strassens Algorithm replaces the one separated matrix multiplication with several new matrix additions. It can significantly reduce the running time of matrix multiplication lower. The pseudocode for Strassens method used in two-ordered matrix can be written as follows:
 
 ```python
 Strassen(A,B)
-S1=B12-B22
-S2=A11-A12
-S3=A21+A22
-S4=B21-B11
-S5=A11+A22
-S6=B11+B22
-S7=A12-A22
-S8=B21+B22
-S9=A11-A21
-S10=B11+B12
-P1=Strassen(A11,S1)
-P2=Strassen(A11,B22)
-P3=Strassen(S3,B11)
-P4=Strassen(A22,S4)
-P5=Strassen(S5,S6)
-P6=Strassen(S7,S8)
-P7=Strassen(S9,S10)
-C11=P5+P4-P2+P6
-C12=P1+P2
-C21=P3+P4
-C22=P5+P1-P3-P7
+S1 = B12 - B22
+S2 = A11 - A12
+S3 = A21 + A22
+S4 = B21 - B11
+S5 = A11 + A22
+S6 = B11 + B22
+S7 = A12 - A22
+S8 = B21 + B22
+S9 = A11 - A21
+S10 = B11 + B12
+P1 = Strassen(A11,S1)
+P2 = Strassen(A11,B22)
+P3 = Strassen(S3,B11)
+P4 = Strassen(A22,S4)
+P5 = Strassen(S5,S6)
+P6 = Strassen(S7,S8)
+P7 = Strassen(S9,S10)
+C11 = P5 + P4 - P2 + P6
+C12 = P1 + P2
+C21 = P3 + P4
+C22 = P5 + P1 - P3 - P7
 return C
 ```
 
