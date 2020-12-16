@@ -18,15 +18,15 @@ Matrix mltiplication (MM) is a practical application of Linear Algebra. It is us
 Previously, people used traditional matrix multiplication, which was based on the definition of MM, to calculate the product of two matrices. It's pseudocode is
 
 ```python
-SQUARE MATRIX MULTIPLY(A,B)
-n=A.rows
-let C be a new n*n matrix
-for i=1 to n
-   for j=1 to n
-      Cij=0
-      for k=1 to n
-      Cij=Cij+aik*bkj
-return C
+SQUARE-MATRIX-MULTIPLY(A, B)
+  n = A.rows
+  let C be a new n * n matrix
+  for i = 1 to n
+    for j = 1 to n
+        Cij = 0
+        for k = 1 to n
+        Cij = Cij + aik * bkj
+  return C
 ```
 
 According to the pseudocode, the algorithm contains three circulations. Concretely, $C_{ij}=A_{ik}B_{kj}$, each index ($i,j,k$) runs from 1 to $n$. Therefore, the time complexity is $\Theta(n^3)$, where $n$ is the length of the square matrix. The time complexity of traditional method is large. Hence, since the extensive application of MM, how to optimize the operation of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in MM is a major optimized direction.
@@ -72,6 +72,14 @@ A 1-page summary of the contributions of the paper in [1]. Discuss why the autho
 -->
 
 <!-- TODO -->
+### Usefulness of Adaptive Strassen's Algorithm
+
+### Implementation of the Adaptive Method
+
+### Experiment Design and Results
+
+### Possible Applications
+
 the writers of the paper provided, Paolo D'Alberto and Alexandru Nicolau talked about an easy-to-use adaptive algorithm which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS. The Strassen's algorithm has decreased the running time of matrix multiplication significantly, by replacing one discrete matrix multiplication with several matrix additions. However, for modern architectures with complex memory hierarchies, the matrix additions have a limited in-cache data reuse and thus poor memory-hierarchy utilization. The first benefit writers listed is their algorithm divides the MM problems into a set of balanced sub-problems without any matrix padding or peelingIn addition;Second, their  algorithm applies Strassen’s strategy recursively as many time as a function of the problem size.Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The writers' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm provided by the writers of the given paper.
 
 The concrete implementation of the adaptive algorithm is realized by several steps. To begin with, writers declared several notations and computations. As the writer suggests, their algorithm reduces the number of passes as well as the number of computations because of a balanced division process. For matrix C=A*B, where σ(A)=m×n, decompose A to four small matrices A0, A1, A2 and A3. The size of four small matrices are A0 with σ(A0)=d m2e×d n2 e, A1 with σ(A1)=d m2e×b n2 c, A2 with σ(A2)=b m2c×d n2 e and A3 with σ(A3)=b m2 c×b n2 c. The same with matrix B. When we do matrix addition, we expand the scope of matrix addition to different sizes. For example, we define matrix X=Y+Z, if the size of Y and Z is not the same, then we expand the size of X to the largest of them and the redundant part of X is set 0. After that, the adaptive algorithm begin. Several matrix additions and multiplications is performed and are put into practice to several systems. Through this process, the writers found that the same algorithm applied to different systems can have different results.
@@ -323,9 +331,10 @@ Which is obviously an absurd result, since generally, the runtime for addition c
 
 In this experiment, the larger size of the matrices is, the more convincing the result is. However, too large matrices would lead to unacceptable runtime for a single test. After doing several brief test on multiplication of different matrices size, taking the pace of our work into consideration, we chose 512 by 512 matrices for finding the crossover point.
 
+### Crossover Point Finding
+
 <!-- TODO: add runtime -->
 
-In all, are done, with a total runtime of. The complete testing result in `.xlsx` format can be retrieved at.
 
 <!-- TODO: add links -->
 
