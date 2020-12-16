@@ -43,7 +43,7 @@ The writers of the provided paper, Paolo D'Alberto and Alexandru Nicolau talked 
 
 The concrete implementation of the adaptive algorithm is realized by several steps. To begin with, writers declared several notations and computations. As the writer suggests, their algorithm reduces the number of passes as well as the number of computations because of a balanced division process.
 
- For matrix C=A×B, where σ(A)=m×n, decompose A to four small matrices A0, A1, A2 and A3. The size of four small matrices are A0 with σ(A0)= $\lceil m/2 \rceil$×$\lceil n/2 \rceil$,A1 with σ(A1)=$\lceil m/2 \rceil$×$\lfloor n/2 \rfloor$, A2 with σ(A2)=$\lfloor m/2 \rfloor$×$\lceil n/2 \rceil$and A3 with σ(A3)=$\lfloor m/2 \rfloor$×$\lfloor n/2 \rfloor$. The same with matrix B. When we do matrix addition, we expand the scope of matrix addition to different sizes. For example, we define matrix X=Y+Z, if the size of Y and Z is not the same, then we expand the size of X to the largest of them and the redundant part of X is set 0. After that, the adaptive algorithm begin. Several matrix additions and multiplications is performed and are put into practice to several systems. Through this process, the writers found that the same algorithm applied to different systems can have different results.
+ For matrix $C=A×B$, where $σ(A)=m×n$, decompose $A$ to four small matrices $A0, A1, A2 and A3$. The size of four small matrices are $A0$ with $σ(A0)$= $\lceil m/2 \rceil$×$\lceil n/2 \rceil$$,A1$ with $σ(A1)$=$\lceil m/2 \rceil$×$\lfloor n/2 \rfloor$, $A2$ with $σ(A2)$=$\lfloor m/2 \rfloor$×$\lceil n/2 \rceil$and $A3$ with $σ(A3)$=$\lfloor m/2 \rfloor$×$\lfloor n/2 \rfloor$. The same with matrix $B$. When we do matrix addition, we expand the scope of matrix addition to different sizes. For example, we define matrix $X=Y+Z$, if the size of $Y$ and $Z$ is not the same, then we expand the size of $X$ to the largest of them and the redundant part of $X$ is set 0. After that, the adaptive algorithm begin. Several matrix additions and multiplications is performed and are put into practice to several systems. Through this process, the writers found that the same algorithm applied to different systems can have different results.
 
 ### Experiment Design and Results
 
@@ -65,7 +65,7 @@ From the code we can know that there are three for-loop cycles, so that the time
 
 ### Time Complexity of Strassen Algorithm
 
-From the recurrence relationship we know that the run-time complexity is T(n)=7T(n/2)+ $\Theta(n^2)$(when n>1). By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^lg7)$.
+From the recurrence relationship we know that the run-time complexity is $T(n)=7T(n/2)$+ $\Theta(n^2)$(when n>1). By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^lg7)$.
 
 ### Crossover Point Estimation
 
