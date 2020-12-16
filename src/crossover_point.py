@@ -44,4 +44,6 @@ for i in range(s, e + 1):
     ws['C' + str(i)] = square / r
     print("==========")
 
-wb.save('data.xlsx')
+    wb.save('data.xlsx')
+
+print("benchmark finished")
