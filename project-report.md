@@ -17,9 +17,42 @@ Matrix mltiplication (MM) is a practical application of Linear Algebra. It is us
 
 Previously, people used traditional matrix multiplication, which was based on the definition of MM, to calculate the product of two matrices. It's pseudocode is
 
+```python
+SQUARE-MATRIX-MULTIPLY(A, B)
+    n = A.rows
+    let C be a new n * n matrix
+    for i = 1 to n
+        for j = 1 to n
+            Cij = 0
+            for k = 1 to n
+                Cij = Cij + aik * bkj
+    return C
+```
+
 According to the pseudocode, the algorithm contains three circulations. Concretely, $C_{ij}=A_{ik}B_{kj}$, each index ($i,j,k$) runs from 1 to $n$. Therefore, the time complexity is $\Theta(n^3)$, where $n$ is the length of the square matrix. The time complexity of traditional method is large. Hence, since the extensive application of MM, how to optimize the operation of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in MM is a major optimized direction.
 
-The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm (**Cite**). It's main idea is to replace multiplication by addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms. For a two order square matrix, the pseudocode of Strassen's algorithm is
+The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm (**Cite**). It's main idea is to replace multiplication by addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms.The pseudocode of Strassen's algorithm is
+
+```python
+Strassen(A, B)
+n = A.row
+Let C be a new matrix
+if n == 1 to n
+    c11 = a11b11
+else partition A,B and C 
+P1 = Strassen(A11,B12-B22)
+P2 = Strassen(A11+A12,B22)
+P3 = Strassen(A21+A22,B11)
+P4 = Strassen(A22,B21-B11)
+P5 = Strassen(A11+A22,B11+B22)
+P6 = Strassen(A12-A22,B21+B22)
+P7 = Strassen(A11-A21,B11+B12)
+C11 = P5 + P4 - P2 + P6
+C12 = P1 + P2
+C21 = P3 + P4
+C22 = P5 + P1 - P3 - P7
+return C
+```
 
 For Strassen algorithm, the time complexity is O(n^(\lg7)). For a two order matrix multiplication, we need to spend 8*(2^3) with Obvious matrix multiplication algorithm but we just need 7*(2^(\lg7)) by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
 
@@ -36,8 +69,8 @@ A 1-page summary of the contributions of the paper in [1]. Discuss why the autho
 <!-- TODO -->
 ### Usefulness of Adaptive Strassen's Algorithm
 
-The writers of the provided paper, Paolo D'Alberto and Alexandru Nicolau talked about an easy-to-use adaptive algorithm which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS. The Strassen's algorithm has decreased the running time of matrix multiplication significantly, by replacing one discrete matrix multiplication with several matrix additions. However, for modern architectures with complex memory hierarchies, the matrix additions have a limited in-cache data reuse and thus poor memory-hierarchy utilization.\
- The first benefit writers listed is their algorithm divides the MM problems into a set of balanced sub-problems without any matrix padding or peelingIn addition;Second, their  algorithm applies Strassen’s strategy recursively as many time as a function of the problem size.Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The writers' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm provided by the writers of the given paper.
+The writers of the provided paper, Paolo D'Alberto and Alexandru Nicolau talked about an easy-to-use adaptive algorithm which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS. The Strassen's algorithm has decreased the running time of matrix multiplication significantly, by replacing one discrete matrix multiplication with several matrix additions. However, for modern architectures with complex memory hierarchies, the matrix additions have a limited in-cache data reuse and thus poor memory-hierarchy utilization.
+The first benefit writers listed is their algorithm divides the MM problems into a set of balanced sub-problems without any matrix padding or peelingIn addition;Second, their algorithm applies Strassen’s strategy recursively as many time as a function of the problem size.Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The writers' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm provided by the writers of the given paper.
 
 ### Implementation of the Adaptive Method
 
@@ -61,7 +94,7 @@ Uses an abstract model to estimate the crossover point analytically. You can pro
 
 ### Time Complexity of Standard Matrix Multiplication
 
-From the code we can know that there are three for-loop cycles, so that the time complexity for Standard matrix multiplication is $\Theta(n^3)$.
+From the pseudocode we can know that there are three for-loop cycles so that the time complexity for Standard matrix multiplication is $\Theta(n^3)$.
 
 ### Time Complexity of Strassen Algorithm
 
@@ -112,7 +145,30 @@ Strassen(A, B)
     return C
 ```
 
-According to the recurrence relation, the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
+For n-ordered matrix multiplication, the pseudocode of Strassen's algorithm is :
+
+```python
+Strassen(A, B)
+n = A.row
+Let C be a new matrix
+if n == 1 to n
+    c11 = a11b11
+else partition A,B and C 
+P1 = Strassen(A11,B12-B22)
+P2 = Strassen(A11+A12,B22)
+P3 = Strassen(A21+A22,B11)
+P4 = Strassen(A22,B21-B11)
+P5 = Strassen(A11+A22,B11+B22)
+P6 = Strassen(A12-A22,B21+B22)
+P7 = Strassen(A11-A21,B11+B12)
+C11 = P5 + P4 - P2 + P6
+C12 = P1 + P2
+C21 = P3 + P4
+C22 = P5 + P1 - P3 - P7
+return C
+```
+
+According to the recurrence relation, the running time for Strassens method is $T(n) = 7T(n/2) + \Theta(n^2)$. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
 
 ### Standard Matrix Multiplication
 
@@ -140,21 +196,82 @@ SQUARE-MATRIX-MULTIPLY(A, B)
 
 ### Class `Matrix`
 
+    A data structure for matrix. The matrix implementation should be suitable for dense matrices. You are required to
+    define a class Matrix that will be used in the implementation. This class Matrix will represent a matrix in
+    “row-major” order (i.e. for an n×n-matrix the first row will be stored in an array at index 0 to index n-1 the
+    next row at n to 2n-1 and so on). The class should provide a constructor and methods to get and set the element
+    at any row column index.
+    ...
+    
+    Attributes
+    ----------
+    row: int, default 1
+    col: int, default 1
+    elements: list, default [0.0]
+    
+    Methods
+    -------
+    __init__(self, elements, row=None, col=None):
+        Generate a Matrix object.
+        
+    __str__(self):
+        Return a row*col matrix-like string.
+        
+    __getitem__(self, item):
+        Return elements in a Matrix object.
+        
+    __add__(self, other):
+        If other is a matrix, perform matrix addition, else perform addition with a number element-wisely.
+        Return a Matrix object
+    
+    __sub__(self, other):
+        If other is a matrix, perform matrix subtraction, else perform subtraction with a number element-wisely
+        Return a Matrix object
+
+    __sizeof__(self):
+        Return the number of elements in a Matrix object.
+        
+    dimension(self):
+        Return row and col numbers of a Matrix object.
+
 #### Data Storage
+
+    Matrix elements are stored in a list following row-major order. 
+    For instance, a 2 by 2 matrix is stored as a list [a11 a12 a21 a22].
 
 #### Indexing
 
-#### Operators Override
+    The index rule of an element in a Matrix object follows conventions in math. 
+    That is, Matrix[i, j] is the element in the ith row and jth column (i and j run from 1 to Matrix.row and Matrix.col respectively).
 
-#### Other Operations
+### Other Operations
 
-### Function `adaptive_add()` and `adaptive_minus()`
+#### Function `adaptive_add()` and `adaptive_minus()`
 
-### Function `square_matrix_multiply()`
+    adaptive_add(a, b, target_row, target_col):
+    Given target matrix size, perform matrix addition of Matrix a and b.
+    Return a Matrix with the size of target_row*target_col.
+    
+    ----------------------------------------------
+    
+    adaptive_minus(a, b, target_row, target_col):
+    Given target matrix size, perform matrix subtraction of Matrix a and b.
+    Return a Matrix with the size of target_row*target_col.
 
-### Function `strassen_matrix_multiply()`
+#### Function `square_matrix_multiply()`
 
-### Function `random_matrix_gen()`
+    square_matrix_multiply(a, b):
+    Given Matrix a and b, perform standard matrix multiplication. a.col must equal to b.row.
+    Return a Matrix. 
+
+#### Function `strassen_matrix_multiply()`
+
+    strassen_multiply(a, b, n=None):
+    Given Matrix a and b, perform an improved version of Strassen's algorithm.
+    Based on the paper published by Paolo D’Alberto and Alexandru Nicolau in 2007.
+    Return a Matrix.
+
+#### Function `random_matrix_gen()`
 
 This function is for generating matrices for testing.
 
