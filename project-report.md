@@ -36,8 +36,8 @@ A 1-page summary of the contributions of the paper in [1]. Discuss why the autho
 <!-- TODO -->
 ### Usefulness of Adaptive Strassen's Algorithm
 
-The writers of the provided paper, Paolo D'Alberto and Alexandru Nicolau talked about an easy-to-use adaptive algorithm which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS. The Strassen's algorithm has decreased the running time of matrix multiplication significantly, by replacing one discrete matrix multiplication with several matrix additions. However, for modern architectures with complex memory hierarchies, the matrix additions have a limited in-cache data reuse and thus poor memory-hierarchy utilization.\
- The first benefit writers listed is their algorithm divides the MM problems into a set of balanced sub-problems without any matrix padding or peelingIn addition;Second, their  algorithm applies Strassen’s strategy recursively as many time as a function of the problem size.Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The writers' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm provided by the writers of the given paper.
+The writers of the provided paper, Paolo D'Alberto and Alexandru Nicolau talked about an easy-to-use adaptive algorithm which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS. The Strassen's algorithm has decreased the running time of matrix multiplication significantly, by replacing one discrete matrix multiplication with several matrix additions. However, for modern architectures with complex memory hierarchies, the matrix additions have a limited in-cache data reuse and thus poor memory-hierarchy utilization.
+The first benefit writers listed is their algorithm divides the MM problems into a set of balanced sub-problems without any matrix padding or peelingIn addition;Second, their algorithm applies Strassen’s strategy recursively as many time as a function of the problem size.Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The writers' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm provided by the writers of the given paper.
 
 ### Implementation of the Adaptive Method
 
@@ -61,7 +61,7 @@ Uses an abstract model to estimate the crossover point analytically. You can pro
 
 ### Time Complexity of Standard Matrix Multiplication
 
-From the code we can know that there are three for-loop cycles, so that the time complexity for Standard matrix multiplication is $\Theta(n^3)$.
+From the pseudocode we can know that there are three for-loop cycles so that the time complexity for Standard matrix multiplication is $\Theta(n^3)$.
 
 ### Time Complexity of Strassen Algorithm
 
@@ -112,7 +112,30 @@ Strassen(A, B)
     return C
 ```
 
-According to the recurrence relation, the running time for Strassens method is T(n)=7T(n/2)+‚.n2/. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
+For n-ordered matrix multiplication, the pseudocode of Strassen's algorithm is :
+
+```python
+Strassen(A, B)
+n = A.row
+Let C be a new matrix
+if n == 1 to n
+    c11 = a11b11
+else partition A,B and C 
+P1 = Strassen(A11,B12-B22)
+P2 = Strassen(A11+A12,B22)
+P3 = Strassen(A21+A22,B11)
+P4 = Strassen(A22,B21-B11)
+P5 = Strassen(A11+A22,B11+B22)
+P6 = Strassen(A12-A22,B21+B22)
+P7 = Strassen(A11-A21,B11+B12)
+C11 = P5 + P4 - P2 + P6
+C12 = P1 + P2
+C21 = P3 + P4
+C22 = P5 + P1 - P3 - P7
+return C
+```
+
+According to the recurrence relation, the running time for Strassens method is $T(n) = 7T(n/2) + \Theta(n^2)$. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
 
 ### Standard Matrix Multiplication
 
