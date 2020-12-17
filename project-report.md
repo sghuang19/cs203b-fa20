@@ -440,8 +440,28 @@ For finding the crossover point, multiplications between 512 by 512 matrices are
 #### Comparison between Two Algorithms
 
 #### Comparison for Recursion Point
+#### For Varied Recursion Point
 
-#### Comparison for Matrix Size
+The test design is shown in [crossover point finding part](#Crossover20Point%20Finding), the plot of the runtime with respect to the selection of recursion point is shown below.
+
+![Runtime of algorithms with different recursion points](figures/crossover_point.png)
+
+From the figure it is clear that, for 512 by 512 matrix multiplication, Strassen's method is stably faster then the standard method for about 40 seconds, even if the recursion point is set to be 1. In general, though the runtime of the two methods has fluctuations, but the tendency is synchronous, hence we may consider these changes as a consequence of the load of the computer and operating system.
+
+More intuitively, the plot of the difference is shown below.
+
+![The difference between the runtime of algorithms with different recursion points](figures/crossover_point_difference.png)
+
+In which the difference percentage is calculated as
+
+$$
+\text{difference percentage} =
+\frac{\text{runtime of standard method} - \text{runtime of Strassen's method}}
+{\text{runtime of standard method}}
+$$
+
+No obvious regular pattern could be found from the statistics. Therefore, the affect on the runtime of the Strassen's multiplication due to the choice of recursion point can be neglected.
+
 
 ### More on FLO Benchmark
 
