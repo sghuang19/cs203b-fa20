@@ -1,4 +1,4 @@
-from matrix import Matrix, strassen_multiply
+from Matrix import *
 
 n = 1000
 elements = []

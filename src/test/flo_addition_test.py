@@ -1,5 +1,5 @@
 import time
-from matrix import random_matrix_gen
+from Matrix import *
 
 n = 8192
 m1 = random_matrix_gen(n)
