@@ -212,27 +212,27 @@ SQUARE-MATRIX-MULTIPLY(A, B)
     Methods
     -------
     __init__(self, elements, row=None, col=None):
-        Generate a `Matrix` object.
+        Generate a Matrix object.
         
     __str__(self):
         Return a row*col matrix-like string.
         
     __getitem__(self, item):
-        Return elements in a `Matrix` object.
+        Return elements in a Matrix object.
         
     __add__(self, other):
         If other is a matrix, perform matrix addition, else perform addition with a number element-wisely.
-        Return a `Matrix` object
+        Return a Matrix object
     
     __sub__(self, other):
         If other is a matrix, perform matrix subtraction, else perform subtraction with a number element-wisely
-        Return a `Matrix` object
+        Return a Matrix object
 
     __sizeof__(self):
-        Return the number of elements in a `Matrix` object.
+        Return the number of elements in a Matrix object.
         
     dimension(self):
-        Return row and col numbers of a `Matrix` object.
+        Return row and col numbers of a Matrix object.
 
 #### Data Storage
 
@@ -244,15 +244,32 @@ SQUARE-MATRIX-MULTIPLY(A, B)
     The index rule of an element in a Matrix object follows conventions in math. 
     That is, Matrix[i, j] is the element in the ith row and jth column (i and j run from 1 to Matrix.row and Matrix.col respectively).
 
-
-
-#### Other Operations
+### Other Operations
 
 #### Function `adaptive_add()` and `adaptive_minus()`
 
+    adaptive_add(a, b, target_row, target_col):
+    Given target matrix size, perform matrix addition of Matrix a and b.
+    Return a Matrix with the size of target_row*target_col.
+    
+    ----------------------------------------------
+    
+    adaptive_minus(a, b, target_row, target_col):
+    Given target matrix size, perform matrix subtraction of Matrix a and b.
+    Return a Matrix with the size of target_row*target_col.
+
 #### Function `square_matrix_multiply()`
 
+    square_matrix_multiply(a, b):
+    Given Matrix a and b, perform standard matrix multiplication. a.col must equal to b.row.
+    Return a Matrix. 
+
 #### Function `strassen_matrix_multiply()`
+
+    strassen_multiply(a, b, n=None):
+    Given Matrix a and b, perform an improved version of Strassen's algorithm.
+    Based on the paper published by Paolo D’Alberto and Alexandru Nicolau in 2007.
+    Return a Matrix.
 
 #### Function `random_matrix_gen()`
 
