@@ -465,7 +465,53 @@ No obvious regular pattern could be found from the statistics. Therefore, the af
 
 ### More on FLO Benchmark
 
-The results obtained from FLO benchmark is completely invalid, hence we did further research on it. The profile tool in PyCharm helps us to analyze the CPU time and function calling tree. According to the report, most of the CPU time were spent on indexing the elements of the matrices.
+The results obtained from FLO benchmark is completely invalid, hence we did further research on it. The profiler tool in PyCharm enables us to analyze the CPU time and function calling tree. According to the report, most of the CPU time were spent on indexing the elements of the matrices.
+
+#### For addition test
+
+The call graph of addition test is shown below.
+
+![Call graph of addition](figures/call_addition_8192.png)
+
+The most called functions are shown below (in order of time).
+
+| Name                                            | Call Count | Time (ms) | Time percentage | Onw Time (ms) | Own time percentage |
+| ----------------------------------------------- | ---------: | --------: | :-------------: | ------------: | :-----------------: |
+| `flo_addition_test.py`                          |          1 |    166184 |     100.0%      |         22330 |        13.4%        |
+| `random_matrix_gen`                             |          2 |     77056 |      46.4%      |         33498 |        20.2%        |
+| `__getitem__`                                   |  134217728 |     66797 |      40.2%      |         44784 |        26.9%        |
+| `uniform`                                       |  134217728 |     35563 |      21.4%      |         27868 |        16.8%        |
+| \<built-in method `builtins.isinstance`\>       |  268435462 |     14681 |      8.8%       |         14681 |        8.8%         |
+| \<method `append` of `list` objects\>           |  134217728 |      7993 |      4.8%       |          7993 |        4.8%         |
+| \<method `random` of `_random.Random` objects\> |  134217728 |      7695 |      4.6%       |          7695 |        4.6%         |
+| \<built-in method `builtins.len`\>              |  134217742 |      7332 |      4.4%       |          7332 |        4.4%         |
+
+>The rest calls are with negligible runtime.
+
+#### For multiplication test
+
+The call graph of multiplication test is shown below.
+
+![Call graph of multiplication](figures/call_multiplication_8192.png)
+
+| Name                                            | Call Count | Time (ms) | Time percentage | Onw Time (ms) | Own time percentage |
+| ----------------------------------------------- | ---------: | --------: | :-------------: | ------------: | :-----------------: |
+| `flo_addition_test.py`                          |          1 |    164414 |     100.0%      |         21216 |        12.9%        |
+| `random_matrix_gen`                             |          2 |     76665 |      46.6%      |         32751 |        19.9%        |
+| `__getitem__`                                   |  134217728 |     66532 |      40.5%      |         44601 |        27.1%        |
+| `uniform`                                       |  134217728 |     35841 |      21.8%      |         28127 |        17.1%        |
+| \<built-in method `builtins.isinstance`\>       |  268435462 |     14614 |      8.9%       |         14614 |        8.9%         |
+| \<method `append` of `list` objects\>           |  134217728 |      8072 |      4.9%       |          8072 |        4.9%         |
+| \<method `random` of `_random.Random` objects\> |  134217728 |      7713 |      4.7%       |          7713 |        4.7%         |
+| \<built-in method `builtins.len`\>              |  134217742 |      7316 |      4.4%       |          7316 |        4.4%         |
+
+>The rest calls are with negligible runtime.
+
+#### Analysis for FLO Runtime
+
+In the two tables above, `flo_addition_test.py` and `flo_multiplication.py` is the test script, hence takes the whole runtime. Function `random_matrix_gen` and `uniform` is for generating the random matrices. From the CProfiler statistics, we can see that, the efficiency of matrix elements addition and multiplication is nearly the same, including the detailed statistics for each function calls. The most of the runtime, that is to say, up to is 74.95% in addition and 75.82% in multiplication, setting aside the runtime of matrices generation, is spent on indexing the elements.
+
+Since the process of indexing the elements, or `__getitem__` function dominates the runtime of FLO, the efficiency advantage of floating point addition against multiplication is completely diluted. Thus, seemingly, floating point multiplication is as "fast" as addition, which is the reason why our Strassen's method is always faster than the standard matrix multiplication in spite of the choice of recursion point, even if which is set to be 1.
 
 ---
 
