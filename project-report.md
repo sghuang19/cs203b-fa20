@@ -462,6 +462,22 @@ $$
 
 No obvious regular pattern could be found from the statistics. Therefore, the affect on the runtime of the Strassen's multiplication due to the choice of recursion point can be neglected.
 
+#### For Varied Matrix Size
+
+The runtime of Strassen's multiplication and its $n^3$ polynomial fitted graph is shown below.
+
+![Runtime of Strassen's method with varied matrix size](figures/runtime_strassen_1200.png)
+
+In this figure, the runtime of our Strassen's multiplication can be perfectly fitted with
+
+$$
+T =
+6.26245873\times10^{-7}n^3 +
+1.25884940\times10^{-4}n^2 -
+7.98600504\times10^{-3}n -
+5.42879675\times10^{-1}
+$$
+
 
 ### More on FLO Benchmark
 
