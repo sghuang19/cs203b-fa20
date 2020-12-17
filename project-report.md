@@ -140,21 +140,65 @@ SQUARE-MATRIX-MULTIPLY(A, B)
 
 ### Class `Matrix`
 
+    A data structure for matrix. The matrix implementation should be suitable for dense matrices. You are required to
+    define a class Matrix that will be used in the implementation. This class Matrix will represent a matrix in
+    “row-major” order (i.e. for an n×n-matrix the first row will be stored in an array at index 0 to index n-1 the
+    next row at n to 2n-1 and so on). The class should provide a constructor and methods to get and set the element
+    at any row column index.
+    ...
+    
+    Attributes
+    ----------
+    row: int, default 1
+    col: int, default 1
+    elements: list, default [0.0]
+    
+    Methods
+    -------
+    __init__(self, elements, row=None, col=None):
+        Generate a `Matrix` object.
+        
+    __str__(self):
+        Return a row*col matrix-like string.
+        
+    __getitem__(self, item):
+        Return elements in a `Matrix` object.
+        
+    __add__(self, other):
+        If other is a matrix, perform matrix addition, else perform addition with a number element-wisely.
+        Return a `Matrix` object
+    
+    __sub__(self, other):
+        If other is a matrix, perform matrix subtraction, else perform subtraction with a number element-wisely
+        Return a `Matrix` object
+
+    __sizeof__(self):
+        Return the number of elements in a `Matrix` object.
+        
+    dimension(self):
+        Return row and col numbers of a `Matrix` object.
+
 #### Data Storage
+
+    Matrix elements are stored in a list following row-major order. 
+    For instance, a 2 by 2 matrix is stored as a list [a11 a12 a21 a22].
 
 #### Indexing
 
-#### Operators Override
+    The index rule of an element in a Matrix object follows conventions in math. 
+    That is, Matrix[i, j] is the element in the ith row and jth column (i and j run from 1 to Matrix.row and Matrix.col respectively).
+
+
 
 #### Other Operations
 
-### Function `adaptive_add()` and `adaptive_minus()`
+#### Function `adaptive_add()` and `adaptive_minus()`
 
-### Function `square_matrix_multiply()`
+#### Function `square_matrix_multiply()`
 
-### Function `strassen_matrix_multiply()`
+#### Function `strassen_matrix_multiply()`
 
-### Function `random_matrix_gen()`
+#### Function `random_matrix_gen()`
 
 This function is for generating matrices for testing.
 
