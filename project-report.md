@@ -491,7 +491,7 @@ The call graph of addition test is shown below.
 
 The most called functions are shown below (in order of time).
 
-| Name                                            | Call Count | Time (ms) | Time percentage | Onw Time (ms) | Own time percentage |
+| Name                                            | Call Count | Time (ms) | Time percentage | Own Time (ms) | Own time percentage |
 | ----------------------------------------------- | ---------: | --------: | :-------------: | ------------: | :-----------------: |
 | `flo_addition_test.py`                          |          1 |    166184 |     100.0%      |         22330 |        13.4%        |
 | `random_matrix_gen`                             |          2 |     77056 |      46.4%      |         33498 |        20.2%        |
@@ -510,7 +510,7 @@ The call graph of multiplication test is shown below.
 
 ![Call graph of multiplication](figures/call_multiplication_8192.png)
 
-| Name                                            | Call Count | Time (ms) | Time percentage | Onw Time (ms) | Own time percentage |
+| Name                                            | Call Count | Time (ms) | Time percentage | Own Time (ms) | Own time percentage |
 | ----------------------------------------------- | ---------: | --------: | :-------------: | ------------: | :-----------------: |
 | `flo_addition_test.py`                          |          1 |    164414 |     100.0%      |         21216 |        12.9%        |
 | `random_matrix_gen`                             |          2 |     76665 |      46.6%      |         32751 |        19.9%        |
