@@ -235,7 +235,7 @@ at any row column index.
 ```
 #### Data Storage
 
-Matrix elements are stored in a list following row-major order.
+Matrix elements are stored in a list following row-major order.  
 For instance, a 2 by 2 matrix $a$ is stored as a list \[$a_{11} a_{12} a_{21} a_{22}$\].
 
 #### Indexing
@@ -249,25 +249,27 @@ That is, Matrix\[i, j\] is the element in the ith row and jth column (i and j ru
 
 
 adaptive_add(a, b, target_row, target_col):  
-    Given target matrix size, perform matrix addition of Matrix a and b.
+    Given target matrix size, perform matrix addition of Matrix a and b.  
+    The function is called by `strassen_matrix_multiply()`.  
     Return a Matrix with the size of target_row*target_col.
 
 
 adaptive_minus(a, b, target_row, target_col):  
-    Given target matrix size, perform matrix subtraction of Matrix a and b.
+    Given target matrix size, perform matrix subtraction of Matrix a and b.  
+    The function is called by `strassen_matrix_multiply()`.  
     Return a Matrix with the size of target_row*target_col.
 
 #### Function `square_matrix_multiply()`
 
 square_matrix_multiply(a, b):  
-    Given Matrix a and b, perform standard matrix multiplication. a.col must equal to b.row.
+    Given Matrix a and b, perform standard matrix multiplication. a.col must equal to b.row.  
     Return a Matrix object.
 
 #### Function `strassen_matrix_multiply()`
 
 strassen_multiply(a, b, n=None):  
     Given Matrix a and b, perform an improved version of Strassen's algorithm.  
-    The algorithm is based on the paper published by Paolo D’Alberto and Alexandru Nicolau in 2007.
+    The algorithm is based on the paper published by Paolo D’Alberto and Alexandru Nicolau in 2007.  
     Return a Matrix object.
 
 #### Function `random_matrix_gen()`
