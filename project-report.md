@@ -196,80 +196,79 @@ SQUARE-MATRIX-MULTIPLY(A, B)
 
 ### Class `Matrix`
 
-    A data structure for matrix. The matrix implementation should be suitable for dense matrices. You are required to
-    define a class Matrix that will be used in the implementation. This class Matrix will represent a matrix in
-    “row-major” order (i.e. for an n×n-matrix the first row will be stored in an array at index 0 to index n-1 the
-    next row at n to 2n-1 and so on). The class should provide a constructor and methods to get and set the element
-    at any row column index.
-    ...
-    
-    Attributes
-    ----------
-    row: int, default 1
-    col: int, default 1
+A data structure for matrix. The matrix implementation should be suitable for dense matrices. You are required to
+define a class Matrix that will be used in the implementation. This class Matrix will represent a matrix in
+“row-major” order (i.e. for an n×n-matrix the first row will be stored in an array at index 0 to index n-1 the
+next row at n to 2n-1 and so on). The class should provide a constructor and methods to get and set the element
+at any row column index.
+
+**Attributes**:
+```
+    row: int, default 1  
+    col: int, default 1  
     elements: list, default [0.0]
-    
-    Methods
-    -------
+```
+**Methods**：
+```
     __init__(self, elements, row=None, col=None):
-        Generate a Matrix object.
-        
+        # Generate a Matrix object.
+
     __str__(self):
-        Return a row*col matrix-like string.
+        # Return a row*col matrix-like string.
         
     __getitem__(self, item):
-        Return elements in a Matrix object.
+        # Return elements in a Matrix object.
         
     __add__(self, other):
-        If other is a matrix, perform matrix addition, else perform addition with a number element-wisely.
-        Return a Matrix object
+        # If other is a matrix, perform matrix addition, else perform addition with a number element-wisely.
+        # Return a Matrix object
     
     __sub__(self, other):
-        If other is a matrix, perform matrix subtraction, else perform subtraction with a number element-wisely
-        Return a Matrix object
+        # If other is a matrix, perform matrix subtraction, else perform subtraction with a number element-wisely
+        # Return a Matrix object
 
     __sizeof__(self):
-        Return the number of elements in a Matrix object.
+        # Return the number of elements in a Matrix object.
         
     dimension(self):
-        Return row and col numbers of a Matrix object.
-
+        # Return row and col numbers of a Matrix object.
+```
 #### Data Storage
 
-    Matrix elements are stored in a list following row-major order. 
-    For instance, a 2 by 2 matrix is stored as a list [a11 a12 a21 a22].
+Matrix elements are stored in a list following row-major order.
+For instance, a 2 by 2 matrix $a$ is stored as a list \[$a_{11} a_{12} a_{21} a_{22}$\].
 
 #### Indexing
 
-    The index rule of an element in a Matrix object follows conventions in math. 
-    That is, Matrix[i, j] is the element in the ith row and jth column (i and j run from 1 to Matrix.row and Matrix.col respectively).
+The index rule of an element in a Matrix object follows conventions in math.  
+That is, Matrix\[i, j\] is the element in the ith row and jth column (i and j run from 1 to Matrix.row and Matrix.col respectively).
 
 ### Other Operations
 
 #### Function `adaptive_add()` and `adaptive_minus()`
 
-    adaptive_add(a, b, target_row, target_col):
+
+adaptive_add(a, b, target_row, target_col):  
     Given target matrix size, perform matrix addition of Matrix a and b.
     Return a Matrix with the size of target_row*target_col.
-    
-    ----------------------------------------------
-    
-    adaptive_minus(a, b, target_row, target_col):
+
+
+adaptive_minus(a, b, target_row, target_col):  
     Given target matrix size, perform matrix subtraction of Matrix a and b.
     Return a Matrix with the size of target_row*target_col.
 
 #### Function `square_matrix_multiply()`
 
-    square_matrix_multiply(a, b):
+square_matrix_multiply(a, b):  
     Given Matrix a and b, perform standard matrix multiplication. a.col must equal to b.row.
-    Return a Matrix. 
+    Return a Matrix object.
 
 #### Function `strassen_matrix_multiply()`
 
-    strassen_multiply(a, b, n=None):
-    Given Matrix a and b, perform an improved version of Strassen's algorithm.
-    Based on the paper published by Paolo D’Alberto and Alexandru Nicolau in 2007.
-    Return a Matrix.
+strassen_multiply(a, b, n=None):  
+    Given Matrix a and b, perform an improved version of Strassen's algorithm.  
+    The algorithm is based on the paper published by Paolo D’Alberto and Alexandru Nicolau in 2007.
+    Return a Matrix object.
 
 #### Function `random_matrix_gen()`
 
