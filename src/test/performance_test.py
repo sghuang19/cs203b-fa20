@@ -1,4 +1,4 @@
-from matrix import *
+from Matrix import *
 import time
 
 n = 512

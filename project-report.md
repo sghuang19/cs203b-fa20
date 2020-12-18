@@ -76,7 +76,7 @@ The first benefit writers listed is their algorithm divides the MM problems into
 
 The concrete implementation of the adaptive algorithm is realized by several steps. To begin with, writers declared several notations and computations. As the writer suggests, their algorithm reduces the number of passes as well as the number of computations because of a balanced division process.
 
- For matrix $C=A×B$, where $σ(A)=m×n$, decompose $A$ to four small matrices $A_{0}, A_{1}, A_{2}$ and $A_{3}$. The size of four small matrices are $A_{0}$ with $σ(A_{0})$= $\lceil m/2 \rceil$×$\lceil n/2 \rceil$$,A_{1}$ with $σ(A_{1})$=$\lceil m/2 \rceil$×$\lfloor n/2 \rfloor$, $A_{2}$ with $σ(A_{2})$=$\lfloor m/2 \rfloor$×$\lceil n/2 \rceil$and $A_{3}$ with $σ(A_{3})$=$\lfloor m/2 \rfloor$×$\lfloor n/2 \rfloor$. The same with matrix $B$. When we do matrix addition, we expand the scope of matrix addition to different sizes. For example, we define matrix $X=Y+Z$, if the size of $Y$ and $Z$ is not the same, then we expand the size of $X$ to the largest of them and the redundant part of $X$ is set 0. After that, the adaptive algorithm begin. Several matrix additions and multiplications is performed and are put into practice to several systems. Through this process, the writers found that the same algorithm applied to different systems can have different results.
+ For matrix $C=A×B$, where $σ(A)=m×n$, decompose $A$ to four small matrices $A0, A1, A2 and A3$. The size of four small matrices are $A0$ with $σ(A0)$= $\lceil m/2 \rceil$×$\lceil n/2 \rceil$$,A1$ with $σ(A1)$=$\lceil m/2 \rceil$×$\lfloor n/2 \rfloor$, $A2$ with $σ(A2)$=$\lfloor m/2 \rfloor$×$\lceil n/2 \rceil$and $A3$ with $σ(A3)$=$\lfloor m/2 \rfloor$×$\lfloor n/2 \rfloor$. The same with matrix $B$. When we do matrix addition, we expand the scope of matrix addition to different sizes. For example, we define matrix $X=Y+Z$, if the size of $Y$ and $Z$ is not the same, then we expand the size of $X$ to the largest of them and the redundant part of $X$ is set 0. After that, the adaptive algorithm begin. Several matrix additions and multiplications is performed and are put into practice to several systems. Through this process, the writers found that the same algorithm applied to different systems can have different results.
 
 ### Experiment Design and Results
 
@@ -196,61 +196,77 @@ SQUARE-MATRIX-MULTIPLY(A, B)
 
 ### Class `Matrix`
 
-    A data structure for matrix. The matrix implementation should be suitable for dense matrices. You are required to
-    define a class Matrix that will be used in the implementation. This class Matrix will represent a matrix in
-    “row-major” order (i.e. for an n×n-matrix the first row will be stored in an array at index 0 to index n-1 the
-    next row at n to 2n-1 and so on). The class should provide a constructor and methods to get and set the element
-    at any row column index.
-    ...
-    
-    Attributes
-    ----------
-    row: int, default 1
-    col: int, default 1
+A data structure for matrix. The matrix implementation is suitable for dense matrices. A class `Matrix` is defined in the implementation.  
+This class `Matrix` represent a matrix in “row-major” order (i.e. for an n×n-matrix the first row will be stored in an array at index 0 to index n-1 the
+next row at n to 2n-1 and so on). The class provides a constructor and methods to get and set the element at any row column index.
+
+**Attributes**:
+```
+    row: int, default 1  
+    col: int, default 1  
     elements: list, default [0.0]
-    
-    Methods
-    -------
+```
+**Methods**：
+```
     __init__(self, elements, row=None, col=None):
-        Generate a `Matrix` object.
-        
+        # Generate a Matrix object.
+
     __str__(self):
-        Return a row*col matrix-like string.
+        # Return a row*col matrix-like string.
         
     __getitem__(self, item):
-        Return elements in a `Matrix` object.
+        # Return elements in a Matrix object.
         
     __add__(self, other):
-        If other is a matrix, perform matrix addition, else perform addition with a number element-wisely.
-        Return a `Matrix` object
+        # If other is a matrix, perform matrix addition, else perform addition with a number element-wisely.
+        # Return a Matrix object
     
     __sub__(self, other):
-        If other is a matrix, perform matrix subtraction, else perform subtraction with a number element-wisely
-        Return a `Matrix` object
+        # If other is a matrix, perform matrix subtraction, else perform subtraction with a number element-wisely
+        # Return a Matrix object
 
     __sizeof__(self):
-        Return the number of elements in a `Matrix` object.
+        # Return the number of elements in a Matrix object.
         
     dimension(self):
-        Return row and col numbers of a `Matrix` object.
-
+        # Return row and col numbers of a Matrix object.
+```
 #### Data Storage
 
-    Matrix elements are stored in a list following row-major order. 
-    For instance, a 2 by 2 matrix is stored as a list [a11 a12 a21 a22].
+Matrix elements are stored in a list following row-major order.  
+For instance, a 2 by 2 matrix $a$ is stored as a list \[$a_{11} a_{12} a_{21} a_{22}$\].
 
 #### Indexing
 
-    The index rule of an element in a Matrix object follows conventions in math. 
-    That is, Matrix[i, j] is the element in the ith row and jth column (i and j run from 1 to Matrix.row and Matrix.col respectively).
+The index rule of an element in a `Matrix` object follows conventions in math.  
+That is, Matrix\[i, j\] is the element in the ith row and jth column (i and j run from 1 to Matrix.row and Matrix.col respectively).
 
-#### Other Operations
+### Other Operations
 
 #### Function `adaptive_add()` and `adaptive_minus()`
 
+adaptive_add(a, b, target_row, target_col):  
+    Given target matrix size, perform matrix addition of Matrix a and b.  
+    The function is called by `strassen_matrix_multiply()`.  
+    Return a `Matrix` object with the size of `target_row`*`target_col`.
+
+adaptive_minus(a, b, target_row, target_col):  
+    Given target matrix size, perform matrix subtraction of `Matrix` a and b.  
+    The function is called by `strassen_matrix_multiply()`.  
+    Return a `Matrix` object with the size of `target_row`*`target_col`.
+
 #### Function `square_matrix_multiply()`
 
+square_matrix_multiply(a, b):  
+    Given `Matrix` a and b, perform standard matrix multiplication. `a.col` must equal to `b.row`.  
+    Return a `Matrix` object.
+
 #### Function `strassen_matrix_multiply()`
+
+strassen_multiply(a, b, n=None):  
+    Given `Matrix` a and b, perform an improved version of Strassen's algorithm.  
+    The algorithm is based on the paper published by Paolo D’Alberto and Alexandru Nicolau in 2007.  
+    Return a `Matrix` object.
 
 #### Function `random_matrix_gen()`
 
@@ -421,12 +437,94 @@ For finding the crossover point, multiplications between 512 by 512 matrices are
 #### Comparison between Two Algorithms
 
 #### Comparison for Recursion Point
+#### For Varied Recursion Point
 
-#### Comparison for Matrix Size
+The test design is shown in [crossover point finding part](#Crossover20Point%20Finding), the plot of the runtime with respect to the selection of recursion point is shown below.
+
+![Runtime of algorithms with different recursion points](figures/crossover_point.png)
+
+From the figure it is clear that, for 512 by 512 matrix multiplication, Strassen's method is stably faster then the standard method for about 40 seconds, even if the recursion point is set to be 1. In general, though the runtime of the two methods has fluctuations, but the tendency is synchronous, hence we may consider these changes as a consequence of the load of the computer and operating system.
+
+More intuitively, the plot of the difference is shown below.
+
+![The difference between the runtime of algorithms with different recursion points](figures/crossover_point_difference.png)
+
+In which the difference percentage is calculated as
+
+$$
+\text{difference percentage} =
+\frac{\text{runtime of standard method} - \text{runtime of Strassen's method}}
+{\text{runtime of standard method}}
+$$
+
+No obvious regular pattern could be found from the statistics. Therefore, the affect on the runtime of the Strassen's multiplication due to the choice of recursion point can be neglected.
+
+#### For Varied Matrix Size
+
+The runtime of Strassen's multiplication and its $n^3$ polynomial fitted graph is shown below.
+
+![Runtime of Strassen's method with varied matrix size](figures/runtime_strassen_1200.png)
+
+In this figure, the runtime of our Strassen's multiplication can be perfectly fitted with
+
+$$
+T =
+6.26245873\times10^{-7}n^3 +
+1.25884940\times10^{-4}n^2 -
+7.98600504\times10^{-3}n -
+5.42879675\times10^{-1}
+$$
+
 
 ### More on FLO Benchmark
 
-The results obtained from FLO benchmark is completely invalid, hence we did further research on it. The profile tool in PyCharm helps us to analyze the CPU time and function calling tree. According to the report, most of the CPU time were spent on indexing the elements of the matrices.
+The results obtained from FLO benchmark is completely invalid, hence we did further research on it. The profiler tool in PyCharm enables us to analyze the CPU time and function calling tree. According to the report, most of the CPU time were spent on indexing the elements of the matrices.
+
+#### For addition test
+
+The call graph of addition test is shown below.
+
+![Call graph of addition](figures/call_addition_8192.png)
+
+The most called functions are shown below (in order of time).
+
+| Name                                            | Call Count | Time (ms) | Time percentage | Own Time (ms) | Own time percentage |
+| ----------------------------------------------- | ---------: | --------: | :-------------: | ------------: | :-----------------: |
+| `flo_addition_test.py`                          |          1 |    166184 |     100.0%      |         22330 |        13.4%        |
+| `random_matrix_gen`                             |          2 |     77056 |      46.4%      |         33498 |        20.2%        |
+| `__getitem__`                                   |  134217728 |     66797 |      40.2%      |         44784 |        26.9%        |
+| `uniform`                                       |  134217728 |     35563 |      21.4%      |         27868 |        16.8%        |
+| \<built-in method `builtins.isinstance`\>       |  268435462 |     14681 |      8.8%       |         14681 |        8.8%         |
+| \<method `append` of `list` objects\>           |  134217728 |      7993 |      4.8%       |          7993 |        4.8%         |
+| \<method `random` of `_random.Random` objects\> |  134217728 |      7695 |      4.6%       |          7695 |        4.6%         |
+| \<built-in method `builtins.len`\>              |  134217742 |      7332 |      4.4%       |          7332 |        4.4%         |
+
+>The rest calls are with negligible runtime.
+
+#### For multiplication test
+
+The call graph of multiplication test is shown below.
+
+![Call graph of multiplication](figures/call_multiplication_8192.png)
+
+| Name                                            | Call Count | Time (ms) | Time percentage | Own Time (ms) | Own time percentage |
+| ----------------------------------------------- | ---------: | --------: | :-------------: | ------------: | :-----------------: |
+| `flo_addition_test.py`                          |          1 |    164414 |     100.0%      |         21216 |        12.9%        |
+| `random_matrix_gen`                             |          2 |     76665 |      46.6%      |         32751 |        19.9%        |
+| `__getitem__`                                   |  134217728 |     66532 |      40.5%      |         44601 |        27.1%        |
+| `uniform`                                       |  134217728 |     35841 |      21.8%      |         28127 |        17.1%        |
+| \<built-in method `builtins.isinstance`\>       |  268435462 |     14614 |      8.9%       |         14614 |        8.9%         |
+| \<method `append` of `list` objects\>           |  134217728 |      8072 |      4.9%       |          8072 |        4.9%         |
+| \<method `random` of `_random.Random` objects\> |  134217728 |      7713 |      4.7%       |          7713 |        4.7%         |
+| \<built-in method `builtins.len`\>              |  134217742 |      7316 |      4.4%       |          7316 |        4.4%         |
+
+>The rest calls are with negligible runtime.
+
+#### Analysis for FLO Runtime
+
+In the two tables above, `flo_addition_test.py` and `flo_multiplication.py` is the test script, hence takes the whole runtime. Function `random_matrix_gen` and `uniform` is for generating the random matrices. From the CProfiler statistics, we can see that, the efficiency of matrix elements addition and multiplication is nearly the same, including the detailed statistics for each function calls. The most of the runtime, that is to say, up to is 74.95% in addition and 75.82% in multiplication, setting aside the runtime of matrices generation, is spent on indexing the elements.
+
+Since the process of indexing the elements, or `__getitem__` function dominates the runtime of FLO, the efficiency advantage of floating point addition against multiplication is completely diluted. Thus, seemingly, floating point multiplication is as "fast" as addition, which is the reason why our Strassen's method is always faster than the standard matrix multiplication in spite of the choice of recursion point, even if which is set to be 1.
 
 ---
 
