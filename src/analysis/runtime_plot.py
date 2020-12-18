@@ -4,21 +4,22 @@ import matplotlib.pyplot as plt
 import openpyxl
 from scipy.optimize import curve_fit
 
-t = np.zeros(75)
-n = np.zeros(75)
+t = np.zeros(80)
+n = np.zeros(80)
 
 wb = openpyxl.load_workbook("data.xlsx")
 ws = wb['multiplication']
-for i in range(0, 75):
+for i in range(0, 80):
     n[i] = ws['A' + str(i + 1)].value
     t[i] = ws['B' + str(i + 1)].value
 
-n = np.append(n, [1024, 2048])
-t = np.append(t, [ws['D1'].value, ws['D2'].value])
 
-c = np.polyfit(n, t, 3)
-print(c)
-f = np.polyval(c, n)
+# n = np.append(n, [1024, 2048])
+# t = np.append(t, [ws['D1'].value, ws['D2'].value])
+
+# c = np.polyfit(n, t, 3)
+# print(c)
+# f = np.polyval(c, n)
 
 
 def func(xval, c1, c2, c3, c4):
@@ -32,21 +33,22 @@ c3 = popt[2]
 c4 = popt[3]
 yvals = func(n, c1, c2, c3, c4)
 
-# plt.figure(figsize=(14.4, 6.4))
-# plt.subplot(1, 2, 1)
-plt.plot(n, t, 'x', label='runtime of Strassen\'s method')
-plt.plot(n, f, label=r'n^3 order polynomial fitted runtime')
-plt.grid()
-plt.title('The runtime of matrix multiplication with varied matrix size\n'
-          'recursion point is set to be 128')
-plt.xlabel('Matrix size (n by n)')
-plt.ylabel('Runtime/s')
-plt.legend(loc='upper left')
+# plt.figure(figsize=(6.4, 4.8), dpi=600)
+# # plt.subplot(1, 2, 1)
+# plt.plot(n, t, 'x', label='runtime of Strassen\'s method')
+# plt.plot(n, f, label=r'$n^3$ order polynomial fitted runtime')
+# plt.grid()
+# plt.title('The runtime of matrix multiplication with varied matrix size\n'
+#           'recursion point is set to be 128')
+# plt.xlabel('Matrix size (n by n)')
+# plt.ylabel('Runtime/s')
+# plt.legend(loc='upper left')
 
-figure()
+# figure()
+plt.figure(figsize=(6.4, 4.8), dpi=600)
 # plt.subplot(1, 2, 2)
 plt.plot(n, t, 'x', label='runtime of Strassen\'s method')
-plt.plot(n, yvals, label='polynomial fitted runtime')
+plt.plot(n, yvals, label=r'$n^{2.81}$ polynomial fitted runtime')
 plt.grid()
 plt.title('The runtime of matrix multiplication with varied matrix size\n'
           'recursion point is set to be 128')
