@@ -13,7 +13,7 @@ print("Matrix 1 generated")
 m2 = random_matrix_gen(n)
 print("Matrix 2 generated")
 
-wb = openpyxl.load_workbook('../analysis/data.xlsx')
+wb = openpyxl.load_workbook('../../analysis/data.xlsx')
 print("workbook", wb.sheetnames, "loaded")
 ws = wb['crossover_point']
 

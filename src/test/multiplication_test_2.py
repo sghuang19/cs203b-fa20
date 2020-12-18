@@ -4,7 +4,7 @@ import openpyxl
 
 n = [1024, 2048, 4096, 8192]
 
-wb = openpyxl.load_workbook('../analysis/data.xlsx')
+wb = openpyxl.load_workbook('../../analysis/data.xlsx')
 print("workbook", wb.sheetnames, "loaded")
 ws = wb['multiplication']
 

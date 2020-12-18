@@ -6,7 +6,7 @@ s = 16
 e = 4096
 step = 16
 
-wb = openpyxl.load_workbook('../analysis/data.xlsx')
+wb = openpyxl.load_workbook('../../analysis/data.xlsx')
 print("workbook", wb.sheetnames, "loaded")
 ws = wb['multiplication']
 

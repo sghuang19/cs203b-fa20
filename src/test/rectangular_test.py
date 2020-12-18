@@ -5,7 +5,7 @@ import openpyxl
 m = 256
 n = 256
 
-wb = openpyxl.load_workbook('../analysis/data.xlsx')
+wb = openpyxl.load_workbook('../../analysis/data.xlsx')
 print("workbook", wb.sheetnames, "loaded")
 ws = wb['rectangular']
 
