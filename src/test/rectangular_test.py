@@ -10,7 +10,7 @@ print("workbook", wb.sheetnames, "loaded")
 ws = wb['rectangular']
 
 i = 1
-for n in range(m, 3 * m + 1):
+while n < 5 * m + 1:
     print("test for", m, 'by', n, 'matrix starts')
     ws['A' + str(i)] = n
 
@@ -35,7 +35,7 @@ for n in range(m, 3 * m + 1):
     print("==========")
 
     wb.save('../analysis/data.xlsx')
-    n += 16
+    n += 128
     i += 1
 
 print("benchmark finished")
