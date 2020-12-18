@@ -111,11 +111,11 @@ From the pseudocode we can know that there are three for-loop cycles so that the
 
 ### Time Complexity of Strassen Algorithm
 
-From the recurrence relationship we know that the run-time complexity is $T(n) = 7T(n/2) + \Theta(n^2)$ (when $n > 1$). By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^{\lg7})$.
+From the recurrence relationship we know that the run-time complexity is $T(n)=7T(n/2)$+ $\Theta(n^2)$(when n>1). By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^lg7)$.
 
 ### Crossover Point Estimation
 
-The crossover point means the size of matrix when the run-time of Strassen algorithm is faster than the Standard Matrix multiplication.
+ The crossover point means the size of matrix when the run-time of Strassen algorithm is faster than the Standard Matrix multiplication.
 
 <!-- TODO -->
 
@@ -129,8 +129,7 @@ The crossover point means the size of matrix when the run-time of Strassen algor
 
 ### Strassen Algorithm
 
-Comparing to the Obvious matrix multiplication, the Strassen's Algorithm replaces matrix multiplication into the matrix addition. In this algorithm, the operated matrices are divided into some submatrices and define some other submatrices to be the basic operated matrices which are calculated by the addition or subtraction of those submatrices which are divided from the operated matrices. Then repeat these procedures on all submatrices and get the resulting submatrices which we define as $P$. Then get the submatrices of the product of the original operated matrices. Finally add all these submatrices to get the result.
-
+Comparing to the Obvious matrix multiplication, the Strassen's Algorithm replaces matrix multiplication into the matrix addition. In this algorithm, the operated matrices are divided into some submatrices and define some other submatrices to be the basic operated matrices which are calculated by the addition or subtraction of those submatrices which are divided from the operated matrices. Then repeat these procedures on all submatrices and get the resulting submatrices which we define as "P". Then get the submatrices of the product of the original operated matries. Finally add all these submatrices to get the result.
 Since the Strassen's Algorithm replaces the one separated matrix multiplication with several new matrix additions. It can significantly reduce the running time of matrix multiplication lower. The pseudocode for Strassen's method used in two-ordered matrix can be written as follows:
 
 ```python
@@ -182,7 +181,7 @@ Strassen(A, B)
     return C
 ```
 
-According to the recurrence relation, the running time for Strassen's method is $T(n) = 7T(n/2) + \Theta(n^2)$. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
+According to the recurrence relation, the running time for Strassens method is $T(n) = 7T(n/2) + \Theta(n^2)$. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
 
 ### Standard Matrix Multiplication
 
@@ -211,19 +210,16 @@ SQUARE-MATRIX-MULTIPLY(A, B)
 ### Class `Matrix`
 
 A data structure for matrix. The matrix implementation is suitable for dense matrices. A class `Matrix` is defined in the implementation.  
-This class `Matrix` represent a matrix in “row-major” order (i.e. for an n×n-matrix the first row will be stored in an array at index 0 to index n-1 the
+This class `Matrix` represent a matrix in row-major order (i.e. for an n×n-matrix the first row will be stored in an array at index 0 to index n-1 the
 next row at n to 2n-1 and so on). The class provides a constructor and methods to get and set the element at any row column index.
 
 **Attributes**:
-
 ```
     row: int, default 1  
     col: int, default 1  
     elements: list, default [0.0]
 ```
-
 **Methods**：
-
 ```
     __init__(self, elements, row=None, col=None):
         # Generate a Matrix object.
@@ -248,7 +244,6 @@ next row at n to 2n-1 and so on). The class provides a constructor and methods t
     dimension(self):
         # Return row and col numbers of a Matrix object.
 ```
-
 #### Data Storage
 
 Matrix elements are stored in a list following row-major order.  
@@ -271,7 +266,37 @@ adaptive_add(a, b, target_row, target_col):
 adaptive_minus(a, b, target_row, target_col):  
     Given target matrix size, perform matrix subtraction of `Matrix` a and b.  
     The function is called by `strassen_matrix_multiply()`.  
-    Return a `Matrix` object with the size of `target_row`*`target_col`.
+    Return a `Matrix` object with the size of target_row*target_col.
+
+The following is the code of `adaptive_add(a, b, target_row, target_col)`. The code of `adaptive_minus(a,...)` is similar.
+
+    def adaptive_add(a, b, target_row, target_col):
+    """
+        Given target matrix size, perform adaptive matrix addition
+        :type a: Matrix
+        :type b: Matrix
+        :type target_col: Integer
+        :type target_row: Integer
+        :return: Matrix
+        """
+        arow = a.row
+        acol = a.col
+        brow = b.row
+        bcol = b.col
+        s = [0] * (target_col * target_row)
+        for i in range(target_row):
+            for j in range(target_col):
+                flag = False
+                if 0 <= i < arow and 0 <= j < acol:
+                    s[i * target_col + j] = a[i + 1, j + 1]
+                    flag = True
+                if 0 <= i < brow and 0 <= j < bcol:
+                    s[i * target_col + j] = s[i * target_col + j] + b[i + 1, j + 1]
+                    flag = True
+                if not flag:
+                    s[i * target_col + j] = 0
+        c = Matrix(s, target_row, target_col)
+        return c
 
 #### Function `square_matrix_multiply()`
 
@@ -279,10 +304,11 @@ square_matrix_multiply(a, b):
     Given `Matrix` a and b, perform standard matrix multiplication. `a.col` must equal to `b.row`.  
     Return a `Matrix` object.
 
-#### Function `strassen_matrix_multiply()`
+#### Function `strassen_multiply()`
 
 strassen_multiply(a, b, n=None):  
     Given `Matrix` a and b, perform an improved version of Strassen's algorithm.  
+    The `adaptive_add()` and `adaptive_minus()` are called in `strassen_multiply()` to tackle arbitrary matrix size inputs.  
     The algorithm is based on the paper published by Paolo D’Alberto and Alexandru Nicolau in 2007.  
     Return a `Matrix` object.
 
@@ -447,7 +473,74 @@ wb.save('data.xlsx')
 
 To make the condition as close as possible, `square_matrix_multiply()` is executed again every time `strassen_matrix_multiply()` runs in the loop, even theoretically the recursion point has no affect on the run time of `square_matrix_multiply()`.
 
+---
+
+## Empirical Analysis
+
+<!-- provides your results of parts 3 and 4 evaluating the adaptive method for matrix multiplication, Strassen’s algorithm, and the basic method. You should use [1] as an example of the type of results you should put in this section (tables, graphs, type of discussion) because when marking will expect to see graphs and results that are of comparable quality to this and measure similar quantities. -->
+
+<!-- TODO -->
+
+### Testing Platform
+
+The specifications of our main testing platform is as follows:
+
+- Hardware
+  - AMD Ryzen 9 3900X, with 12 cores, running at 3.8GHz, **maximum turbo frequency 4.6GHz**
+  - ADATA DDR4 3200MHz 16GB × 4, **running at 2666MHz**, quad channel
+  - Gigabyte X570 Gaming X
+- Software
+  - Windows 10 Professional 20H2
+  - Python 3.9.1
+  - PyCharm 2020.3, Professional Edition
+  - Visual Studio Community 2019
+
+>Special thanks to SUN Jiachen, for providing us with this powerful testing platform.
+
+<!-- TODO: add platform info -->
+
+Some other lightweight tests are conducted on our own platform Surface Pro 6, the specifications are shown below.
+
+- Hardware
+  - Surface Pro 6 1796
+  - Intel Core i7-8650U 1.99GHz, running at 2.11GHz, **maximum Turbo frequency 4.2GHz**
+  - 8GB of RAM, dual channel, **running at 1867MHz**
+- Software
+  - Windows 10 Professional 20H2
+  - WSL2, Kali Linux
+  - Python 3.9.1, running in WSL2
+  - PyCharm 2020.3 Professional Edition
+  - Visual Studio Code, with Pylance engine
+  - Visual Studio Community 2019
+
+### Preparation
+
+Firstly, we run the performance benchmark, to figure out the run time of `float` addition and `float` multiplication.
+
+ We tested the additions and multiplications between the elements of two matrices of size 8192 by 8192, in total $2^26$, which is the total runtime is shown below.
+
+|     Addition      |  Multiplication   | Ratio $\alpha/\pi$ |
+| :---------------: | :---------------: | :----------------: |
+| 89.12498784065247 | 87.74823570251465 | 0.984552568572583  |
+
+Which is obviously an absurd result, since generally, the runtime for addition cannot be longer than multiplication. In this case, the ratio is of sheds no light on the estimation of crossover point.
+
+In this experiment, the larger size of the matrices is, the more convincing the result is. However, too large matrices would lead to unacceptable runtime for a single test. After doing several brief test on multiplication of different matrices size, taking the pace of our work into consideration, we chose 512 by 512 matrices for finding the crossover point.
+
+### Crossover Point Finding
+
+<!-- TODO: add runtime -->
+
 For finding the crossover point, multiplications between 512 by 512 matrices are conducted. The range of crossover point searching is from 1 to 64, for each recursion point the test is conducted twice and take average, the whole test costs about 10 to 11 hours. The complete testing result in `.xlsx` format can be retrieved at.
+
+<!-- TODO: add links -->
+
+### Algorithm Performance
+
+#### Comparison between Two Algorithms
+
+#### Comparison for Recursion Point
+#### For Varied Recursion Point
 
 The test design is shown in [crossover point finding part](#Crossover20Point%20Finding), the plot of the runtime with respect to the selection of recursion point is shown below.
 
@@ -469,7 +562,7 @@ $$
 
 No obvious regular pattern could be found from the statistics. Therefore, the affect on the runtime of the Strassen's multiplication due to the choice of recursion point can be neglected.
 
-### Performance with Varied Matrix Size
+#### For Varied Matrix Size
 
 The runtime of Strassen's multiplication and its $n^3$ polynomial fitted graph is shown below.
 
@@ -485,9 +578,6 @@ T =
 5.42879675\times10^{-1}
 $$
 
-### Performance with Varied Matrix Shape
-
-![Runtime of matrix multiplication with varied matrix shape](figures/rectangular.png)
 
 ### More on FLO Benchmark
 
