@@ -1,24 +1,30 @@
 # coding: utf-8
 import exceptions
 import math
+# from CallingCounter import CallingCounter
 
 import random
 
 
-def random_matrix_gen(n):
+def random_matrix_gen(m, n=None):
     """
     Generates a random matrix of size n by n, the elements are randomly from -1 to 1 float number.
+    :param m: optional dimension
     :param n: the size of the matrix
+    :type m: int
     :type n: int
     :return: The generated random matrix
     :rtype Matrix
     """
+    if n is None:
+        n = m
     elements = []
-    for i in range(n * n):
+    for i in range(m * n):
         elements.append(random.uniform(-1, 1))
-    return Matrix(elements, n, n)
+    return Matrix(elements, m, n)
 
 
+# @CallingCounter
 def square_matrix_multiply(a, b):
     """
     Use the standard approach to multiply 2 matrices a and b, return their product.
@@ -40,6 +46,7 @@ def square_matrix_multiply(a, b):
     return c
 
 
+# @CallingCounter
 def strassen_multiply(a, b, n=None):  # for almost square matrix
     """
     Use the Strassen to multiply 2 matrices a and b, return their product.
@@ -134,6 +141,7 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
     return c
 
 
+# @CallingCounter
 def adaptive_add(a, b, target_row, target_col):
     """
         Given target matrix size, perform adaptive matrix addition
@@ -163,6 +171,7 @@ def adaptive_add(a, b, target_row, target_col):
     return c
 
 
+# @CallingCounter
 def adaptive_minus(a, b, target_row, target_col):
     """
         Given target matrix size, perform adaptive matrix subtraction
@@ -209,6 +218,7 @@ class Matrix:
     # TODO(SamuelHuang2019): Finish the docstring.
     # TODO(SamuelHuang2019): More methods.
 
+    # @CallingCounter
     def __init__(self, elements, row=None, col=None):
         """
         Initializes the matrix,
@@ -246,6 +256,7 @@ class Matrix:
                     result = result + '\n'
         return result
 
+    # @CallingCounter
     def __getitem__(self, item):
         """
         Get element with index of key, in row-major order
@@ -292,6 +303,7 @@ class Matrix:
                 raise (exceptions.ColumnOutOfBoundsException(item))
             return self.elements[item - 1]
 
+    # @CallingCounter
     def __add__(self, other):
         """
         If other is a matrix, perform matrix addition, else perform addition with a number element-wisely
@@ -311,6 +323,7 @@ class Matrix:
             self.elements[i] += other
         return self
 
+    # @CallingCounter
     def __sub__(self, other):
         """
         If other is a matrix, perform matrix subtraction, else perform subtraction with a number element-wisely
