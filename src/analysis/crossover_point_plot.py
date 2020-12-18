@@ -7,7 +7,7 @@ X = np.arange(1, 64 + 1)
 strassen = np.zeros(64)
 square = np.zeros(64)
 
-wb = openpyxl.load_workbook("../data.xlsx")
+wb = openpyxl.load_workbook("data.xlsx")
 ws = wb['crossover_point']
 for i in range(0, 64):
     strassen[i] = ws['B' + str(i + 1)].value

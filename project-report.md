@@ -462,6 +462,22 @@ $$
 
 No obvious regular pattern could be found from the statistics. Therefore, the affect on the runtime of the Strassen's multiplication due to the choice of recursion point can be neglected.
 
+#### For Varied Matrix Size
+
+The runtime of Strassen's multiplication and its $n^3$ polynomial fitted graph is shown below.
+
+![Runtime of Strassen's method with varied matrix size](figures/runtime_strassen_1200.png)
+
+In this figure, the runtime of our Strassen's multiplication can be perfectly fitted with
+
+$$
+T =
+6.26245873\times10^{-7}n^3 +
+1.25884940\times10^{-4}n^2 -
+7.98600504\times10^{-3}n -
+5.42879675\times10^{-1}
+$$
+
 
 ### More on FLO Benchmark
 
@@ -475,7 +491,7 @@ The call graph of addition test is shown below.
 
 The most called functions are shown below (in order of time).
 
-| Name                                            | Call Count | Time (ms) | Time percentage | Onw Time (ms) | Own time percentage |
+| Name                                            | Call Count | Time (ms) | Time percentage | Own Time (ms) | Own time percentage |
 | ----------------------------------------------- | ---------: | --------: | :-------------: | ------------: | :-----------------: |
 | `flo_addition_test.py`                          |          1 |    166184 |     100.0%      |         22330 |        13.4%        |
 | `random_matrix_gen`                             |          2 |     77056 |      46.4%      |         33498 |        20.2%        |
@@ -494,7 +510,7 @@ The call graph of multiplication test is shown below.
 
 ![Call graph of multiplication](figures/call_multiplication_8192.png)
 
-| Name                                            | Call Count | Time (ms) | Time percentage | Onw Time (ms) | Own time percentage |
+| Name                                            | Call Count | Time (ms) | Time percentage | Own Time (ms) | Own time percentage |
 | ----------------------------------------------- | ---------: | --------: | :-------------: | ------------: | :-----------------: |
 | `flo_addition_test.py`                          |          1 |    164414 |     100.0%      |         21216 |        12.9%        |
 | `random_matrix_gen`                             |          2 |     76665 |      46.6%      |         32751 |        19.9%        |
