@@ -1,4 +1,5 @@
-from Matrix import *
+from matrix import Matrix, square_matrix_multiply
+from matrix import strassen_multiply
 import numpy as np
 
 elements = [1, 2, 3, 4, 5, 6]
@@ -12,6 +13,7 @@ c = strassen_multiply(m1, m2)
 c2 = np.dot(a1, a2)
 print(c)
 print(c2)
+
 
 m1 = Matrix(range(10000), 100, 100)
 m2 = Matrix(range(10000), 100, 100)
