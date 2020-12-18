@@ -76,7 +76,7 @@ The first benefit writers listed is their algorithm divides the MM problems into
 
 The concrete implementation of the adaptive algorithm is realized by several steps. To begin with, writers declared several notations and computations. As the writer suggests, their algorithm reduces the number of passes as well as the number of computations because of a balanced division process.
 
- For matrix $C=A×B$, where $σ(A)=m×n$, decompose $A$ to four small matrices $A0, A1, A2 and A3$. The size of four small matrices are $A0$ with $σ(A0)$= $\lceil m/2 \rceil$×$\lceil n/2 \rceil$$,A1$ with $σ(A1)$=$\lceil m/2 \rceil$×$\lfloor n/2 \rfloor$, $A2$ with $σ(A2)$=$\lfloor m/2 \rfloor$×$\lceil n/2 \rceil$and $A3$ with $σ(A3)$=$\lfloor m/2 \rfloor$×$\lfloor n/2 \rfloor$. The same with matrix $B$. When we do matrix addition, we expand the scope of matrix addition to different sizes. For example, we define matrix $X=Y+Z$, if the size of $Y$ and $Z$ is not the same, then we expand the size of $X$ to the largest of them and the redundant part of $X$ is set 0. After that, the adaptive algorithm begin. Several matrix additions and multiplications is performed and are put into practice to several systems. Through this process, the writers found that the same algorithm applied to different systems can have different results.
+ For matrix $C=A×B$, where $σ(A)=m×n$, decompose $A$ to four small matrices $A_{0}, A_{1}, A_{2}$ and $A_{3}$. The size of four small matrices are $A_{0}$ with $σ(A_{0})$= $\lceil m/2 \rceil$×$\lceil n/2 \rceil$$,A_{1}$ with $σ(A_{1})$=$\lceil m/2 \rceil$×$\lfloor n/2 \rfloor$, $A_{2}$ with $σ(A_{2})$=$\lfloor m/2 \rfloor$×$\lceil n/2 \rceil$and $A_{3}$ with $σ(A_{3})$=$\lfloor m/2 \rfloor$×$\lfloor n/2 \rfloor$. The same with matrix $B$. When we do matrix addition, we expand the scope of matrix addition to different sizes. For example, we define matrix $X=Y+Z$, if the size of $Y$ and $Z$ is not the same, then we expand the size of $X$ to the largest of them and the redundant part of $X$ is set 0. After that, the adaptive algorithm begin. Several matrix additions and multiplications is performed and are put into practice to several systems. Through this process, the writers found that the same algorithm applied to different systems can have different results.
 
 ### Experiment Design and Results
 
@@ -243,8 +243,6 @@ SQUARE-MATRIX-MULTIPLY(A, B)
 
     The index rule of an element in a Matrix object follows conventions in math. 
     That is, Matrix[i, j] is the element in the ith row and jth column (i and j run from 1 to Matrix.row and Matrix.col respectively).
-
-
 
 #### Other Operations
 
