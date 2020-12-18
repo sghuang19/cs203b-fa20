@@ -270,33 +270,35 @@ adaptive_minus(a, b, target_row, target_col):
 
 The following is the code of `adaptive_add(a, b, target_row, target_col)`. The code of `adaptive_minus(a,...)` is similar.
 
-    def adaptive_add(a, b, target_row, target_col):
+```python
+def adaptive_add(a, b, target_row, target_col):
     """
-        Given target matrix size, perform adaptive matrix addition
-        :type a: Matrix
-        :type b: Matrix
-        :type target_col: Integer
-        :type target_row: Integer
-        :return: Matrix
-        """
-        arow = a.row
-        acol = a.col
-        brow = b.row
-        bcol = b.col
-        s = [0] * (target_col * target_row)
-        for i in range(target_row):
-            for j in range(target_col):
-                flag = False
-                if 0 <= i < arow and 0 <= j < acol:
-                    s[i * target_col + j] = a[i + 1, j + 1]
-                    flag = True
-                if 0 <= i < brow and 0 <= j < bcol:
-                    s[i * target_col + j] = s[i * target_col + j] + b[i + 1, j + 1]
-                    flag = True
-                if not flag:
-                    s[i * target_col + j] = 0
-        c = Matrix(s, target_row, target_col)
-        return c
+    Given target matrix size, perform adaptive matrix addition
+    :type a: Matrix 
+    :type b: Matrix
+    :type target_col: Integer
+    :type target_row: Integer
+    :return: Matrix
+    """  
+    arow = a.row
+    acol = a.col
+    brow = b.row  
+    bcol = b.col
+    s = [0] * (target_col * target_row)
+    for i in range(target_row): 
+        for j in range(target_col):
+            flag = False
+            if 0 <= i < arow and 0 <= j < acol:
+                s[i * target_col + j] = a[i + 1, j + 1]
+                flag = True
+            if 0 <= i < brow and 0 <= j < bcol:
+                s[i * target_col + j] = s[i * target_col + j] + b[i + 1, j + 1]
+                flag = True
+            if not flag:
+                s[i * target_col + j] = 0
+    c = Matrix(s, target_row, target_col)   
+    return c
+```
 
 #### Function `square_matrix_multiply()`
 
