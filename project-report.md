@@ -253,7 +253,7 @@ adaptive_add(a, b, target_row, target_col):
 adaptive_minus(a, b, target_row, target_col):  
     Given target matrix size, perform matrix subtraction of `Matrix` a and b.  
     The function is called by `strassen_matrix_multiply()`.  
-    Return a `Matrix` object with the size of target_row*target_col.
+    Return a `Matrix` object with the size of `target_row`*`target_col`.
 
 #### Function `square_matrix_multiply()`
 
