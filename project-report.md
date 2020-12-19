@@ -344,13 +344,14 @@ def random_matrix_gen(n):
 <!-- provides your results of parts 3 and 4 evaluating the adaptive method for matrix multiplication, Strassen’s algorithm, and the basic method. You should use [1] as an example of the type of results you should put in this section (tables, graphs, type of discussion) because when marking will expect to see graphs and results that are of comparable quality to this and measure similar quantities. -->
 
 <!-- TODO -->
+---
 
 ### Testing Platform
 
 The specifications of our main testing platform is as follows:
 
 - Hardware
-  - AMD Ryzen 9 3900X, with 12 cores, running at 3.8GHz, **maximum turbo frequency 4.6GHz**
+  - AMD Ryzen 9 3900X, with 12 cores, 24 threads, running at 3.8GHz, **maximum turbo frequency 4.6GHz**
   - ADATA DDR4 3200MHz 16GB × 4, **running at 2666MHz**, quad channel
   - Gigabyte X570 Gaming X
 - Software
@@ -366,8 +367,8 @@ The specifications of our main testing platform is as follows:
 Some other lightweight tests are conducted on our own platform Surface Pro 6, the specifications are shown below.
 
 - Hardware
-  - Surface Pro 6 1796
-  - Intel Core i7-8650U 1.99GHz, running at 2.11GHz, **maximum Turbo frequency 4.2GHz**
+  - Microsoft Surface Pro 6 1796
+  - Intel Core i7-8650U, with 4 cores, 8 threads, 1.99GHz, running at 2.11GHz, **maximum Turbo frequency 4.2GHz**
   - 8GB of RAM, dual channel, **running at 1867MHz**
 - Software
   - Windows 10 Professional 20H2
@@ -376,6 +377,8 @@ Some other lightweight tests are conducted on our own platform Surface Pro 6, th
   - PyCharm 2020.3 Professional Edition
   - Visual Studio Code, with Pylance engine
   - Visual Studio Community 2019
+
+---
 
 ### Performance Benchmark
 
@@ -391,7 +394,7 @@ Therefore, it is natural for us to try to find this ratio by running benchmark, 
 
 ```python
 import time
-from matrix import random_matrix_gen
+from Matrix import random_matrix_gen
 
 n = 8192
 m1 = random_matrix_gen(n)
@@ -408,7 +411,7 @@ Similarly, the test for multiplication is written in another module, so that we 
 
 Firstly, we run the performance benchmark, to figure out the run time of `float` addition and `float` multiplication.
 
-We tested the additions and multiplications between the elements of two matrices of size 8192 by 8192, in total $2^{26}$, which is the total runtime is shown below.
+We tested the additions and multiplications between the elements of two matrices of size 8192 by 8192, in total $2^{26}$ floating point numbers, the total runtime of which is shown below.
 
 |     Addition      |  Multiplication   | Ratio $\alpha/\pi$ |
 | :---------------: | :---------------: | :----------------: |
@@ -418,17 +421,14 @@ Which is obviously an absurd result, since generally, the runtime for addition c
 
 In this experiment, the larger size of the matrices is, the more convincing the result is. However, too large matrices would lead to unacceptable runtime for a single test. After doing several brief test on multiplication of different matrices size, taking the pace of our work into consideration, we chose 512 by 512 matrices for finding the crossover point.
 
-### Crossover Point Finding
+---
 
-<!-- TODO: add runtime -->
-<!-- TODO: remove redundancy -->
+### Crossover Point Searching
 
 For searching for the crossover point, we used `openpyxl` package to collect the data in Excel file. In the script, `n` is the matrix size we consider, `s` is the start point for searching, `e` is accordingly the end point, `r` means for each recursion point, tests are conducted twice and take average.
 
-<!-- TODO: update code -->
-
 ```python
-from matrix import square_matrix_multiply, strassen_multiply
+from Matrix import *
 import time
 import openpyxl
 
@@ -443,7 +443,7 @@ print("Matrix 1 generated")
 m2 = random_matrix_gen(n)
 print("Matrix 2 generated")
 
-wb = openpyxl.load_workbook('data.xlsx')
+wb = openpyxl.load_workbook('../analysis/data.xlsx')
 print("workbook", wb.sheetnames, "loaded")
 ws = wb['crossover_point']
 
@@ -474,32 +474,22 @@ for i in range(s, e + 1):
     ws['C' + str(i)] = square / r
     print("==========")
 
-wb.save('data.xlsx')
+wb.save('../analysis/data.xlsx')
 ```
 
 To make the condition as close as possible, `square_matrix_multiply()` is executed again every time `strassen_matrix_multiply()` runs in the loop, even theoretically the recursion point has no affect on the run time of `square_matrix_multiply()`.
 
----
-
-### Algorithm Performance
-
-#### Comparison between Two Algorithms
-
-#### Comparison for Recursion Point
-
-#### For Varied Recursion Point
-
-The test design is shown in [crossover point finding part](#Crossover20Point%20Finding), the plot of the runtime with respect to the selection of recursion point is shown below.
+The plot of the runtime with respect to the selection of recursion point is shown below.
 
 ![Runtime of algorithms with different recursion points](figures/crossover_point.png)
 
-From the figure it is clear that, for 512 by 512 matrix multiplication, Strassen's method is stably faster then the standard method for about 40 seconds, even if the recursion point is set to be 1. In general, though the runtime of the two methods has fluctuations, but the tendency is synchronous, hence we may consider these changes as a consequence of the load of the computer and operating system.
+From the figure, it is clear that, for 512 by 512 matrix multiplication, Strassen's method is stably faster then the standard method for about 40 seconds, even if the recursion point is set to be 1. In general, though the runtime of the two methods has fluctuations, but the tendency is synchronous, hence we may consider these changes as a consequence of the load of the computer and operating system.
 
 More intuitively, the plot of the difference is shown below.
 
 ![The difference between the runtime of algorithms with different recursion points](figures/crossover_point_difference.png)
 
-In which the difference percentage is calculated as
+In which the difference percentage is defined as
 
 $$
 \text{difference percentage} =
@@ -509,27 +499,59 @@ $$
 
 No obvious regular pattern could be found from the statistics. Therefore, the affect on the runtime of the Strassen's multiplication due to the choice of recursion point can be neglected.
 
+---
+
+### Algorithm Performance
+
 #### For Varied Matrix Size
 
-The runtime of Strassen's multiplication and its $n^3$ polynomial fitted graph is shown below.
+The runtime of Strassen's multiplication and its $n^{2.81}$ polynomial fitted graph, along with that of standard matrix multiplication graph is shown below.
 
-![Runtime of Strassen's method with varied matrix size](figures/runtime_strassen_1200.png)
+![Runtime of Strassen's method with varied matrix size](figures/runtime_1200.png)
 
 In this figure, the runtime of our Strassen's multiplication can be perfectly fitted with
 
 $$
 T =
-6.26245873\times10^{-7}n^3 +
-1.25884940\times10^{-4}n^2 -
-7.98600504\times10^{-3}n -
-5.42879675\times10^{-1}
+3.0306\times10^{-6}n^{2.81} -
+0.0001 n^2 +
+0.0333 n -
+2.7749.
 $$
+
+The runtime of our standard matrix multiplication can be perfectly fitted with
+
+$$
+T =
+1.1190\times10^{-6}n^3 +
+1.9060\times10^{-4}n^2 -
+1.0860\times10^{-1}n +
+1.0460.
+$$
+
+Adding a small amount of results from larger matrices, the conclusion is still roughly consistent.
+
+![Runtime of multiplication with varied matrix size](figures/runtime_4096.png)
+
+These results perfectly corresponds to the asymptotic estimation of time complexity in theoretical analysis.
+
+#### For Varied Matrix Shape
+
+Though adaptive Strassen's method, it should work best with square or almost square matrices. We also conducted a test for the performance of adaptive Strassen's method with varied matrix size.
+
+In this experiment, the dimension of the matrices is from 256 by 256 to 256 by 1280, hence the ratio of the long edge over the short edge is from 1 to 5. The results are shown below.
+
+![Runtime of multiplication with varied matrix shape](figures/rectangular.png)
+
+From the figure, it is clear that, the runtime of MM in two methods increases linearly as oen dimension of the matrix grows. However, the runtime of adaptive Strassen's method grows even slower. This contradicts our assumption.
+
+---
 
 ### More on FLO Benchmark
 
 The results obtained from FLO benchmark is completely invalid, hence we did further research on it. The profiler tool in PyCharm enables us to analyze the CPU time and function calling tree. According to the report, most of the CPU time were spent on indexing the elements of the matrices.
 
-#### For addition test
+#### For Addition Test
 
 The call graph of addition test is shown below.
 
@@ -550,7 +572,7 @@ The most called functions are shown below (in order of time).
 
 >The rest calls are with negligible runtime.
 
-#### For multiplication test
+#### For Multiplication Test
 
 The call graph of multiplication test is shown below.
 
@@ -573,6 +595,31 @@ The call graph of multiplication test is shown below.
 
 In the two tables above, `flo_addition_test.py` and `flo_multiplication.py` is the test script, hence takes the whole runtime. Function `random_matrix_gen` and `uniform` is for generating the random matrices. From the CProfiler statistics, we can see that, the efficiency of matrix elements addition and multiplication is nearly the same, including the detailed statistics for each function calls. The most of the runtime, that is to say, up to is 74.95% in addition and 75.82% in multiplication, setting aside the runtime of matrices generation, is spent on indexing the elements.
 
+```python
+def __getitem__(self, item):
+    ...
+    # for tuple input
+    if isinstance(item, tuple):
+        # both of the elements in the item are slice
+        if isinstance(item[0], slice) and isinstance(item[1], slice):
+            ...
+            return Matrix(e, r, c)
+
+        # one slice, one int
+        # both of the elements in the item are int
+        if isinstance(item[0], int) and isinstance(item[1], int):
+            ...
+            return self.elements[(item[0] - 1) * self.col + item[1] - 1]
+
+    # else for int input
+    if isinstance(item, int):
+        if item > len(self.elements):
+            raise (exceptions.ColumnOutOfBoundsException(item))
+        return self.elements[item - 1]
+```
+
+Referring to the source code of `__getitem__` method, it is clear that, in order to support different indexing patterns, and to give a hint for users while for out of bounds exception, `isinstance` and `len` functions are called too many times.
+
 Since the process of indexing the elements, or `__getitem__` function dominates the runtime of FLO, the efficiency advantage of floating point addition against multiplication is completely diluted. Thus, seemingly, floating point multiplication is as "fast" as addition, which is the reason why our Strassen's method is always faster than the standard matrix multiplication in spite of the choice of recursion point, even if which is set to be 1.
 
 ---
@@ -581,6 +628,12 @@ Since the process of indexing the elements, or `__getitem__` function dominates 
 
 ### Performance Bottleneck
 
+The performance of our algorithms is severely restricted by the data structure. More concisely, the performance bottleneck is the process of indexing the elements in matrix.
+
 ### Balance between Performance and Ease of use
+
+The reason the indexing process, or the `__getitem__` method is inefficient, is the tedious procedure for judging the form of indexing. Such practice offers convenience for user, since more complex indexing operations, such as slice, are supported through it. However, this also caused huge performance waste.
+
+The balance between code performance and user friendliness is of great significance,
 
 ### Optimizations
