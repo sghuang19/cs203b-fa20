@@ -74,6 +74,8 @@ The writers of the provided paper, Paolo D'Alberto and Alexandru Nicolau talked 
 
 The first benefit writers listed is their algorithm divides the MM problems into a set of balanced sub-problems without any matrix padding or peelingIn addition;Second, their algorithm applies Strassen’s strategy recursively as many time as a function of the problem size.Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The writers' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm provided by the writers of the given paper.
 
+---
+
 ### Implementation of the Adaptive Method
 
 The concrete implementation of the adaptive algorithm is realized by several steps. To begin with, writers declared several notations and computations. As the writer suggests, their algorithm reduces the number of passes as well as the number of computations because of a balanced division process.
@@ -91,13 +93,19 @@ $$
 
 The dimension is the same with matrix $B$. When we do matrix addition, we expand the scope of matrix addition to different sizes. For example, we define matrix $X = Y + Z$, if the size of $Y$ and $Z$ is not the same, then we expand the size of $X$ to the largest of them and the redundant part of $X$ is set 0. After that, the adaptive algorithm begin. Several matrix additions and multiplications is performed and are put into practice to several systems. Through this process, the writers found that the same algorithm applied to different systems can have different results.
 
+---
+
 ### Experiment Design and Results
 
 In conclusion, the adaptive algorithm is based on the Strassen method and have some advanced operations. The Strassen method has its run-time advantage when the matrix size is quite big, but this edge cannot be exhibited when the size is not big enough, because it add quite a lot matrix additions compared to the old standard matrix multiplication. For instance, the size has to be bigger than about 1000*1000 when Strassen method begin to show its superiority. However,  speedups up to 30% are observed over already tuned MM using this hybrid approach.
 
+---
+
 ### Possible Applications
 
 Their algorithm can be useful in some real-world problems involving matrix multiplication, especially for those matrix which size is big and  not fixed. For practical application, this algorithm can be applied to many industrial problems. For instance, the circuits equations which include several unknown parameters can be solved quickly by using matrix divisions, which means matrix multiplications as well. What's more, the signal processing can make good use of the algorithm, too. The input and output signals' relationship can be expressed in matrix, too. With the advantage of changeable size and comparatively fast speed, the adaptive method has great potential in real-world problems.
+
+---
 
 ## Theoretical Analysis
 
@@ -109,9 +117,13 @@ Uses an abstract model to estimate the crossover point analytically. You can pro
 
 From the pseudocode we can know that there are three for-loop cycles so that the time complexity for Standard matrix multiplication is $\Theta(n^3)$.
 
+---
+
 ### Time Complexity of Strassen Algorithm
 
 From the recurrence relationship we know that the run-time complexity is $T(n)=7T(n/2)$+ $\Theta(n^2)$(when n>1). By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^lg7)$.
+
+---
 
 ### Crossover Point Estimation
 
@@ -183,6 +195,8 @@ Strassen(A, B)
 
 According to the recurrence relation, the running time for Strassens method is $T(n) = 7T(n/2) + \Theta(n^2)$. When $n$ is very large, the time is significantly lower than the standard matrix multiplication.
 
+---
+
 ### Standard Matrix Multiplication
 
 For the standard matrix multiplication, the running time is about n^3, and the pseudocode is given below:
@@ -206,6 +220,8 @@ SQUARE-MATRIX-MULTIPLY(A, B)
 <!-- describes your implementation of the two algorithms and the way you generate test problems (ie matrices to multiply). -->
 
 <!-- TODO -->
+
+---
 
 ### Class `Matrix`
 
@@ -257,6 +273,8 @@ For instance, a 2 by 2 matrix $a$ is stored as a list \[$a_{11} a_{12} a_{21} a_
 
 The index rule of an element in a `Matrix` object follows conventions in math.  
 That is, Matrix\[i, j\] is the element in the ith row and jth column (i and j run from 1 to Matrix.row and Matrix.col respectively).
+
+---
 
 ### Other Operations
 
@@ -343,7 +361,6 @@ def random_matrix_gen(n):
 
 <!-- provides your results of parts 3 and 4 evaluating the adaptive method for matrix multiplication, Strassen’s algorithm, and the basic method. You should use [1] as an example of the type of results you should put in this section (tables, graphs, type of discussion) because when marking will expect to see graphs and results that are of comparable quality to this and measure similar quantities. -->
 
-<!-- TODO -->
 ---
 
 ### Testing Platform
