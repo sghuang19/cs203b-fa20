@@ -17,8 +17,7 @@ def random_matrix_gen(m, n=None):
     :return: The generated random matrix
     :rtype Matrix
     """
-    if n is None:
-        n = m
+    n = m if n is None else n
     elements = []
     for i in range(m * n):
         elements.append(random.uniform(-1, 1))
@@ -52,6 +51,7 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
     """
     Use the Strassen to multiply 2 matrices a and b, return their product.
 
+    :param n:
     :type a: Matrix
     :type b: Matrix
     :return: Matrix
@@ -219,8 +219,7 @@ class Matrix:
     # TODO(SamuelHuang2019): Finish the docstring.
     # TODO(SamuelHuang2019): More methods.
 
-    # @profile
-    def __init__(self, elements, row=None, col=None):
+    def __init__(self, elements, row=1, col=None):
         """
         Initializes the matrix,
 
@@ -231,9 +230,6 @@ class Matrix:
         :type col: int
         """
 
-        if row is None:
-            row = 1
-            col = len(elements)
         if col is None:
             col = len(elements) // row
 
