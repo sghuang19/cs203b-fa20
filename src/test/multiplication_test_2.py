@@ -2,7 +2,7 @@ from Matrix import *
 import time
 import openpyxl
 
-n = [1024, 2048, 4096, 8192]
+n = [2048, 4096, 8192]
 
 wb = openpyxl.load_workbook('../../analysis/data.xlsx')
 print("workbook", wb.sheetnames, "loaded")
@@ -17,13 +17,14 @@ for d in n:
     m2 = random_matrix_gen(d)
     print("Matrix 2 generated")
 
-    ws['C' + str(i)] = d
+    ws['E' + str(i)] = d
 
     time1 = time.time()
-    c = strassen_multiply(m1, m2, 128)
+    # c = strassen_multiply(m1, m2, 128)
+    c = square_matrix_multiply(m1, m2)
     time2 = time.time()
     print("The run time of Strassen's method is", time2 - time1)
-    ws['D' + str(i)] = time2 - time1
+    ws['F' + str(i)] = time2 - time1
     print("==========")
 
     wb.save('../analysis/data.xlsx')
