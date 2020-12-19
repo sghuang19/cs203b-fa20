@@ -1,4 +1,5 @@
 # coding: utf-8
+from memory_profiler import profile
 import exceptions
 import math
 # from CallingCounter import CallingCounter
@@ -24,7 +25,7 @@ def random_matrix_gen(m, n=None):
     return Matrix(elements, m, n)
 
 
-# @CallingCounter
+# @profile
 def square_matrix_multiply(a, b):
     """
     Use the standard approach to multiply 2 matrices a and b, return their product.
@@ -46,7 +47,7 @@ def square_matrix_multiply(a, b):
     return c
 
 
-# @CallingCounter
+# @profile
 def strassen_multiply(a, b, n=None):  # for almost square matrix
     """
     Use the Strassen to multiply 2 matrices a and b, return their product.
@@ -141,7 +142,7 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
     return c
 
 
-# @CallingCounter
+# @profile
 def adaptive_add(a, b, target_row, target_col):
     """
         Given target matrix size, perform adaptive matrix addition
@@ -171,7 +172,7 @@ def adaptive_add(a, b, target_row, target_col):
     return c
 
 
-# @CallingCounter
+# @profile
 def adaptive_minus(a, b, target_row, target_col):
     """
         Given target matrix size, perform adaptive matrix subtraction
@@ -218,7 +219,7 @@ class Matrix:
     # TODO(SamuelHuang2019): Finish the docstring.
     # TODO(SamuelHuang2019): More methods.
 
-    # @CallingCounter
+    # @profile
     def __init__(self, elements, row=None, col=None):
         """
         Initializes the matrix,
@@ -256,7 +257,7 @@ class Matrix:
                     result = result + '\n'
         return result
 
-    # @CallingCounter
+    # @profile
     def __getitem__(self, item):
         """
         Get element with index of key, in row-major order
@@ -303,7 +304,7 @@ class Matrix:
                 raise (exceptions.ColumnOutOfBoundsException(item))
             return self.elements[item - 1]
 
-    # @CallingCounter
+    # @profile
     def __add__(self, other):
         """
         If other is a matrix, perform matrix addition, else perform addition with a number element-wisely
@@ -323,7 +324,7 @@ class Matrix:
             self.elements[i] += other
         return self
 
-    # @CallingCounter
+    # @profile
     def __sub__(self, other):
         """
         If other is a matrix, perform matrix subtraction, else perform subtraction with a number element-wisely
@@ -342,6 +343,7 @@ class Matrix:
             self.elements[i] -= other
         return self
 
+    # @profile
     def __sizeof__(self):
         return len(self.elements)
 
