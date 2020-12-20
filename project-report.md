@@ -7,8 +7,7 @@ This is the report for the project of DSAA course, written by Group 2, with foll
 - LI Yuru, SID 11911035 from EIE
 - TIAN Yuqiong, SID 11911039 from EIE
 
-The complete resources of our work in this project, including Python source codes, testing scripts, experiment raw data, figures and report can be retrieved at [our GitHub repo](<!-- provides your results of parts 3 and 4 evaluating the adaptive method for matrix multiplication, Strassen’s algorithm, and the basic method. You should use [1] as an example of the type of results you should put in this section (tables, graphs, type of discussion) because when marking will expect to see graphs and results that are of comparable quality to this and measure similar quantities. -->
-)
+The complete resources of our work in this project, including Python source codes, testing scripts, experiment raw data, figures and report can be retrieved at [our GitHub repo](https://github.com/SamuelHuang2019/dsaa-project-matrix)
 
 [toc]
 
@@ -692,7 +691,17 @@ Some optimizations can be made to our code to improve the performance.
 > - SUN Jiachen, who provided testing platform for us.
 > - HAN Zichen, who offered us professional advice on Python and other CS problems.
 
-Our project is based on GitHub for version control and code cooperation.
+Our project is based on GitHub for version control and code cooperation, on which we created projects for different stages of our work.
+
+![Project for developing preparation](figures/project_1.png)
+
+![Project for developing preparation](figures/projects.png)
+
+Also, we opened some issues while code debugging.
+
+![Project for developing preparation](figures/issue_4.png)
+
+Until xxx, the contributions insight is as shown below.
 
 ---
 
