@@ -4,8 +4,11 @@ This is the report for the project of DSAA course, written by Group 2, with foll
 
 - HUANG Guanchao, SID 11912309 from SME
 - ZHENG Shuhan, SID 11712401 from PHY
-- Li Yuru, SID 11911035 from EIE
-- Tian Yuqiong, SID 11911039 from EIE
+- LI Yuru, SID 11911035 from EIE
+- TIAN Yuqiong, SID 11911039 from EIE
+
+The complete resources of our work in this project, including Python source codes, testing scripts, experiment raw data, figures and report can be retrieved at [our GitHub repo](<!-- provides your results of parts 3 and 4 evaluating the adaptive method for matrix multiplication, Strassen’s algorithm, and the basic method. You should use [1] as an example of the type of results you should put in this section (tables, graphs, type of discussion) because when marking will expect to see graphs and results that are of comparable quality to this and measure similar quantities. -->
+)
 
 [toc]
 
@@ -651,6 +654,66 @@ The performance of our algorithms is severely restricted by the data structure. 
 
 The reason the indexing process, or the `__getitem__` method is inefficient, is the tedious procedure for judging the form of indexing. Such practice offers convenience for user, since more complex indexing operations, such as slice, are supported through it. However, this also caused huge performance waste.
 
-The balance between code performance and user friendliness is of great significance,
+The balance between code performance and user friendliness is of great significance. Indeed, our data structure provides prominent ease of use for developers or users, however, the performance cost is too high for the purpose of this project.
 
 ### Optimizations
+
+Some optimizations can be made to our code to improve the performance.
+
+- The indexing of the elements can be less flexible, instead, using more operations in underlying system, in order to provide better performance
+- Some judge sentences, such as verifying the dimension of the matrices can be commented out, since this project is only intended for testing the performance of the algorithm itself.
+- Multi-thread, parallel run, or even SIMD in GPU acceleration may be introduced, and provides a huge improvement in performance.
+
+---
+
+## Project Management and Contributions
+
+- HUANG Guanchao, SID 11912309 from SME
+  - organizing the project team, work scheduling
+  - `Matrix` data structure implementing
+  - conducting algorithm test
+  - experiment data analysis
+  - [Empirical Analysis](#empirical-analysis) and [Conclusion](#conclusion) part of report
+  - creating PowerPoint slides, and delivered presentation on class
+  - final adjust of the report
+  - the [repository of this project](https://github.com/SamuelHuang2019/dsaa-projec-matrix) is under his GitHub account [SamuelHuang2019](https://github.com/SamuelHuang2019)
+
+- ZHENG Shuhan, SID 11712401 from PHY
+  - reading the paper, and offering theoretical instructions on adaptive Strassen's algorithm for us
+  - `Matrix` data structure implementing
+  - implementing two methods of multiplication, including function `square_matrix_multiply`, `adaptive_add`, `adaptive_minus` and `strassen_multiply`
+  - [Code Implementation](#experiment-design) part of the report
+
+- LI Yuru, SID 11911035 from EIE and TIAN Yuqiong, SID 11911039 from EIE
+  - [Introduction](#introduction), [Background](#background) and [Theoretical Analysis](#theoretical-analysis) part of the report
+
+>SPECIAL THANKS TO:
+>
+> - SUN Jiachen, who provided testing platform for us.
+> - HAN Zichen, who offered us professional advice on Python and other CS problems.
+
+Our project is based on GitHub for version control and code cooperation.
+
+---
+
+## Open Source License
+
+Copyright (c) 2020 SamuelHuang2019
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
