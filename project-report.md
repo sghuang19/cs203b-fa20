@@ -25,10 +25,7 @@ Strassen's algorithm embodies two different locality properties because its two 
 
 Strassen's algorithm also has **Layout effects**. That is the performance of MA is not affected by a specific matrix layout or shape as long as we can exploit the only viable reuse: spatial data reuse. We know that data reuse(spatial/temporal) is crucial for matrix multiply. In practice, ATLAS and GotoBLAS cope rather well with the effects of a (limited) row/column major format reaching often 90% of peak performance. Thus, we can assume for practical purpose that $\pi$ and $\alpha$ are functions of the matrix size only.
 
-
-
-
-<!-- TODO: remove pseudocode from intro -->
+What's more, for square matrices, there is something special. Combining the performance properties of both matrix multiplications and matrix additions with a more specific analysis for only square matrices; that is, $n = m = p$. Based on it, the equation $\lfloor m/2 \rfloor \lceil n/2 \rceil \lceil p/2 \rceil \leq \alpha / 2\pi [5\lceil n/2 \rceil (\lceil m/2 \rceil + \lceil p/2 \rceil) + 3mp]$ can be simplify. And from this equation, we can find that the **recursion point** $n_1$ is $n_1 = 22\alpha/\pi$.
 
 For Strassen algorithm, the time complexity is O(n^(\lg7)). For a two order matrix multiplication, we need to spend 8*(2^3) with Obvious matrix multiplication algorithm but we just need 7*(2^(\lg7)) by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
 
