@@ -17,44 +17,17 @@ The complete resources of our work in this project, including Python source code
 
 Matrix mltiplication (MM) is a practical application of Linear Algebra. It is used in many fields, including mathematics, physics and electrical engineering (**Cite**). In real life, no matter calculating the path between two place or solving the profit problem of goods, it always be of great use.
 
-Previously, people used traditional matrix multiplication, which was based on the definition of MM, to calculate the product of two matrices. It's pseudocode is
+Previously, people used traditional matrix multiplication, which was based on the definition of MM, to calculate the product of two matrices. The traditional matrix multiplication algorithm contains three circulations. Concretely, $C_{ij}=A_{ik}B_{kj}$, each index ($i,j,k$) runs from 1 to $n$. Therefore, the time complexity is $\Theta(n^3)$, where $n$ is the length of the square matrix. The time complexity of traditional method is large. Hence, since the extensive application of MM, how to optimize the operation of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in MM is a major optimized direction.
 
-```python
-SQUARE-MATRIX-MULTIPLY(A, B)
-    n = A.rows
-    let C be a new n * n matrix
-    for i = 1 to n
-        for j = 1 to n
-            Cij = 0
-            for k = 1 to n
-                Cij = Cij + aik * bkj
-    return C
-```
+The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm (**Cite**). It's main idea is to replace multiplication by addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms. 
 
-According to the pseudocode, the algorithm contains three circulations. Concretely, $C_{ij}=A_{ik}B_{kj}$, each index ($i,j,k$) runs from 1 to $n$. Therefore, the time complexity is $\Theta(n^3)$, where $n$ is the length of the square matrix. The time complexity of traditional method is large. Hence, since the extensive application of MM, how to optimize the operation of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in MM is a major optimized direction.
+Strassen's algorithm embodies two different locality properties because its two basic computations exploit different data locality: matrix multiply MM has spatial and temporal locality, and matrix addition MA has only spatial locality. This method contains 7 MMs and 22MAs. For those 7 MMs, they take $2\pi$($\lceil m/2 \rceil $ $\lceil n/2 \rceil$ p + mn $\lceil p/2 \rceil + \lceil m/2 \rceil \lfloor n/2 \rfloor \lceil p/2 \rceil)$ seconds,where $\pi$ is the efficiency of MM and $1/\pi$ is simply the **floating point operation per second**(FLOPS) of the computation. For 22 MAs (18 matrix additions and 4 matrix copies) take $\alpha [5 \lceil n/2 \rceil (\lceil m/2 \rceil + \lceil p/2 \rceil ) + 3mp ]$ seconds, where $\alpha$ is the efficiency of MA. 
 
-The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm (**Cite**). It's main idea is to replace multiplication by addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms.The pseudocode of Strassen's algorithm is
+Strassen's algorithm also has **Layout effects**. That is the performance of MA is not affected by a specific matrix layout or shape as long as we can exploit the only viable reuse: spatial data reuse. We know that data reuse(spatial/temporal) is crucial for matrix multiply. In practice, ATLAS and GotoBLAS cope rather well with the effects of a (limited) row/column major format reaching often 90% of peak performance. Thus, we can assume for practical purpose that $\pi$ and $\alpha$ are functions of the matrix size only.
 
-```python
-Strassen(A, B)
-    n = A.row
-    Let C be a new matrix
-    if n == 1 to n
-        c11 = a11b11
-    else partition A,B and C 
-    P1 = Strassen(A11,B12-B22)
-    P2 = Strassen(A11+A12,B22)
-    P3 = Strassen(A21+A22,B11)
-    P4 = Strassen(A22,B21-B11)
-    P5 = Strassen(A11+A22,B11+B22)
-    P6 = Strassen(A12-A22,B21+B22)
-    P7 = Strassen(A11-A21,B11+B12)
-    C11 = P5 + P4 - P2 + P6
-    C12 = P1 + P2
-    C21 = P3 + P4
-    C22 = P5 + P1 - P3 - P7
-    return C
-```
+
+
+
 <!-- TODO: remove pseudocode from intro -->
 
 For Strassen algorithm, the time complexity is O(n^(\lg7)). For a two order matrix multiplication, we need to spend 8*(2^3) with Obvious matrix multiplication algorithm but we just need 7*(2^(\lg7)) by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
