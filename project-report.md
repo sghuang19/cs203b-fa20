@@ -686,7 +686,8 @@ Some optimizations can be made to our code to improve the performance.
 
 - LI Yuru, SID 11911035 from EIE
   - [Introduction](#introduction)
--TIAN Yuqiong, SID 11911039 from EIE
+
+- -TIAN Yuqiong, SID 11911039 from EIE
  [Background](#background) and [Theoretical Analysis](#theoretical-analysis) part of the report
 
 -
