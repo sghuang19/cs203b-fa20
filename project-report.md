@@ -684,8 +684,12 @@ Some optimizations can be made to our code to improve the performance.
   - implementing two methods of multiplication, including function `square_matrix_multiply`, `adaptive_add`, `adaptive_minus` and `strassen_multiply`
   - [Code Implementation](#experiment-design) part of the report
 
-- LI Yuru, SID 11911035 from EIE and TIAN Yuqiong, SID 11911039 from EIE
-  - [Introduction](#introduction), [Background](#background) and [Theoretical Analysis](#theoretical-analysis) part of the report
+- LI Yuru, SID 11911035 from EIE
+  - [Introduction](#introduction)
+-TIAN Yuqiong, SID 11911039 from EIE
+ [Background](#background) and [Theoretical Analysis](#theoretical-analysis) part of the report
+
+-
 
 >SPECIAL THANKS TO:
 >
