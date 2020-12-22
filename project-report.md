@@ -123,7 +123,7 @@ From the pseudocode we can know that there are three for-loop cycles so that the
 
 ### Time Complexity of Strassen Algorithm
 
-From the recurrence relationship we know that the run-time complexity is $T(n)=7T(n/2)$+ $\Theta(n^2)$(when n>1). By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^lg7)$.
+From the recurrence relationship we know that the run-time complexity is $T(n)=7T(n/2)$+ $\Theta(n^2)$(when n>1). By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^(\lg7))$.
 
 ---
 
