@@ -70,16 +70,19 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
     if max(arow, acol, bcol) < 100:  # 100 could be changed to other number depending on input size
         return square_matrix_multiply(a, b)
 
+    # Ceil and floor number for matrix a
     half_arow_ceil = math.ceil(arow / 2)
     half_arow_floor = math.floor(arow / 2)
     half_acol_ceil = math.ceil(acol / 2)
     half_acol_floor = math.floor(acol / 2)
 
+    # Ceil and floor number for matrix b
     half_brow_ceil = math.ceil(brow / 2)
     half_brow_floor = math.floor(brow / 2)
     half_bcol_ceil = math.ceil(bcol / 2)
     half_bcol_floor = math.floor(bcol / 2)
 
+    # Divide matrix a and b into 4 submatrix.
     A0 = a[1:half_arow_ceil, 1:half_acol_ceil]
     A1 = a[1:half_arow_ceil, half_acol_ceil +
                              1:half_acol_ceil + half_acol_floor]
@@ -95,47 +98,48 @@ def strassen_multiply(a, b, n=None):  # for almost square matrix
     B3 = b[half_brow_ceil + 1:half_brow_ceil + half_brow_floor,
          half_bcol_ceil + 1:half_bcol_ceil + half_bcol_floor]
 
-    T2 = adaptive_minus(B1, B3, half_brow_ceil, half_bcol_floor)
-    M3 = strassen_multiply(A0, T2)
-    C1 = M3
-    C3 = adaptive_add(M3, Matrix([0], 1, 1), half_arow_floor, half_bcol_floor)
+    T2 = adaptive_minus(B1, B3, half_brow_ceil, half_bcol_floor)  # T2 = B1 - B3
+    M3 = strassen_multiply(A0, T2)  # M3 = A0 *s T2
+    C1 = M3  # C1 = M3
+    C3 = adaptive_add(M3, Matrix([0], 1, 1), half_arow_floor, half_bcol_floor)  # C3 = M3
 
-    T1 = adaptive_minus(A2, A0, half_arow_ceil, half_acol_ceil)
-    T2 = adaptive_add(B0, B1, half_brow_ceil, half_bcol_ceil)
-    M6 = strassen_multiply(T1, T2)
-    C3 = adaptive_add(C3, M6, half_arow_floor, half_bcol_floor)
+    T1 = adaptive_minus(A2, A0, half_arow_ceil, half_acol_ceil)  # T1 = A2 - A0
+    T2 = adaptive_add(B0, B1, half_brow_ceil, half_bcol_ceil)  # T2 = B0 + B1
+    M6 = strassen_multiply(T1, T2)  # M6 = T1 *s T2
+    C3 = adaptive_add(C3, M6, half_arow_floor, half_bcol_floor)  # C3 = C3 + M6
 
-    T1 = adaptive_add(A2, A3, half_arow_floor, half_acol_ceil)
-    M2 = strassen_multiply(T1, B0)
-    C2 = M2
-    C3 = adaptive_minus(C3, M2, half_arow_floor, half_bcol_floor)
+    T1 = adaptive_add(A2, A3, half_arow_floor, half_acol_ceil)  # T1 = A2 + A3
+    M2 = strassen_multiply(T1, B0)  # M2 = T1 *s B0
+    C2 = M2  # C2 = M2
+    C3 = adaptive_minus(C3, M2, half_arow_floor, half_bcol_floor)  # C3 = C3 - M2
 
-    T1 = adaptive_add(A0, A3, half_arow_ceil, half_acol_ceil)
-    T2 = adaptive_add(B0, B3, half_brow_ceil, half_bcol_ceil)
-    M1 = strassen_multiply(T1, T2)
-    C0 = M1
-    C3 = adaptive_add(C3, M1, half_arow_floor, half_bcol_floor)
+    T1 = adaptive_add(A0, A3, half_arow_ceil, half_acol_ceil)  # T1 = A0 + A3
+    T2 = adaptive_add(B0, B3, half_brow_ceil, half_bcol_ceil)  # T2 = B0 + B3
+    M1 = strassen_multiply(T1, T2)  # M1 = T1 *s T2
+    C0 = M1  # C0 = M1
+    C3 = adaptive_add(C3, M1, half_arow_floor, half_bcol_floor)  # C3 = C3 + M1
 
-    T1 = adaptive_add(A0, A1, half_arow_ceil, half_acol_floor)
-    M5 = strassen_multiply(T1, B3)
-    C0 = adaptive_minus(C0, M5, half_arow_ceil, half_bcol_ceil)
-    C1 = adaptive_add(C1, M5, half_arow_ceil, half_bcol_floor)
+    T1 = adaptive_add(A0, A1, half_arow_ceil, half_acol_floor)  # T1 = A0 + A1
+    M5 = strassen_multiply(T1, B3)  # M5 = T1 *s B3
+    C0 = adaptive_minus(C0, M5, half_arow_ceil, half_bcol_ceil)  # C0 = C0 - M5
+    C1 = adaptive_add(C1, M5, half_arow_ceil, half_bcol_floor)  # C1 = C1 + M5
 
-    T1 = adaptive_minus(A1, A3, half_arow_ceil, half_acol_floor)
-    T2 = adaptive_add(B2, B3, half_brow_floor, half_bcol_ceil)
-    M7 = strassen_multiply(T1, T2)
-    C0 = adaptive_add(C0, M7, half_arow_ceil, half_bcol_ceil)
+    T1 = adaptive_minus(A1, A3, half_arow_ceil, half_acol_floor)  # T1 = A1 - A3
+    T2 = adaptive_add(B2, B3, half_brow_floor, half_bcol_ceil)  # T2 = B2 + B3
+    M7 = strassen_multiply(T1, T2)  # M7 = T1 *s T2
+    C0 = adaptive_add(C0, M7, half_arow_ceil, half_bcol_ceil)  # C0 = C0 + M7
 
-    T2 = adaptive_minus(B2, B0, half_brow_floor, half_bcol_ceil)
-    M4 = strassen_multiply(A3, T2)
-    C0 = adaptive_add(C0, M4, half_arow_ceil, half_bcol_ceil)
-    C2 = adaptive_add(C2, M4, half_arow_floor, half_bcol_ceil)
+    T2 = adaptive_minus(B2, B0, half_brow_floor, half_bcol_ceil)  # T2 = B2 - B0
+    M4 = strassen_multiply(A3, T2)  # M4 = A3 *s T2
+    C0 = adaptive_add(C0, M4, half_arow_ceil, half_bcol_ceil)  # C0 = C0 + M4
+    C2 = adaptive_add(C2, M4, half_arow_floor, half_bcol_ceil)  # C2 = C2 + M4
 
+    # Join submatrix C0, C1, C2 and C3
     s = []
-    for i in range(C0.row):
+    for i in range(C0.row):  # Join C0 and C1
         s = s + C0[i + 1:i + 1, 1:C0.col].elements + \
             C1[i + 1:i + 1, 1:C1.col].elements
-    for j in range(C2.row):
+    for j in range(C2.row):  # Join C2 and C3
         s = s + C2[j + 1:j + 1, 1:C2.col].elements + \
             C3[j + 1:j + 1, 1:C3.col].elements
     c = Matrix(s, a.row, b.col)
@@ -152,20 +156,25 @@ def adaptive_add(a, b, target_row, target_col):
         :type target_row: Integer
         :return: Matrix
         """
+
+    # number of row and column
     arow = a.row
     acol = a.col
     brow = b.row
     bcol = b.col
+
     s = [0] * (target_col * target_row)
     for i in range(target_row):
         for j in range(target_col):
-            flag = False
+            flag = False  # Used as the condition of padding zero
+            # Perform element wise addition if i and j are within the size of matrix a and b
             if 0 <= i < arow and 0 <= j < acol:
                 s[i * target_col + j] = a[i + 1, j + 1]
                 flag = True
             if 0 <= i < brow and 0 <= j < bcol:
                 s[i * target_col + j] = s[i * target_col + j] + b[i + 1, j + 1]
                 flag = True
+            # If i or j goes beyond the size of a and b, pad zero.
             if not flag:
                 s[i * target_col + j] = 0
     c = Matrix(s, target_row, target_col)
@@ -182,20 +191,25 @@ def adaptive_minus(a, b, target_row, target_col):
         :type target_row: Integer
         :return: Matrix
         """
+
+    # number of row and column
     arow = a.row
     acol = a.col
     brow = b.row
     bcol = b.col
+
     s = [0] * (target_col * target_row)
     for i in range(target_row):
         for j in range(target_col):
-            flag = False
+            flag = False    # Used as the condition of padding zero
+            # Perform element wise subtraction if i and j are within the size of matrix a and b
             if 0 <= i < arow and 0 <= j < acol:
                 s[i * target_col + j] = a[i + 1, j + 1]
                 flag = True
             if 0 <= i < brow and 0 <= j < bcol:
                 s[i * target_col + j] = s[i * target_col + j] - b[i + 1, j + 1]
                 flag = True
+            # If i or j goes beyond the size of a and b, pad zero.
             if not flag:
                 s[i * target_col + j] = 0
     c = Matrix(s, target_row, target_col)

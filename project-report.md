@@ -130,6 +130,7 @@ From the recurrence relationship we know that the run-time complexity is $T(n)=7
 ### Crossover Point Estimation
 
  The crossover point means the size of matrix when the run-time of Strassen algorithm is faster than the Standard Matrix multiplication.
+ From the time complexity we know that the Strassen method is faster than the standard matrix multiplication, however, in practice for small matrices, Strassen's method has a significant overhead and conventional MM results in better performance. To overcome this, several authors mentioned in the provided paper have shown hybrid algorithms, by deploying Strassen's method in conjunction with conventional matrix multiplication. For our project, we explored the crossover point in practical ways, running the python code for both Strassen method and standard matrix multiplication. The concrete result is given in the empirical analysis, and is explained in different illustrations.
 
 <!-- TODO -->
 
@@ -683,8 +684,13 @@ Some optimizations can be made to our code to improve the performance.
   - implementing two methods of multiplication, including function `square_matrix_multiply`, `adaptive_add`, `adaptive_minus` and `strassen_multiply`
   - [Code Implementation](#experiment-design) part of the report
 
-- LI Yuru, SID 11911035 from EIE and TIAN Yuqiong, SID 11911039 from EIE
-  - [Introduction](#introduction), [Background](#background) and [Theoretical Analysis](#theoretical-analysis) part of the report
+- LI Yuru, SID 11911035 from EIE
+  - [Introduction](#introduction)
+
+- -TIAN Yuqiong, SID 11911039 from EIE
+ [Background](#background) and [Theoretical Analysis](#theoretical-analysis) part of the report
+
+-
 
 >SPECIAL THANKS TO:
 >
