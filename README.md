@@ -44,6 +44,8 @@ The directory structure of our files is
 - File `./analysis/data.xlsx` contains the experimental results we obtained.
 - The folder `./src` contains the source code of our project.
 
->To run the code, you may need to set `./src` the the root source directory, otherwise error `unresolved import` may occur.
+>**IMPORTANT**
+>
+>To run the code, you may need to set `./src` to be the the root source directory, otherwise error `unresolved import` may occur.
 
 - The folder `./src/test` contains the scripts of the tests we conducted.
