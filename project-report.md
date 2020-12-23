@@ -21,16 +21,16 @@ Previously, people used traditional matrix multiplication, which was based on th
 
 The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm (**Cite**). It's main idea is to replace multiplication by addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms. 
 
-Strassen's algorithm embodies two different locality properties because its two basic computations exploit different data locality: matrix multiply MM has spatial and temporal locality, and matrix addition MA has only spatial locality. This method contains 7 MMs and 22MAs. For those 7 MMs, they take $2\pi$($\lceil m/2 \rceil $ $\lceil n/2 \rceil$ p + mn $\lceil p/2 \rceil + \lceil m/2 \rceil \lfloor n/2 \rfloor \lceil p/2 \rceil)$ seconds,where $\pi$ is the efficiency of MM and $1/\pi$ is simply the **floating point operation per second**(FLOPS) of the computation. For 22 MAs (18 matrix additions and 4 matrix copies) take $\alpha [5 \lceil n/2 \rceil (\lceil m/2 \rceil + \lceil p/2 \rceil ) + 3mp ]$ seconds, where $\alpha$ is the efficiency of MA. 
+Strassen's algorithm embodies two different locality properties because its two basic computations exploit different data locality: matrix multiply MM has spatial and temporal locality, and matrix addition MA has only spatial locality. This method contains 7 MMs and 22MAs. For those 7 MMs, they take $2\pi$($\lceil \frac{m}{2} \rceil $ $\lceil \frac{n}{2} \rceil$ p + mn $\lceil \frac{p}{2} \rceil + \lceil \frac{m}{2} \rceil \lfloor \frac{n}{2} \rfloor \lceil \frac{p}{2} \rceil)$ seconds,where $\pi$ is the efficiency of MM and $1/\pi$ is simply the **floating point operation per second**(FLOPS) of the computation. For 22 MAs (18 matrix additions and 4 matrix copies) take $\alpha [5 \lceil \frac{n}{2} \rceil (\lceil \frac{m}{2} \rceil + \lceil \frac{p}{2} \rceil ) + 3mp ]$ seconds, where $\alpha$ is the efficiency of MA. 
 
 Strassen's algorithm also has **Layout effects**. That is the performance of MA is not affected by a specific matrix layout or shape as long as we can exploit the only viable reuse: spatial data reuse. We know that data reuse(spatial/temporal) is crucial for matrix multiply. In practice, ATLAS and GotoBLAS cope rather well with the effects of a (limited) row/column major format reaching often 90% of peak performance. Thus, we can assume for practical purpose that $\pi$ and $\alpha$ are functions of the matrix size only.
 
-What's more, for square matrices, there is something special. Combining the performance properties of both matrix multiplications and matrix additions with a more specific analysis for only square matrices; that is, $n = m = p$. Based on it, the equation $\lfloor m/2 \rfloor \lceil n/2 \rceil \lceil p/2 \rceil \leq \alpha / 2\pi [5\lceil n/2 \rceil (\lceil m/2 \rceil + \lceil p/2 \rceil) + 3mp]$ can be simplify. And from this equation, we can find that the **recursion point** $n_1$ is $n_1 = 22\alpha/\pi$.
+What's more, for square matrices, there is something special. Combining the performance properties of both matrix multiplications and matrix additions with a more specific analysis for only square matrices; that is, $n = m = p$. Based on it, the equation $\lfloor \frac{m}{2} \rfloor \lceil \frac{n}{2} \rceil \lceil \frac{p}{2} \rceil \leq \alpha / 2\pi [5\lceil \frac{n}{2} \rceil (\lceil \frac{m}{2} \rceil + \lceil \frac{p}{2} \rceil) + 3mp]$ can be simplify. And from this equation, we can find that the **recursion point** $n_1$ is $n_1 = 22\frac{\alpha}{\pi}$.
 
-For Strassen algorithm, the time complexity is O(n^(\lg7)). For a two order matrix multiplication, we need to spend 8*(2^3) with Obvious matrix multiplication algorithm but we just need 7*(2^(\lg7)) by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
+For Strassen algorithm, the time complexity is $O(n^{\lg 7})$. For a two order matrix multiplication, we need to spend $8\times(2^3)$ with Obvious matrix multiplication algorithm but we just need $7\times (2^{\lg7})$ by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
 
 After Strassen came up with this algorithm, more and more optimized algorithms were proposed by different people. For examples, Pan's algorithm was proposed in 1981 which time complexity is decreased to $O(n^{2.494})$ . Later, Andrew Stothers proposed a new algorithm in his paper in 2010 which time complexity is $O(n^{2.374})$. Then in 2014, François Le Gall simplied Stanford's algorithm and the Time complexity was decreased to $O(n^{2.3728639})$ that is the most optimized algorithm for matrix multiplication.(**Cite**)
-In this project, we will focus on the Strassen algorithm. We will apply it to higher order matrix multiplication and discuss more details about it.
+In this project, we will mainly focus on the Strassen algorithm. We will apply it to higher order matrix multiplication and discuss more details about it.
 
 ---
 
@@ -94,7 +94,15 @@ From the pseudocode we can know that there are three for-loop cycles so that the
 
 ### Time Complexity of Strassen Algorithm
 
-From the recurrence relationship we know that the run-time complexity is $T(n)=7T(n/2)$+ $\Theta(n^2)$(when n>1). By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^(\lg7))$.
+From the recurrence relationship we know that the run-time complexity is 
+$$
+\begin{cases}
+T(n) = O(1) , \ n = 2;
+\\
+T(n)=7T(n/2) + \Theta(n^2) , \ n > 2
+\end{cases}
+$$
+ By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^{\lg7})$.
 
 ---
 
