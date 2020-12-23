@@ -102,8 +102,29 @@ T(n) = O(1) , \ n = 2;
 T(n)=7T(n/2) + \Theta(n^2) , \ n > 2
 \end{cases}
 $$
- By the master method, the run-time complexity for Strassen algorithm is $\Theta(n^{\lg7})$.
-
+Then we can calculate the time complexity for Strassen's algorithm
+$$T(n) = 7T(n/2) + O(n^2)\\
+  =7[7T(\frac{n}{2^2}) + O((\frac{n}{2})^2)] + O(n^2)\\
+  =7^2T(\frac{n}{2^2})+7O(\frac{n^2}{4})+O(n^2)\\
+  =7^2[7T(\frac{n}{2^3})+ O((\frac{n}{2^2})^2)]+7O(\frac{n^2}{4})+O(n^2)\\
+  =7^3T(\frac{n}{2^3})+7^2O(\frac{n^2}{4^2})+7O(\frac{n^2}{4})+O(n^2)\\
+  =7^3T(\frac{n}{2^3})+7^2O(\frac{n^2}{4^2})+7O(\frac{n^2}{4^1})+7^0O(\frac{n^2}{4^0})\\
+  =......\\
+  =7^kT(\frac{n}{2^k})+7^{k-1}O(\frac{n}{4^{k-1}})+7^{k-2}O(\frac{n}{4^{k-2}})+......+7^2O(\frac{n^2}{4^2})+7O(\frac{n^2}{4})+7^0O(\frac{n^2}{4^0})
+$$
+$$
+T(n)\leq7^kO(1)+c\cdot n^2\cdot (\frac{7}{4})^{k-1}+c\cdot n^2 \cdot(\frac{7}{4})^{k-2}+......+c\cdot n^2 \cdot (\frac{7}{4})^{2} + c\cdot n^2 \cdot (\frac{7}{4})^{1} + c\cdot n^2 \cdot (\frac{7}{4})^{0}\\
+\leq 7^k\cdot c + c\cdot n^2\cdot [(\frac{7}{4})^{k-1}+(\frac{7}{4})^{k-2} +(\frac{7}{4})^2+(\frac{7}{4})^{1} + (\frac{7}{4})^{0}]\\
+\leq c\cdot 7^{\lg(\frac{n}{2})} + c\cdot n^2\cdot [\frac{1\cdot (1-(\frac{7}{4})^k)}{1-\frac{7}{4}}]\\
+\leq c\cdot 7^{\lg(\frac{n}{2})} + c\cdot n^2\cdot [\frac{4}{3} ((\frac{7}{4})^k - 1)]\\
+\leq c\cdot 7^{\lg(\frac{n}{2})} + c\cdot n^2\cdot [\frac{4}{3}((\frac{7}{4})^{\lg(\frac{n}{2})}-1)]\\
+\leq c\cdot 7^{\lg(\frac{n}{2})} + c\cdot n^2\cdot [\frac{4}{3} ((\frac{4}{7}(\frac{7}{4})^{\lg(n)}-1))]\\
+\leq \frac{c}{7} \cdot 7^{\lg(n)} + c\cdot n^2\cdot [\frac{16}{21}(\frac{7}{4})^{\lg(n)}-1]\\
+\leq \frac{c}{7} \cdot n^{\lg(7)} + c\cdot n^2\cdot [\frac{16}{21}(n)^{lg(\frac{7}{4})}-1]\\
+\leq C \cdot n^{lg(7)} - C\cdot n
+$$
+Since $\lg(7) > 2$, we can get the time complexity for Strassen's algorithm is that $O(n^{\lg7}\approx O(n^{\lg2.81}))$
+ 
 ---
 
 ### Crossover Point Estimation
@@ -664,7 +685,7 @@ Some optimizations can be made to our code to improve the performance.
   - [Code Implementation](#experiment-design) part of the report
 
 - LI Yuru, SID 11911035 from EIE
-  - [Introduction](#introduction)
+  - [Introduction](#introduction) and [Theoretical Analysis](#theoretical-analysis) part of the report
 
 - -TIAN Yuqiong, SID 11911039 from EIE
  [Background](#background) and [Theoretical Analysis](#theoretical-analysis) part of the report
