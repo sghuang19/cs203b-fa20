@@ -29,7 +29,8 @@ What's more, for square matrices, there is something special. Combining the perf
 
 For Strassen algorithm, the time complexity is O(n^(\lg7)). For a two order matrix multiplication, we need to spend 8*(2^3) with Obvious matrix multiplication algorithm but we just need 7*(2^(\lg7)) by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
 
-After Strassen came up with this algorithm, more and more optimized algorithms were proposed by different people (**Cite**). But in this project, we will focus on the Strassen algorithm. We will apply it to higher order matrix multiplication and discuss more details about it.
+After Strassen came up with this algorithm, more and more optimized algorithms were proposed by different people. For examples, Pan's algorithm was proposed in 1981 which time complexity is decreased to $O(n^{2.494})$ . Later, Andrew Stothers proposed a new algorithm in his paper in 2010 which time complexity is $O(n^{2.374})$. Then in 2014, François Le Gall simplied Stanford's algorithm and the Time complexity was decreased to $O(n^{2.3728639})$ that is the most optimized algorithm for matrix multiplication.(**Cite**)
+In this project, we will focus on the Strassen algorithm. We will apply it to higher order matrix multiplication and discuss more details about it.
 
 ---
 
