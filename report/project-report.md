@@ -19,9 +19,7 @@ Matrix multiplication (MM) is a practical application of linear algebra. It is a
 
 Previously, people used traditional matrix multiplication which was based on the definition of MM to calculate the product of two matrices. The traditional matrix multiplication algorithm contains three circulations. Concretely, $C_{ij} = A_{ik} B_{kj}$, each index $(i,\, j,\, k)$ runs from $1$ to $n$. Therefore, the time complexity of which is $\Theta\left(n^3\right)$, where $n$ is the length of the square matrix. The time complexity of traditional method is large, hence, with the extensive application of MM, optimization of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of arithmetic multiplication in MM is a major direction for optimization.
 
-The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969[^Strassen] and was named Strassen's algorithm. Its main idea is to replace multiplication by the combination of addition and subtraction. The result is obtained by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms.
-
-[^Strassen]: test
+The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen's algorithm. Its main idea is to replace multiplication by the combination of addition and subtraction. The result is obtained by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms.
 
 Strassen's algorithm embodies two different locality properties because its two basic computations exploit different data locality: matrix multiplication has spatial and temporal locality, and matrix addition has only spatial locality. This method contains $7$ MMs and $22$ MAs. For those $7$ MMs, the runtime is
 
@@ -59,7 +57,7 @@ After Strassen came up with this algorithm, more and more optimized algorithms w
 
 [^Gall]: Francois Le Gall (2014). Powers of Tensors and Fast Matrix Multiplication. Retrieved December 25, 2020, from Cornell University. Web site: <https://arxiv.org/abs/1401.7714>D
 
-[^Stanford]: Williams, V. V (2014). Multiplying matrices in O(n^2.373) time. Retrieved December 25, 2020, from Stanford University. Web site: <https://people.csail.mit.edu/virgi/matrixmult-f.pdf>
+[^Stanford]: Williams, V. V (2014). Multiplying matrices in $O(n^{2.373})$ time. Retrieved December 25, 2020, from Stanford University. Web site: <https://people.csail.mit.edu/virgi/matrixmult-f.pdf>
 
 In this project, we will mainly focus on the Strassen's algorithm. We will apply it to higher order matrix multiplication to make a comparison between the traditional matrix multiplication and the Strassen's algorithm and discuss more details about it. Further more, in this project, we also tried finding the crossover point for these two methods.
 
@@ -75,7 +73,7 @@ A 1-page summary of the contributions of the paper in [1]. Discuss why the autho
 
 The writers of the provided paper, Paolo D'Alberto and Alexandru Nicolau talked about an easy-to-use adaptive algorithm[^Paolo] which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS. The Strassen's algorithm has decreased the running time of matrix multiplication significantly, by replacing one discrete matrix multiplication with several matrix additions. However, for modern architectures with complex memory hierarchies, the matrix additions have a limited in-cache data reuse and thus poor memory-hierarchy utilization.
 
-[^Paolo]: test
+[^Paolo]: Paolo D'Alberto and Alexandru Nicolau. 2007. Adaptive Strassen's matrix multiplication. In Proceedings of the 21st annual international conference on Supercomputing (ICS '07). Association for Computing Machinery, New York, NY, USA, 284–292. DOI:<https://doi.org/10.1145/1274971.1275010>
 
 The first benefit of their algorithm authors listed is that, they divide the MM problems into a set of balanced sub-problems without any matrix padding or peeling. Second, in addition, their algorithm applies Strassen’s strategy recursively as many times as a function of the problem size. Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The authors' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm provided by the authors of the given paper.
 
