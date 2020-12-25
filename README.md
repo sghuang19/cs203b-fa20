@@ -30,6 +30,7 @@ The directory structure of our files is
          |     ...
          |
          ├─report
+         |    dsaa-project-slides.pptx
          |    project-management.md
          |    project-management.pdf
          |    project-report.md
