@@ -37,6 +37,7 @@ def square_matrix_multiply(a, b):
         print("Unmatched matrix size")
         return
     s = [0] * (a.row * b.col)
+    # perform standard matrix multiplication
     for i in range(a.row):
         for j in range(b.col):
             for k in range(a.col):
@@ -279,14 +280,16 @@ class Matrix:
             # both of the elements in the item are slice
             if isinstance(item[0], slice) and isinstance(item[1], slice):
                 e = []
-                row_indices = item[0].indices(self.row)
+                # generate row and column range.
+                row_indices = item[0].indices(self.row)  # get the row index
                 row_range = range(
                     row_indices[0], row_indices[1] + 1, row_indices[2])
-                col_indices = item[1].indices(self.col)
+                col_indices = item[1].indices(self.col)  # get the column index
                 col_range = range(
                     col_indices[0], col_indices[1] + 1, col_indices[2])
-                r = 0
-                c = 0
+                # join items iteratively
+                r = 0  # for row
+                c = 0  # for column
                 for i in row_range:
                     r += 1
                     c = 0
@@ -298,10 +301,12 @@ class Matrix:
             # one slice, one int
             # both of the elements in the item are int
             if isinstance(item[0], int) and isinstance(item[1], int):
+                # create exception if item exceeds legal range
                 if item[0] > self.row or item[0] <= 0:
                     raise (exceptions.RowOutOfBoundsException(item))
                 if item[1] > self.col or item[1] <= 0:
                     raise (exceptions.ColumnOutOfBoundsException(item))
+                # return the element directly
                 return self.elements[(item[0] - 1) * self.col + item[1] - 1]
 
         # # for slice input
@@ -312,6 +317,7 @@ class Matrix:
         if isinstance(item, int):
             if item > len(self.elements):
                 raise (exceptions.ColumnOutOfBoundsException(item))
+            # return the element directly
             return self.elements[item - 1]
 
     # @profile
@@ -325,11 +331,12 @@ class Matrix:
         if type(other) is Matrix:
             if self.row is other.row and self.col is other.col:
                 s = []
+                # join the corresponding elements
                 for i in range(len(self.elements)):
                     s += [self.elements[i] + other.elements[i]]
                 return Matrix(s, self.row, self.col)
             raise (exceptions.DimensionInconsistentException())
-
+        # perform element wise addition if 'other' is not Matrix object
         for i in range(len(self.elements)):
             self.elements[i] += other
         return self
@@ -344,11 +351,12 @@ class Matrix:
         if type(other) is Matrix:
             if self.row is other.row and self.col is other.col:
                 s = []
+                # join the corresponding elements
                 for i in range(len(self.elements)):
                     s += [self.elements[i] - other.elements[i]]
                 return Matrix(s, self.row, self.col)
             raise (exceptions.DimensionInconsistentException())
-
+        # perform element wise subtraction if 'other' is not Matrix object
         for i in range(len(self.elements)):
             self.elements[i] -= other
         return self
