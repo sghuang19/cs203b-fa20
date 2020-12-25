@@ -15,22 +15,53 @@ The complete resources of our work in this project, including Python source code
 
 ## Introduction
 
-Matrix mltiplication (MM) is a practical application of Linear Algebra. It is a very useful tool in many fields, including mathematics, physics and electrical engineering. For example, we can calculate the path between two places and solve the profit problem of goods in real life. What's more, matrix mltiplication can also be of great use in cryptology. 
+Matrix multiplication (MM) is a practical application of linear algebra. It is a useful tool in many fields, including mathematics, physics and electrical engineering. For example, we can calculate the path between two places and solve the profit problem of goods in real life. Moreover, matrix multiplication is of great use in cryptology.
 
-Previously, people used traditional matrix multiplication which was based on the definition of MM  to calculate the product of two matrices. The traditional matrix multiplication algorithm contains three circulations. Concretely, $C_{ij}=A_{ik}B_{kj}$, each index ($i,j,k$) runs from 1 to $n$. Therefore, the time complexity is $\Theta(n^3)$, where $n$ is the length of the square matrix. The time complexity of traditional method is large. Hence, since the extensive application of MM, how to optimize the operation of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of use of the arithmetic multiplication in MM is a major optimized direction.
+Previously, people used traditional matrix multiplication which was based on the definition of MM to calculate the product of two matrices. The traditional matrix multiplication algorithm contains three circulations. Concretely, $C_{ij} = A_{ik} B_{kj}$, each index $(i,\, j,\, k)$ runs from $1$ to $n$. Therefore, the time complexity of which is $\Theta\left(n^3\right)$, where $n$ is the length of the square matrix. The time complexity of traditional method is large, hence, with the extensive application of MM, optimization of MM becomes more and more important. Without considering the degree of matrix density, how to effectively reduce the number of arithmetic multiplication in MM is a major direction for optimization.
 
-The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969 and was named Strassen algorithm. It's main idea is to replace multiplication by the combination of addition and subtraction. The answer is calculated by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms. 
+The earliest MM optimized algorithm was proposed by German mathematician Volker Strassen in 1969[^Strassen] and was named Strassen's algorithm. Its main idea is to replace multiplication by the combination of addition and subtraction. The result is obtained by piecing some indirect terms together and using the addition and subtraction on these indirect terms to cancel out part of the terms.
 
-Strassen's algorithm embodies two different locality properties because its two basic computations exploit different data locality: matrix multiply MM has spatial and temporal locality, and matrix addition MA has only spatial locality. This method contains 7 MMs and 22MAs. For those 7 MMs, they take $2\pi$($\lceil \frac{m}{2} \rceil $ $\lceil \frac{n}{2} \rceil$ p + mn $\lceil \frac{p}{2} \rceil + \lceil \frac{m}{2} \rceil \lfloor \frac{n}{2} \rfloor \lceil \frac{p}{2} \rceil)$ seconds,where $\pi$ is the efficiency of MM and $1/\pi$ is simply the **floating point operation per second**(FLOPS) of the computation. For 22 MAs (18 matrix additions and 4 matrix copies) take $\alpha [5 \lceil \frac{n}{2} \rceil (\lceil \frac{m}{2} \rceil + \lceil \frac{p}{2} \rceil ) + 3mp ]$ seconds, where $\alpha$ is the efficiency of MA. 
+[^Strassen]: test
 
-Strassen's algorithm also has **Layout effects**. That is the performance of MA is not affected by a specific matrix layout or shape as long as we can exploit the only viable reuse: spatial data reuse. We know that data reuse(spatial/temporal) is crucial for matrix multiply. In practice, ATLAS and GotoBLAS cope rather well with the effects of a (limited) row/column major format reaching often 90% of peak performance. Thus, we can assume for practical purpose that $\pi$ and $\alpha$ are functions of the matrix size only.
+Strassen's algorithm embodies two different locality properties because its two basic computations exploit different data locality: matrix multiplication has spatial and temporal locality, and matrix addition has only spatial locality. This method contains $7$ MMs and $22$ MAs. For those $7$ MMs, the runtime is
 
-What's more, for square matrices, there is something special. Combining the performance properties of both matrix multiplications and matrix additions with a more specific analysis for only square matrices; that is, $n = m = p$. Based on it, the equation $\lfloor \frac{m}{2} \rfloor \lceil \frac{n}{2} \rceil \lceil \frac{p}{2} \rceil \leq \alpha / 2\pi [5\lceil \frac{n}{2} \rceil (\lceil \frac{m}{2} \rceil + \lceil \frac{p}{2} \rceil) + 3mp]$ can be simplify. And from this equation, we can find that there exists a  **recursion point**  $n_1$ for Strassen's algorithm and $n_1 = 22\frac{\alpha}{\pi}$.
+$$
+2\pi\left(
+\left\lceil\frac{m}{2}\right\rceil
+\left\lceil\frac{n}{2}\right\rceil p +
+mn\left\lceil\frac{p}{2}\right\rceil +
+\left\lceil\frac{m}{2}\right\rceil
+\left\lfloor\frac{n}{2}\right\rfloor
+\left\lceil\frac{p}{2}\right\rceil\right),
+$$
 
-For Strassen algorithm, the time complexity is $O(n^{\lg 7})$. For a two order matrix multiplication, we need to spend $8\times(2^3)$ with Obvious matrix multiplication algorithm but we just need $7\times (2^{\lg7})$ by using Strassen's algorithm. The time complexity is decreased. But the space complexity of Strassen algorithm may be increased since the more spaces are needed to save the submatrix.
+where $\pi$ is the efficiency of MM, and $1/\pi$ is simply the **floating point operation per second** (FLOPS) of the computation. For $22$ MAs ($18$ matrix additions and $4$ matrix copies), the runtime is
 
-After Strassen came up with this algorithm, more and more optimized algorithms were proposed by different people. For examples, Pan's algorithm was proposed in 1981 which time complexity is decreased to $O(n^{2.494})$ . Later, Andrew Stothers proposed a new algorithm in his paper in 2010 which time complexity is $O(n^{2.374})$. Then in 2014, François Le Gall simplied Stanford's algorithm and the Time complexity was decreased to $O(n^{2.3728639})$ that is the most optimized algorithm for matrix multiplication now.
-But in this project, we will mainly focus on the Strassen's algorithm. We will apply it to higher order matrix multiplication to make a comparision between the traditional matrix multiplication and the Strassen's algorithm and discuss more details about it.. What's more, In this project, we will also find the crossover point for these two methods. 
+$$
+\alpha\left[
+5\left\lceil\frac{n}{2}\right\rceil\left(
+\left\lceil\frac{m}{2}\right\rceil +
+\left\lceil\frac{p}{2}\right\rceil\right) +
+3mp\right],
+$$
+
+where $\alpha$ is the efficiency of MA.
+
+Strassen's algorithm also has **layout effects**. That is, the performance of MA is not affected by a specific matrix layout or shape as long as we can exploit the only viable reuse: spatial data reuse. We know that data reuse (spatial/temporal) is crucial for matrix multiply. In practice, ATLAS and GotoBLAS cope rather well with the effects of a (limited) row/column major format reaching often 90% of peak performance. Thus, we can assume for practical purpose that $\pi$ and $\alpha$ are functions of the matrix size only.
+
+For Strassen's algorithm, the time complexity is $O\left(n^{\lg 7}\right)$. For a two order matrix multiplication, we need to spend $8\times(2^3)$ of runtime with obvious matrix multiplication algorithm, but we just need $7\times\left(2^{\lg7}\right)$ by using Strassen's algorithm, the time complexity is decreased. However, the space complexity of Strassen's algorithm may be increased, since the more spaces are needed to save the submatrix.
+
+After Strassen came up with this algorithm, more and more optimized algorithms were proposed by different people. For example, Pan's algorithm was proposed in 1981[^Pan], time complexity of which is reduced to $O\left(n^{2.494}\right)$. Later, Andrew Stothers proposed a new algorithm in his paper in 2010[^Stothers], the time complexity of which is $O\left(n^{2.374}\right)$. Then, in 2014, François Le Gall[^Gall] simplified Stanford's algorithm[^Stanford] and the time complexity was reduced to $O\left(n^{2.3728639}\right)$, which is the most optimized algorithm for matrix multiplication so far.
+
+[^Pan]: Pan (1984). How to Multiply Matrices Faster. Retrieved December 25, 2020, from SEMANTIC SCHOLAR. DOI:10.1007/3-540-13866-8
+
+[^Stothers]: Stothers, A. J. (2010). On the Complexity of Matrix Multiplication. Retrieved December 25, 2020, from Edinburgh Research Archive. Web site: <https://era.ed.ac.uk/handle/1842/4734>.
+
+[^Gall]: Francois Le Gall (2014). Powers of Tensors and Fast Matrix Multiplication. Retrieved December 25, 2020, from Cornell University. Web site: <https://arxiv.org/abs/1401.7714>D
+
+[^Stanford]: Williams, V. V (2014). Multiplying matrices in O(n^2.373) time. Retrieved December 25, 2020, from Stanford University. Web site: <https://people.csail.mit.edu/virgi/matrixmult-f.pdf>
+
+In this project, we will mainly focus on the Strassen's algorithm. We will apply it to higher order matrix multiplication to make a comparison between the traditional matrix multiplication and the Strassen's algorithm and discuss more details about it. Further more, in this project, we also tried finding the crossover point for these two methods.
 
 ---
 
@@ -40,43 +71,54 @@ But in this project, we will mainly focus on the Strassen's algorithm. We will a
 A 1-page summary of the contributions of the paper in [1]. Discuss why the authors of [1] think the topic of their paper is useful, a summary of the implementation of the adaptive method (how does it work?), and their experiment design and results. Also include some examples or particular situations where you think their results could be useful for the scientific community or industry.
 -->
 
-<!-- TODO -->
 ### Usefulness of Adaptive Strassen's Algorithm
 
-The writers of the provided paper, Paolo D'Alberto and Alexandru Nicolau talked about an easy-to-use adaptive algorithm which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS. The Strassen's algorithm has decreased the running time of matrix multiplication significantly, by replacing one discrete matrix multiplication with several matrix additions. However, for modern architectures with complex memory hierarchies, the matrix additions have a limited in-cache data reuse and thus poor memory-hierarchy utilization.
+The writers of the provided paper, Paolo D'Alberto and Alexandru Nicolau talked about an easy-to-use adaptive algorithm[^Paolo] which combines a novel implementation of Strassen's idea with matrix multiplication from different systems like ATLAS. The Strassen's algorithm has decreased the running time of matrix multiplication significantly, by replacing one discrete matrix multiplication with several matrix additions. However, for modern architectures with complex memory hierarchies, the matrix additions have a limited in-cache data reuse and thus poor memory-hierarchy utilization.
 
-The first benefit writers listed is their algorithm divides the MM problems into a set of balanced sub-problems without any matrix padding or peelingIn addition;Second, their algorithm applies Strassen’s strategy recursively as many time as a function of the problem size.Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The writers' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm provided by the writers of the given paper.
+[^Paolo]: test
+
+The first benefit of their algorithm authors listed is that, they divide the MM problems into a set of balanced sub-problems without any matrix padding or peeling. Second, in addition, their algorithm applies Strassen’s strategy recursively as many times as a function of the problem size. Third, they store matrices in standard row or column major format so that they can yield control to a highly tuned matrix multiplication. The authors' algorithm applies to any size and shape matrices. These are the advantages of adaptive algorithm provided by the authors of the given paper.
 
 ---
 
 ### Implementation of the Adaptive Method
 
-The concrete implementation of the adaptive algorithm is realized by several steps. To begin with, writers declared several notations and computations. As the writer suggests, their algorithm reduces the number of passes as well as the number of computations because of a balanced division process.
+The concrete implementation of the adaptive algorithm is realized by several steps. To begin with, authors declared several notations and computations. As the authors suggests, their algorithm reduces the number of variables initialization and assignment as well as the number of computations because of a balanced division process.
 
-For matrix $C=A×B$, where $\sigma(A) = m\times n$, decompose $A$ to four small matrices $A_0$, $A_1$, $A_2$ and $A_3$. The size of four small matrices are
+For matrix $C = A\times B$, where $\sigma(A) = m\times n$, decompose $A$ to four small matrices $A_0$, $A_1$, $A_2$ and $A_3$. The size of four small matrices are
 
 $$
-\begin{cases}
-\sigma(A_0) = \lceil m/2 \rceil\times\lceil n/2 \rceil \\
-\sigma(A_{1}) = \lceil m/2 \rceil\times\lfloor n/2 \rfloor \\
-\sigma(A_{2}) = \lfloor m/2 \rfloor\times\lceil n/2 \rceil \\
-\sigma(A_{3}) = \lfloor m/2 \rfloor\times\lfloor n/2 \rfloor
-\end{cases}
+\left\{\begin{aligned} &
+\sigma(A_0) =
+\left\lceil\dfrac{m}{2}\right\rceil\times
+\left\lceil\dfrac{n}{2}\right\rceil \\ &
+\sigma(A_{1}) =
+\left\lceil\dfrac{m}{2}\right\rceil\times
+\left\lfloor\dfrac{n}{2}\right\rfloor \\ &
+\sigma(A_{2}) =
+\left\lfloor\dfrac{m}{2}\right\rfloor\times
+\left\lceil\dfrac{n}{2}\right\rceil \\ &
+\sigma(A_{3}) =
+\left\lfloor\dfrac{m}{2}\right\rfloor\times
+\left\lfloor\dfrac{n}{2}\right\rfloor
+\end{aligned}\right.
 $$
 
-The dimension is the same with matrix $B$. When we do matrix addition, we expand the scope of matrix addition to different sizes. For example, we define matrix $X = Y + Z$, if the size of $Y$ and $Z$ is not the same, then we expand the size of $X$ to the largest of them and the redundant part of $X$ is set 0. After that, the adaptive algorithm begin. Several matrix additions and multiplications is performed and are put into practice to several systems. Through this process, the writers found that the same algorithm applied to different systems can have different results.
+The dimension is the same for matrix $B$. When conducting matrix addition, we expand the scope of matrix addition to different sizes. For example, we define matrix $X = Y + Z$, if the size of $Y$ and $Z$ is not the same, then we expand the size of $X$ to the largest of them and the redundant part of $X$ is set to be $0$. After that, the adaptive algorithm begins. Several matrix additions and multiplications are performed and are put into practice to several systems. Through this process, the authors found that the same algorithm applied to different systems can have different results.
 
 ---
 
 ### Experiment Design and Results
 
-In conclusion, the adaptive algorithm is based on the Strassen method and have some advanced operations. The Strassen method has its run-time advantage when the matrix size is quite big, but this edge cannot be exhibited when the size is not big enough, because it add quite a lot matrix additions compared to the old standard matrix multiplication. For instance, the size has to be bigger than about 1000*1000 when Strassen method begin to show its superiority. However,  speedups up to 30% are observed over already tuned MM using this hybrid approach.
+Generally, the adaptive algorithm is based on the Strassen's method and have some advanced operations. The Strassen's method has its run-time advantage when the matrix size is quite big, but this advantage cannot be exhibited when the size is not big enough, since it adds a large quantity of matrix additions compared to the traditional standard matrix multiplication. For instance, the size has to be greater than about 1000 by 1000 for Strassen's method begins to show its superiority. However,  speedups up to 30% are observed over already tuned MM using this hybrid approach.
 
 ---
 
 ### Possible Applications
 
-Their algorithm can be useful in some real-world problems involving matrix multiplication, especially for those matrix which size is big and  not fixed. For practical application, this algorithm can be applied to many industrial problems. For instance, the circuits equations which include several unknown parameters can be solved quickly by using matrix divisions, which means matrix multiplications as well. What's more, the signal processing can make good use of the algorithm, too. The input and output signals' relationship can be expressed in matrix, too. With the advantage of changeable size and comparatively fast speed, the adaptive method has great potential in real-world problems.
+The adaptive Strassen's algorithm can be useful in some real-world problems involving matrix multiplication, especially for those matrix of size big and not fixed. For practical application, this algorithm can be applied to many industrial problems. For instance, the circuits equations in EDA which include several unknown parameters can be solved quickly using matrix divisions, equivalent to matrix multiplications as well.
+
+In addition, the signal processing can make good use of the algorithm as well, for the input and output signals' relationship can be expressed in matrix. With the advantage of changeable size and comparatively fast speed, the adaptive method has great potential in real-world problems.
 
 ---
 
@@ -88,64 +130,141 @@ Uses an abstract model to estimate the crossover point analytically. You can pro
 
 ### Time Complexity of Standard Matrix Multiplication
 
-From the pseudocode we can know that there are three for-loop cycles so that the time complexity for Standard matrix multiplication is $\Theta(n^3)$.
+From the pseudocode we can know that there are three for-loop cycles so that the time complexity for standard matrix multiplication is $\Theta\left(n^3\right)$.
 
 ---
 
 ### Time Complexity of Strassen Algorithm
 
-From the recurrence relationship we know that the run-time complexity is 
+From the recurrence relationship we know that the run-time complexity satisfies
 $$
 \begin{cases}
-T(n) = O(1) , \ n = 2;
-\\
-T(n)=7T(n/2) + \Theta(n^2) , \ n > 2
+T(n) = O(1), n = 2 \\
+T(n) = 7T\left(\dfrac{n}{2}\right) + \Theta\left(n^2\right), n > 2
 \end{cases}
 $$
-Then we can calculate the time complexity for Strassen's algorithm
-$$T(n) = 7T(n/2) + O(n^2)\\
-  =7[7T(\frac{n}{2^2}) + O((\frac{n}{2})^2)] + O(n^2)\\
-  =7^2T(\frac{n}{2^2})+7O(\frac{n^2}{4})+O(n^2)\\
-  =7^2[7T(\frac{n}{2^3})+ O((\frac{n}{2^2})^2)]+7O(\frac{n^2}{4})+O(n^2)\\
-  =7^3T(\frac{n}{2^3})+7^2O(\frac{n^2}{4^2})+7O(\frac{n^2}{4})+O(n^2)\\
-  =7^3T(\frac{n}{2^3})+7^2O(\frac{n^2}{4^2})+7O(\frac{n^2}{4^1})+7^0O(\frac{n^2}{4^0})\\
-  =......\\
-  =7^kT(\frac{n}{2^k})+7^{k-1}O(\frac{n}{4^{k-1}})+7^{k-2}O(\frac{n}{4^{k-2}})+......+7^2O(\frac{n^2}{4^2})+7O(\frac{n^2}{4})+7^0O(\frac{n^2}{4^0})
+
+Then we can calculate the time complexity for Strassen's algorithm.
+
 $$
+\begin{aligned}
+T(n) & =
+7T\left(\frac{n}{2}\right) + O\left(n^2\right) \\ & =
+7\left\{7T\left(\frac{n}{2^2}\right) +
+O\left[\left(\frac{n}{2}\right)^2\right]\right\} +
+O\left(n^2\right) \\ & =
+7^2T\left(\frac{n}{2^2}\right) +
+7O\left(\frac{n^2}{4}\right) +
+O\left(n^2\right) \\ & =
+7^2\left\{7T\left(\frac{n}{2^3}\right) +
+O\left[\left(\frac{n}{2^2}\right)^2\right]\right\} +
+7O\left(\frac{n^2}{4}\right) +
+O\left(n^2\right) \\ & =
+7^3T\left(\frac{n}{2^3}\right) +
+7^2O\left(\frac{n^2}{4^2}\right) +
+7O\left(\frac{n^2}{4}\right) +
+O\left(n^2\right) \\ & =
+7^3T\left(\frac{n}{2^3}\right) +
+7^2O\left(\frac{n^2}{4^2}\right) +
+7O\left(\frac{n^2}{4^1}\right) +
+7^0O\left(\frac{n^2}{4^0}\right) \\ & =
+\cdots \\ & =
+7^kT\left(\frac{n}{2^k}\right) +
+7^{k-1}O\left(\frac{n}{4^{k-1}}\right) +
+7^{k-2}O\left(\frac{n}{4^{k-2}}\right) +
+\cdots +
+7^2O\left(\frac{n^2}{4^2}\right) +
+7O\left(\frac{n^2}{4}\right) +
+7^0O\left(\frac{n^2}{4^0}\right)
+\end{aligned}
 $$
-T(n)\leq7^kO(1)+c\cdot n^2\cdot (\frac{7}{4})^{k-1}+c\cdot n^2 \cdot(\frac{7}{4})^{k-2}+......+c\cdot n^2 \cdot (\frac{7}{4})^{2} + c\cdot n^2 \cdot (\frac{7}{4})^{1} + c\cdot n^2 \cdot (\frac{7}{4})^{0}\\
-\leq 7^k\cdot c + c\cdot n^2\cdot [(\frac{7}{4})^{k-1}+(\frac{7}{4})^{k-2} +(\frac{7}{4})^2+(\frac{7}{4})^{1} + (\frac{7}{4})^{0}]\\
-\leq c\cdot 7^{\lg(\frac{n}{2})} + c\cdot n^2\cdot [\frac{1\cdot (1-(\frac{7}{4})^k)}{1-\frac{7}{4}}]\\
-\leq c\cdot 7^{\lg(\frac{n}{2})} + c\cdot n^2\cdot [\frac{4}{3} ((\frac{7}{4})^k - 1)]\\
-\leq c\cdot 7^{\lg(\frac{n}{2})} + c\cdot n^2\cdot [\frac{4}{3}((\frac{7}{4})^{\lg(\frac{n}{2})}-1)]\\
-\leq c\cdot 7^{\lg(\frac{n}{2})} + c\cdot n^2\cdot [\frac{4}{3} ((\frac{4}{7}(\frac{7}{4})^{\lg(n)}-1))]\\
-\leq \frac{c}{7} \cdot 7^{\lg(n)} + c\cdot n^2\cdot [\frac{16}{21}(\frac{7}{4})^{\lg(n)}-1]\\
-\leq \frac{c}{7} \cdot n^{\lg(7)} + c\cdot n^2\cdot [\frac{16}{21}(n)^{lg(\frac{7}{4})}-1]\\
-\leq C \cdot n^{lg(7)} - C\cdot n
+
+Therefore, we have
+
 $$
-Since $\lg(7) > 2$, we can get the time complexity for Strassen's algorithm is that $O(n^{\lg7}\approx O(n^{\lg2.81}))$
- 
+\begin{aligned}
+T(n) & \le
+7^kO(1) +
+cn^2\left(\frac{7}{4}\right)^{k-1} +
+cn^2\left(\frac{7}{4}\right)^{k-2} +
+\cdots +
+cn^2\left(\frac{7}{4}\right)^{2} +
+cn^2\left(\frac{7}{4}\right)^{1} +
+cn^2\left(\frac{7}{4}\right)^{0} \\ & \le
+7^kc +
+cn^2\left[\left(\frac{7}{4}\right)^{k-1} +
+\left(\frac{7}{4}\right)^{k-2} +
+\left(\frac{7}{4}\right)^2 +
+\left(\frac{7}{4}\right)^{1} +
+\left(\frac{7}{4}\right)^{0}\right] \\ & \le
+c7^{\lg(n/2)} +
+cn^2\frac{1\left[1 - \left(7/4\right)^k\right]}{1 - 7/4} \\ & \le
+c7^{\lg(n/2)} +
+cn^2\frac{4}{3}\left[\left(\frac{7}{4}\right)^k - 1\right] \\ & \le
+c7^{\lg(n/2)} +
+cn^2\frac{4}{3}\left[\left(\frac{7}{4}\right)^{\lg(n/2)} - 1\right] \\ & \le
+c7^{\lg(n/2)} +
+cn^2\frac{4}{3}\left[\frac{4}{7}\left(\frac{7}{4}\right)^{\lg n} - 1\right] \\ & \le
+\frac{c}{7}7^{\lg n} +
+cn^2\left[\frac{16}{21}\left(\frac{7}{4}\right)^{\lg n} - 1\right] \\ & \le
+\frac{c}{7}n^{\lg7} +
+cn^2\left[\frac{16}{21}n^{\lg(7/4)} - 1\right] \\ & \le
+Cn^{\lg7} -
+Cn
+\end{aligned}
+$$
+
+Since $\lg7 > 2$, we can obtain the time complexity for Strassen's algorithm is
+
+$$
+O\left(n^{\lg7}\right) \approx O\left(n^{2.81}\right)
+$$
+
 ---
 
 ### Crossover Point Estimation
 
- The crossover point means the size of matrix when the run-time of Strassen algorithm is faster than the Standard Matrix multiplication.
- From the time complexity we know that the Strassen method is faster than the standard matrix multiplication, however, in practice for small matrices, Strassen's method has a significant overhead and conventional MM results in better performance. To overcome this, several authors mentioned in the provided paper have shown hybrid algorithms, by deploying Strassen's method in conjunction with conventional matrix multiplication. For our project, we explored the crossover point in practical ways, running the python code for both Strassen method and standard matrix multiplication. The concrete result is given in the empirical analysis, and is explained in different illustrations.
+The crossover point means the size of matrix when the runtime of Strassen algorithm starts to be faster than the standard matrix multiplication.
 
-<!-- TODO -->
+From the time complexity we know that the Strassen's method is faster than the standard matrix multiplication, however, in practice, for small matrices, Strassen's method has a significant overhead and conventional MM results in better performance. To overcome this, several authors in the provided paper point at hybrid algorithms, by deploying Strassen's method in conjunction with conventional matrix multiplication. For our project, we explored the crossover point in practical ways, running the Python code for both Strassen's method and standard matrix multiplication. The concrete result is given in the empirical analysis, and is explained in different illustrations.
+
+Moreover, for square matrices, there is something special. Combining the performance properties of both matrix multiplications and matrix additions with a more specific analysis for only square matrices, that is, $n = m = p$. Based on this, the equation
+
+$$
+\left\lfloor\frac{m}{2}\right\rfloor
+\left\lceil\frac{n}{2}\right\rceil
+\left\lceil\frac{p}{2}\right\rceil \le
+\frac{\alpha}{2\pi}\left[
+5\left\lceil\frac{n}{2}\right\rceil\left(
+\left\lceil \frac{m}{2}\right\rceil +
+\left\lceil\frac{p}{2}\right\rceil\right) +
+3mp\right]
+$$
+
+can be simplified. And from this equation, we can find that there exists a  **recursion point**  $n_1$ for Strassen's algorithm and
+
+$$
+n_1 = 22\frac{\alpha}{\pi}.
+$$
 
 ---
 
 ## Methodology
 
-<!-- in which you explain Strassen Algorithm, standard matrix multiplication and give pseudocode and further explanation. Include your runtime analysis from Part 2 here. -->
-
-<!-- TODO -->
+<!--
+in which you explain Strassen Algorithm, standard matrix multiplication and give pseudocode and further explanation. Include your runtime analysis from Part 2 here.
+-->
 
 ### Strassen Algorithm
 
-Comparing to the Obvious matrix multiplication, the Strassen's Algorithm replaces matrix multiplication into the matrix addition. In this algorithm, the operated matrices are divided into some submatrices and define some other submatrices to be the basic operated matrices which are calculated by the addition or subtraction of those submatrices which are divided from the operated matrices. Then repeat these procedures on all submatrices and get the resulting submatrices which we define as "P". Then get the submatrices of the product of the original operated matries. Finally add all these submatrices to get the result.
-Since the Strassen's Algorithm replaces the one separated matrix multiplication with several new matrix additions. It can significantly reduce the running time of matrix multiplication lower. The pseudocode for Strassen's method used in two-ordered matrix can be written as follows:
+Comparing to the obvious matrix multiplication, the Strassen's Algorithm replaces matrix multiplication into the matrix addition. In this algorithm,
+
+- Operand matrices are divided into some submatrices and some other submatrices are defined to be the basic operated matrices, on which addition or subtraction of are conducted.
+- Repeat these procedures on all submatrices to obtain the resulting submatrices, which we define as $P$.
+- After this, the submatrices of the product of the original operand matrices are obtained.
+- Finally, combine all these submatrices to get the result.
+
+Since the Strassen's Algorithm replaces the one separated matrix multiplication with several new matrix additions, it can significantly reduce the running time of matrix multiplication. The pseudocode for Strassen's method used in two-ordered matrix can be written as follows:
 
 ```python
 Strassen(A, B)
@@ -182,7 +301,7 @@ Strassen(A, B)
     if n == 1 to n
         c11 = a11b11
     else partition A, B and C 
-        P1 = Strassen(A11,B12-B22)
+        P1 = Strassen(A11, B12 - B22)
         P2 = Strassen(A11 + A12, B22)
         P3 = Strassen(A21 + A22, B11)
         P4 = Strassen(A22, B21 - B11)
@@ -196,13 +315,13 @@ Strassen(A, B)
     return C
 ```
 
-According to the recurrence relation, the running time for Strassens method is $T(n) = 7T(n/2) + \Theta(n^2)$. According to the theoretical analysis above, the time complexity for Strassen's method is $O(n^{\lg7})$. Compare to the time complexity of traditional matrix multiplication $O(n^3)$, we can calculate that when $n$ larger than $n_0$ which is the **crossover point** we will talk later, the time of Strassen's algorithm is significantly lower than the standard matrix multiplication.
+According to the recurrence relation, the running time for Strassen's method is $T(n) = 7T(n/2) + \Theta(n^2)$. According to the theoretical analysis above, the time complexity for Strassen's method is $O(n^{\lg7})$. Compared to the time complexity of traditional matrix multiplication $O(n^3)$, we can calculate that when $n$ larger than $n_1$ which is the **crossover point**, which is discussed later, the time of Strassen's algorithm is significantly lower than the standard matrix multiplication.
 
 ---
 
 ### Standard Matrix Multiplication
 
-For the standard matrix multiplication, the running time is about n^3, and the pseudocode is given below:
+For the standard matrix multiplication, the running time is $\Theta(n^3)$, and the pseudocode is given below:
 
 ```python
 SQUARE-MATRIX-MULTIPLY(A, B)
@@ -220,62 +339,46 @@ SQUARE-MATRIX-MULTIPLY(A, B)
 
 ## Experiment Design
 
-<!-- describes your implementation of the two algorithms and the way you generate test problems (ie matrices to multiply). -->
-
-<!-- TODO -->
-
----
+<!--
+describes your implementation of the two algorithms and the way you generate test problems (ie matrices to multiply).
+-->
 
 ### Class `Matrix`
 
-A data structure for matrix. The matrix implementation is suitable for dense matrices. A class `Matrix` is defined in the implementation.  
-This class `Matrix` represent a matrix in row-major order (i.e. for an n×n-matrix the first row will be stored in an array at index 0 to index n-1 the
-next row at n to 2n-1 and so on). The class provides a constructor and methods to get and set the element at any row column index.
+A data structure for matrix. The matrix implementation is suitable for dense matrices. A class `Matrix` is defined in the implementation.
+
+This class `Matrix` represent a matrix in row-major order. The class provides a
+constructor and methods to get and set the element at any row column index.
+
+>For an n by n matrix the first row will be stored in an array at index `0` to index `n - 1`, the next row is at `n` to `2 * n - 1`, and so on.
 
 **Attributes**:
 
-```
-    row: int, default 1  
-    col: int, default 1  
-    elements: list, default [0.0]
-```
+- `row`: `int`, default `1`
+- `col`: `int`, default `1`  
+- elements: `list`, default `[0.0]`
 
 **Methods**：
 
-```
-    __init__(self, elements, row=None, col=None):
-        # Generate a Matrix object.
-
-    __str__(self):
-        # Return a row*col matrix-like string.
-        
-    __getitem__(self, item):
-        # Return elements in a Matrix object.
-        
-    __add__(self, other):
-        # If other is a matrix, perform matrix addition, else perform addition with a number element-wisely.
-        # Return a Matrix object
-    
-    __sub__(self, other):
-        # If other is a matrix, perform matrix subtraction, else perform subtraction with a number element-wisely
-        # Return a Matrix object
-
-    __sizeof__(self):
-        # Return the number of elements in a Matrix object.
-        
-    dimension(self):
-        # Return row and col numbers of a Matrix object.
-```
+- `__init__(self, elements, row=None, col=None):` Generate a `Matrix` object
+- `__str__(self):` Return a row * col matrix-like `String`.
+- `__getitem__(self, item):` Return elements in a `Matrix` object.
+- `__add__(self, other):` If `other` is a `Matrix`, perform matrix addition, else perform addition with a number element-wisely. Return a `Matrix` object.
+- `__sub__(self, other):` If other is a `Matrix`, perform matrix subtraction, else perform subtraction with a number element-wisely. Return a `Matrix` object
+- `__sizeof__(self):` Return the number of elements in a `Matrix` object.
+- `dimension(self):` Return row and column numbers of a `Matrix` object.
 
 #### Data Storage
 
 Matrix elements are stored in a list following row-major order.  
-For instance, a 2 by 2 matrix $a$ is stored as a list \[$a_{11} a_{12} a_{21} a_{22}$\].
+
+For instance, a 2 by 2 matrix $A$ is stored as a list $[A_{11}\;A_{12}\;A_{21}\;A_{22}]$.
 
 #### Indexing
 
-The index rule of an element in a `Matrix` object follows conventions in math.  
-That is, Matrix\[i, j\] is the element in the ith row and jth column (i and j run from 1 to Matrix.row and Matrix.col respectively).
+The indexing rule of an element in a `Matrix` object follows conventions in math.  
+
+That is, `Matrix[i, j]` is the element in the `i`th row and `j`th column (`i` and `j` run from 1 to `Matrix.row` and `Matrix.col` respectively).
 
 ---
 
@@ -283,12 +386,12 @@ That is, Matrix\[i, j\] is the element in the ith row and jth column (i and j ru
 
 #### Function `adaptive_add()` and `adaptive_minus()`
 
-adaptive_add(a, b, target_row, target_col):  
+- `adaptive_add(a, b, target_row, target_col):`
     Given target matrix size, perform matrix addition of Matrix a and b.  
     The function is called by `strassen_matrix_multiply()`.  
     Return a `Matrix` object with the size of `target_row`*`target_col`.
 
-adaptive_minus(a, b, target_row, target_col):  
+- `adaptive_minus(a, b, target_row, target_col):`
     Given target matrix size, perform matrix subtraction of `Matrix` a and b.  
     The function is called by `strassen_matrix_multiply()`.  
     Return a `Matrix` object with the size of target_row*target_col.
@@ -327,17 +430,21 @@ def adaptive_add(a, b, target_row, target_col):
 
 #### Function `square_matrix_multiply()`
 
-square_matrix_multiply(a, b):  
-    Given `Matrix` a and b, perform standard matrix multiplication. `a.col` must equal to `b.row`.  
-    Return a `Matrix` object.
+`square_matrix_multiply(a, b):`  
+
+Given `Matrix` a and b, perform standard matrix multiplication. `a.col` must equal to `b.row`. Return a `Matrix` object.
 
 #### Function `strassen_multiply()`
 
-strassen_multiply(a, b, n=None):  
-    Given `Matrix` a and b, perform an improved version of Strassen's algorithm.  
-    The `adaptive_add()` and `adaptive_minus()` are called in `strassen_multiply()` to tackle arbitrary matrix size inputs.  
-    The algorithm is based on the paper published by Paolo D’Alberto and Alexandru Nicolau in 2007.  
-    Return a `Matrix` object.
+`strassen_multiply(a, b, n=None):`
+
+Given `Matrix` a and b, perform an improved version of Strassen's algorithm.  
+
+The `adaptive_add()` and `adaptive_minus()` are called in `strassen_multiply()` to tackle arbitrary matrix size inputs.  
+
+The algorithm is based on the paper published by Paolo D’Alberto and Alexandru Nicolau in 2007.  
+
+Return a `Matrix` object.
 
 #### Function `random_matrix_gen()`
 
@@ -362,9 +469,9 @@ def random_matrix_gen(n):
 
 ## Empirical Analysis
 
-<!-- provides your results of parts 3 and 4 evaluating the adaptive method for matrix multiplication, Strassen’s algorithm, and the basic method. You should use [1] as an example of the type of results you should put in this section (tables, graphs, type of discussion) because when marking will expect to see graphs and results that are of comparable quality to this and measure similar quantities. -->
-
----
+<!--
+provides your results of parts 3 and 4 evaluating the adaptive method for matrix multiplication, Strassen’s algorithm, and the basic method. You should use [1] as an example of the type of results you should put in this section (tables, graphs, type of discussion) because when marking will expect to see graphs and results that are of comparable quality to this and measure similar quantities.
+-->
 
 ### Testing Platform
 
@@ -381,8 +488,6 @@ The specifications of our main testing platform is as follows:
   - Visual Studio Community 2019
 
 >Special thanks to SUN Jiachen, for providing us with this powerful testing platform.
-
-<!-- TODO: add platform info -->
 
 Some other lightweight tests are conducted on our own platform Surface Pro 6, the specifications are shown below.
 
@@ -401,8 +506,6 @@ Some other lightweight tests are conducted on our own platform Surface Pro 6, th
 ---
 
 ### Performance Benchmark
-
-<!-- TODO: merge redundancy -->
 
 According to Paolo D'Alberto and Alexandru Nicolau, the crossover point (or the recursion point) for square matrices case is expressed as
 
@@ -501,13 +604,13 @@ To make the condition as close as possible, `square_matrix_multiply()` is execut
 
 The plot of the runtime with respect to the selection of recursion point is shown below.
 
-![Runtime of algorithms with different recursion points](figures/crossover_point.png)
+![Runtime of algorithms with different recursion points](../figures/crossover_point.png)
 
 From the figure, it is clear that, for 512 by 512 matrix multiplication, Strassen's method is stably faster then the standard method for about 40 seconds, even if the recursion point is set to be 1. In general, though the runtime of the two methods has fluctuations, but the tendency is synchronous, hence we may consider these changes as a consequence of the load of the computer and operating system.
 
 More intuitively, the plot of the difference is shown below.
 
-![The difference between the runtime of algorithms with different recursion points](figures/crossover_point_difference.png)
+![The difference between the runtime of algorithms with different recursion points](../figures/crossover_point_difference.png)
 
 In which the difference percentage is defined as
 
@@ -527,7 +630,7 @@ No obvious regular pattern could be found from the statistics. Therefore, the af
 
 The runtime of Strassen's multiplication and its $n^{2.81}$ polynomial fitted graph, along with that of standard matrix multiplication graph is shown below.
 
-![Runtime of Strassen's method with varied matrix size](figures/runtime_1200.png)
+![Runtime of Strassen's method with varied matrix size](../figures/runtime_1200.png)
 
 In this figure, the runtime of our Strassen's multiplication can be perfectly fitted with
 
@@ -551,7 +654,7 @@ $$
 
 Adding a small amount of results from larger matrices, the conclusion is still roughly consistent.
 
-![Runtime of multiplication with varied matrix size](figures/runtime_4096.png)
+![Runtime of multiplication with varied matrix size](../figures/runtime_4096.png)
 
 These results perfectly corresponds to the asymptotic estimation of time complexity in theoretical analysis.
 
@@ -561,7 +664,7 @@ Though adaptive Strassen's method, it should work best with square or almost squ
 
 In this experiment, the dimension of the matrices is from 256 by 256 to 256 by 1280, hence the ratio of the long edge over the short edge is from 1 to 5. The results are shown below.
 
-![Runtime of multiplication with varied matrix shape](figures/rectangular.png)
+![Runtime of multiplication with varied matrix shape](../figures/rectangular.png)
 
 From the figure, it is clear that, the runtime of MM in two methods increases linearly as oen dimension of the matrix grows. However, the runtime of adaptive Strassen's method grows even slower. This contradicts our assumption.
 
@@ -575,7 +678,7 @@ The results obtained from FLO benchmark is completely invalid, hence we did furt
 
 The call graph of addition test is shown below.
 
-![Call graph of addition](figures/call_addition_8192.png)
+![Call graph of addition](../figures/call_addition_8192.png)
 
 The most called functions are shown below (in order of time).
 
@@ -596,7 +699,7 @@ The most called functions are shown below (in order of time).
 
 The call graph of multiplication test is shown below.
 
-![Call graph of multiplication](figures/call_multiplication_8192.png)
+![Call graph of multiplication](../figures/call_multiplication_8192.png)
 
 | Name                                            | Call Count | Time (ms) | Time percentage | Own Time (ms) | Own time percentage |
 | ----------------------------------------------- | ---------: | --------: | :-------------: | ------------: | :-----------------: |
@@ -699,15 +802,15 @@ Some optimizations can be made to our code to improve the performance.
 
 Our project is based on GitHub for version control and code cooperation, on which we created projects for different stages of our work.
 
-![Project for developing preparation](figures/project_1.png)
+![Project for developing preparation](../figures/project_1.png)
 
-![Project for developing preparation](figures/projects.png)
+![Project for developing preparation](../figures/projects.png)
 
 Also, we opened some issues while code debugging.
 
-![Project for developing preparation](figures/issue_4.png)
+![Project for developing preparation](../figures/issue_4.png)
 
-Until xxx, the contributions insight is as shown below.
+Until December 25th, 2020, the contributions insight is as shown below.
 
 ---
 
